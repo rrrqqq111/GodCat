@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: alpaca
   m_EditorClassIdentifier: 
   id: Alpaca
-  animalName: "\u7f8a\u9a7c"
+  animalName: "\u7F8A\u9A7C"
   family: Hoofed
   rarity: 2
   baseMoney: 2
   ability: {fileID: 11400000, guid: 1e416257b71e499e971bdbbb6caa9770, type: 2}
-  description: "\u5468\u56f4\u52a8\u7269\u89e6\u53d1\u80fd\u529b\u83b7\u5f97\u7684\u91d1\u5e01\u7ffb\u500d"
-  icon: {fileID: 21300000, guid: 633725fa77622194db09a0749a07ed67, type: 3}
+  description: "\u5468\u56F4\u52A8\u7269\u672C\u6B21\u7ED3\u7B97\u7684\u989D\u5916\u91D1\u5E01\u6536\u76CA\u7FFB\u500D"
+  icon: {fileID: 21300000, guid: 537fc875c74e64d4281cf4acbf723fd2, type: 3}

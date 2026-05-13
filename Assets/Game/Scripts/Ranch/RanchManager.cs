@@ -85,6 +85,7 @@ namespace NekogamiRanch.Ranch
 
             BeginSettlementReport();
 
+            ResolveAbilitiesByMapScan("SettlementPrepare");
             ResolveAbilitiesByMapScan("DayStart");
             ResolveAbilitiesByMapScan("DayEnd");
 
