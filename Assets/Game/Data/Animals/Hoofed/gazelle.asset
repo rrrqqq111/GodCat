@@ -15,7 +15,7 @@ MonoBehaviour:
   id: Gazelle
   animalName: "\u77aa\u7f9a"
   family: Hoofed
-  rarity: "1"
+  rarity: 0
   baseMoney: 1
   ability: {fileID: 11400000, guid: f0c6f9a145a64f87b1e6f0be9162c00b, type: 2}
   description: "\u4e0e\u4e0a\u65b9\u52a8\u7269\u4ea4\u6362\u4f4d\u7f6e\u5e76\u83b7\u5f972\u91d1\u5e01"

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: Donkey
   animalName: "\u9a74"
   family: Hoofed
-  rarity: "1"
+  rarity: 0
   baseMoney: 1
   ability: {fileID: 11400000, guid: f0c6f9a145a64f87b1e6f0be9162c007, type: 2}
   description: "\u573a\u4e0a\u6709\u9a6c\u6216\u6591\u9a6c\u65f6\u83b7\u5f971\u91d1\u5e01"

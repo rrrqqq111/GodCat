@@ -12,7 +12,7 @@ namespace NekogamiRanch.Ranch
         [SerializeField] private bool allowDuplicateOffers;
         [SerializeField] private bool lockLegendaryBeforeDay = true;
         [SerializeField] private int legendaryUnlockDay = 5;
-        [SerializeField] private string legendaryRarity = "5";
+        [SerializeField, Range(0, 4)] private int legendaryRarity = 4;
 
         public IReadOnlyList<AnimalData> Roll(int day, int count, IReadOnlyList<AnimalData> fallbackPool = null)
         {
@@ -65,12 +65,7 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
-            if (int.TryParse(data.Rarity, out var rarityValue) && int.TryParse(legendaryRarity, out var legendaryValue))
-            {
-                return rarityValue >= legendaryValue;
-            }
-
-            return string.Equals(data.Rarity, legendaryRarity, StringComparison.OrdinalIgnoreCase);
+            return data.Rarity >= legendaryRarity;
         }
 
         private static IReadOnlyList<AnimalData> RollWithDuplicates(IReadOnlyList<AnimalData> pool, int count)

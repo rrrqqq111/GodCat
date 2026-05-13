@@ -15,7 +15,7 @@ MonoBehaviour:
   id: Lamb
   animalName: "\u7f8a\u7f94"
   family: Hoofed
-  rarity: "1"
+  rarity: 0
   baseMoney: 0
   ability: {fileID: 11400000, guid: f0c6f9a145a64f87b1e6f0be9162c004, type: 2}
   description: "5\u5929\u540e\u6210\u957f\u4e3a\u7ef5\u7f8a"

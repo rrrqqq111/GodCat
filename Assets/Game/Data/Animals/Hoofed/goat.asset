@@ -15,7 +15,7 @@ MonoBehaviour:
   id: Goat
   animalName: "\u5c71\u7f8a"
   family: Hoofed
-  rarity: "1"
+  rarity: 0
   baseMoney: 2
   ability: {fileID: 11400000, guid: f0c6f9a145a64f87b1e6f0be9162c009, type: 2}
   description: "\u6bcf\u65e5\u7ed3\u675f\u65f6\u751f\u6210\u4e00\u53ea\u7f8a\u7f94"

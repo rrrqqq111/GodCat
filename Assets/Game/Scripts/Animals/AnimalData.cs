@@ -9,7 +9,7 @@ namespace NekogamiRanch.Animals
         [SerializeField] private string id;
         [SerializeField] private string animalName;
         [SerializeField] private string family = "Hoofed";
-        [SerializeField] private string rarity = "1";
+        [SerializeField, Range(0, 4)] private int rarity;
         [SerializeField] private int baseMoney = 1;
         [SerializeField] private AbilityData ability;
         [SerializeField, TextArea] private string description;
@@ -18,7 +18,7 @@ namespace NekogamiRanch.Animals
         public string Id => id;
         public string Name => string.IsNullOrWhiteSpace(animalName) ? name : animalName;
         public string Family => family;
-        public string Rarity => rarity;
+        public int Rarity => rarity;
         public int BaseMoney => baseMoney;
         public AbilityData Ability => ability;
         public string Description => description;
@@ -28,12 +28,12 @@ namespace NekogamiRanch.Animals
         public string DisplayName => Name;
         public string AbilityDescription => Description;
 
-        public void Initialize(string animalId, string displayName, string animalFamily, string animalRarity, int money, AbilityData animalAbility, string animalDescription, Sprite animalIcon = null)
+        public void Initialize(string animalId, string displayName, string animalFamily, int animalRarity, int money, AbilityData animalAbility, string animalDescription, Sprite animalIcon = null)
         {
             id = animalId;
             animalName = displayName;
             family = animalFamily;
-            rarity = animalRarity;
+            rarity = Mathf.Clamp(animalRarity, 0, 4);
             baseMoney = money;
             ability = animalAbility;
             description = animalDescription;
