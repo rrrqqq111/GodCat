@@ -1,0 +1,2043 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dictionaries>
+  <Dictionary Language="ChineseSimplified">
+    <String Key="Ability_InstDesc_Count" Value="当前：{0}/{1}" />
+    <String Key="Ability_Lieflat_NotEnough" Value="{0}不足，无法提前上贡" />
+    <String Key="UI_Animal_BaseMoney" Value="{0}{1}{2}/天" />
+    <String Key="UI_AnimalFamily_CountLimit" Value="最多选择{0}个动物家族" />
+    <String Key="UI_AnimalFamily_Lock" Value="通过教程后解锁" />
+    <String Key="UI_AnimalFamily_SelectInGame" Value="选择1个动物家族" />
+    <String Key="UI_AnimalType_None" Value="空" />
+    <String Key="UI_Award_SelectAnimal" Value="选择动物" />
+    <String Key="UI_Award_SelectHero" Value="更换猫神" />
+    <String Key="UI_Award_SelectItem" Value="获得道具" />
+    <String Key="UI_Award_SelectToy" Value="获得玩具" />
+    <String Key="UI_Award_Title" Value="猫神的奖励" />
+    <String Key="UI_Book_All" Value="全部" />
+    <String Key="UI_Book_Animal" Value="动物" />
+    <String Key="UI_Book_AnimalFamilyLock" Value="所属动物家族未解锁" />
+    <String Key="UI_Book_Clear" Value="已阅" />
+    <String Key="UI_Book_Collect" Value="收集度：{0}" />
+    <String Key="UI_Book_Item" Value="道具" />
+    <String Key="UI_Book_NotDiscover" Value="在游戏中使用后收入图鉴" />
+    <String Key="UI_Book_UnlockCondition" Value="解锁条件：{0}" />
+    <String Key="UI_Book_UnlockDisable" Value="暂未解锁" />
+    <String Key="UI_BugReport_ContactPlaceholder" Value="请留下您的联系方式（可选）" />
+    <String Key="UI_BugReport_Placeholder" Value="请详细描述您遇到的BUG" />
+    <String Key="UI_Dialog_CancelButton" Value="取消" />
+    <String Key="UI_Dialog_ConfirmButton" Value="好的" />
+    <String Key="UI_Dialog_OtherButton" Value="其他" />
+    <String Key="UI_Dlc_LockTip" Value="需要购买DLC：{0}" />
+    <String Key="UI_Game_Name" Value="猫神牧场" />
+    <String Key="UI_Hero_SelectInGame" Value="选择猫神" />
+    <String Key="UI_HeroAbility_Active" Value="主动" />
+    <String Key="UI_HeroAbility_CoolDownDay" Value="{0}天" />
+    <String Key="UI_HeroAbility_CoolDownStage" Value="{0}阶段" />
+    <String Key="UI_HeroAbility_Passive" Value="被动" />
+    <String Key="UI_Inventory_Count" Value="总数：{0}" />
+    <String Key="UI_Leaderboard_DayMoney" Value="每日贡献榜" />
+    <String Key="UI_Leaderboard_Days" Value="天数榜" />
+    <String Key="UI_Leaderboard_Friend" Value="好友" />
+    <String Key="UI_Leaderboard_Global" Value="全球" />
+    <String Key="UI_Leaderboard_Loading" Value="加载中..." />
+    <String Key="UI_Leaderboard_TotalMoney" Value="总贡献榜" />
+    <String Key="UI_Level_AdventureMode" Value="冒险模式" />
+    <String Key="UI_Level_ChallengeDesc" Value="每次上贡后{0}清零" />
+    <String Key="UI_Level_ChallengeMode" Value="挑战模式" />
+    <String Key="UI_Level_EndlessMode" Value="无尽模式" />
+    <String Key="UI_Level_LevelDescTitle" Value="地图简介" />
+    <String Key="UI_Level_LevelDifficutyTitle" Value="难度标签" />
+    <String Key="UI_Level_NormalMode" Value="基础模式" />
+    <String Key="UI_Main_Achievement" Value="成就" />
+    <String Key="UI_Main_Book" Value="图鉴" />
+    <String Key="UI_Main_CatGod" Value="猫神" />
+    <String Key="UI_Main_ConfirmButton" Value="确定" />
+    <String Key="UI_Main_FamilySelect" Value="家族选择" />
+    <String Key="UI_Main_FamilySelectTip" Value="请选择3个家族" />
+    <String Key="UI_Main_FeatureLock" Value="暂未解锁" />
+    <String Key="UI_Main_Leaderboard" Value="排行榜" />
+    <String Key="UI_Main_LevelSelectTip" Value="请先完成当前难度" />
+    <String Key="UI_Main_LevelTitle" Value="难度{0}" />
+    <String Key="UI_Main_Map" Value="地图" />
+    <String Key="UI_Main_NoneLevel" Value="难度0" />
+    <String Key="UI_Main_Select" Value="选择" />
+    <String Key="UI_Main_SelectAnimalFamily" Value="家族选择" />
+    <String Key="UI_Main_SelectCatGod" Value="猫神选择" />
+    <String Key="UI_Main_Selected" Value="已选择" />
+    <String Key="UI_Main_Start" Value="出发上贡！" />
+    <String Key="UI_Main_Talent" Value="玩具" />
+    <String Key="UI_Main_Toy" Value="玩具" />
+    <String Key="UI_MainOption_ReturnButton" Value="返回" />
+    <String Key="UI_MainOption_ReturnMenu" Value="返回主菜单" />
+    <String Key="UI_Menu_AboutButton" Value="关于" />
+    <String Key="UI_Menu_Book" Value="图鉴" />
+    <String Key="UI_Menu_BugReport" Value="Bug上报" />
+    <String Key="UI_Menu_Close" Value="关闭" />
+    <String Key="UI_Menu_Confirm" Value="确定" />
+    <String Key="UI_Menu_ContinueButton" Value="继续游戏" />
+    <String Key="UI_Menu_ContinueTitle" Value="要继续上贡咩？" />
+    <String Key="UI_Menu_DemoTitle" Value="试玩版" />
+    <String Key="UI_Menu_ExitButton" Value="退出游戏" />
+    <String Key="UI_Menu_Leaderboard" Value="排行榜" />
+    <String Key="UI_Menu_LoadingHint" Value="加载中..." />
+    <String Key="UI_Menu_LoadingTips" Value="小提示 : 猫神再次出现日 牧场即将解放时" />
+    <String Key="UI_Menu_NewButton" Value="新游戏" />
+    <String Key="UI_Menu_Questionnaire" Value="问卷" />
+    <String Key="UI_Menu_QuitButton" Value="退出" />
+    <String Key="UI_Menu_Return" Value="返回" />
+    <String Key="UI_Menu_ReturnToMain" Value="返回小屋" />
+    <String Key="UI_Menu_SettingButton" Value="设置" />
+    <String Key="UI_Menu_StaffButton" Value="制作人员" />
+    <String Key="UI_Menu_StartButton" Value="开始游戏" />
+    <String Key="UI_Menu_StartGame" Value="开始游戏" />
+    <String Key="UI_Menu_Unlocked" Value="已解锁" />
+    <String Key="UI_Menu_Wishlist" Value="加入愿望单" />
+    <String Key="UI_Option_RestartButton" Value="重新开始" />
+    <String Key="UI_Option_ReturnButton" Value="返回游戏" />
+    <String Key="UI_Option_ReturnToMainButton" Value="返回小屋" />
+    <String Key="UI_Option_ReturnToMenuButton" Value="保存并返回主菜单" />
+    <String Key="UI_Option_SettingButton" Value="设置" />
+    <String Key="UI_Option_Title" Value="选项" />
+    <String Key="UI_Option_TutorialButton" Value="教程" />
+    <String Key="UI_Prologue_HighlightTip" Value="点击高亮处继续" />
+    <String Key="UI_Prologue_Tip" Value="点击继续" />
+    <String Key="UI_Ranch_All" Value="全部" />
+    <String Key="UI_Ranch_Award" Value="你获得了{0}{1}和{2}{3}" />
+    <String Key="UI_Ranch_BaseMoney" Value="{0}{1}{2}" />
+    <String Key="UI_Ranch_BeginnerTutorial" Value="你需要【合理安排动物上场】赚取{0}给猫神大人上贡。&lt;br&gt;&lt;br&gt;首期上贡金额是{1}{0}, 需在{2}天后上交。" />
+    <String Key="UI_Ranch_BestDay" Value="历史最佳&lt;br&gt;{0}天" />
+    <String Key="UI_Ranch_Cancel" Value="取消" />
+    <String Key="UI_Ranch_CannotSell" Value="当前无法出售" />
+    <String Key="UI_Ranch_CloseButton" Value="返回" />
+    <String Key="UI_Ranch_Collapse" Value="点击收起" />
+    <String Key="UI_Ranch_CompleteGame" Value="恭喜你，猫神大人已被你喂饱！&lt;br&gt;&lt;br&gt;功成身退，返回小屋。" />
+    <String Key="UI_Ranch_CompleteTutorial" Value="恭喜你，猫神大人已被你喂饱，测试合格！&lt;br&gt;&lt;br&gt;结束教程，返回小屋。" />
+    <String Key="UI_Ranch_Day" Value="第{0}天" />
+    <String Key="UI_Ranch_DayDebt" Value="{0}天后上贡{1}{2}" />
+    <String Key="UI_Ranch_DebtComplete" Value="你的上贡金额是{0}{1}, 需在{2}天之后上交。" />
+    <String Key="UI_Ranch_DebtTitle" Value="猫神账单" />
+    <String Key="UI_Ranch_DebtUp" Value="你的上贡金额已增加至{0}{1}, 需在{2}天之后上交。" />
+    <String Key="UI_Ranch_DisableSave" Value="当前无法保存" />
+    <String Key="UI_Ranch_EndButton" Value="功成身退" />
+    <String Key="UI_Ranch_EndlessMode_Tip" Value="（进入无尽模式后贡献将只计入无尽模式排行榜）" />
+    <String Key="UI_Ranch_EndlessReturnToMainTip" Value="返回小屋后本局将结束（当前贡献会计入排行榜），是否返回？" />
+    <String Key="UI_Ranch_Expand" Value="点击展开" />
+    <String Key="UI_Ranch_FossilReward" Value="化石收获" />
+    <String Key="UI_Ranch_GameOver" Value="你没有按时上贡，失去了猫神大人的信任，你被开除了！" />
+    <String Key="UI_Ranch_GetAll" Value="全部拿走" />
+    <String Key="UI_Ranch_GiveUpButton" Value="放弃" />
+    <String Key="UI_Ranch_GoldAward" Value="你获得了{0}{1}, 利息{2}{3}" />
+    <String Key="UI_Ranch_HideButton" Value="隐藏" />
+    <String Key="UI_Ranch_Interest" Value="(利息{0}{1})" />
+    <String Key="UI_Ranch_ItemFull" Value="物品栏已满" />
+    <String Key="UI_Ranch_Items" Value="道具" />
+    <String Key="UI_Ranch_MapCellFull" Value="场上地块已满" />
+    <String Key="UI_Ranch_NewDayButton" Value="新的一天" />
+    <String Key="UI_Ranch_NextStage" Value="下一阶段" />
+    <String Key="UI_Ranch_NotEnoughGold" Value="没有足够的{0}" />
+    <String Key="UI_Ranch_Notice" Value="通知" />
+    <String Key="UI_Ranch_NotOnField" Value="未上场" />
+    <String Key="UI_Ranch_NotRemovable" Value="无法移除" />
+    <String Key="UI_Ranch_OnField" Value="已上场" />
+    <String Key="UI_Ranch_PayButton" Value="支付" />
+    <String Key="UI_Ranch_PayDebt" Value="你的上贡期限已到期，需要给猫神大人上贡{0}{1}" />
+    <String Key="UI_Ranch_RefreshButton" Value="刷新" />
+    <String Key="UI_Ranch_RemoveButton" Value="移除" />
+    <String Key="UI_Ranch_ReserveFossil" Value="保留化石" />
+    <String Key="UI_Ranch_Reset" Value="重置" />
+    <String Key="UI_Ranch_ReturnToMainTip" Value="返回小屋后本局进度将丢失，是否返回？" />
+    <String Key="UI_Ranch_Sell" Value="出售" />
+    <String Key="UI_Ranch_Shop" Value="商店" />
+    <String Key="UI_Ranch_ShowButton" Value="显示" />
+    <String Key="UI_Ranch_SkipButton" Value="跳过" />
+    <String Key="UI_Ranch_SortByCon" Value="按贡献排序" />
+    <String Key="UI_Ranch_SortByRarity" Value="按稀有度排序" />
+    <String Key="UI_Ranch_Stage" Value="阶段:" />
+    <String Key="UI_Ranch_Talents" Value="天赋" />
+    <String Key="UI_Ranch_Tiles" Value="地形" />
+    <String Key="UI_Ranch_UnlockButton" Value="解锁" />
+    <String Key="UI_Rarity_Normal" Value="普通" />
+    <String Key="UI_Rarity_Rare" Value="稀有" />
+    <String Key="UI_Rarity_SuperRare" Value="罕见" />
+    <String Key="UI_Rarity_SuperUltraRare" Value="绝迹" />
+    <String Key="UI_Rarity_UltraRare" Value="珍稀" />
+    <String Key="UI_Save_Collect" Value="收集度" />
+    <String Key="UI_Save_Create" Value="新建存档" />
+    <String Key="UI_Save_Days" Value="最高天数" />
+    <String Key="UI_Save_Delete" Value="删除存档" />
+    <String Key="UI_Save_DeleteConfirm" Value="是否确认删除该存档？" />
+    <String Key="UI_Save_Empty" Value="空" />
+    <String Key="UI_Save_Money" Value="最高金币" />
+    <String Key="UI_Save_NameInput" Value="输入名字" />
+    <String Key="UI_Save_Pass" Value="通关数" />
+    <String Key="UI_Save_SaveIndex" Value="存档{0}" />
+    <String Key="UI_Save_Stats" Value="统计" />
+    <String Key="UI_Save_UnlockAll" Value="解锁全部" />
+    <String Key="UI_Save_UnlockAllConfirm" Value="解锁全部内容后该存档无法获得成就，是否确认解锁？" />
+    <String Key="UI_Setting_ConfirmButton" Value="保存并返回" />
+    <String Key="UI_Setting_Cursor" Value="鼠标皮肤" />
+    <String Key="UI_Setting_DisplayMode" Value="显示模式" />
+    <String Key="UI_Setting_FullScreen" Value="全屏" />
+    <String Key="UI_Setting_Language" Value="语言" />
+    <String Key="UI_Setting_MusicVolume" Value="音乐音量" />
+    <String Key="UI_Setting_Native" Value="原生" />
+    <String Key="UI_Setting_Nolimit" Value="不限制" />
+    <String Key="UI_Setting_Resolution" Value="分辨率" />
+    <String Key="UI_Setting_SoundVolume" Value="音效音量" />
+    <String Key="UI_Setting_Title" Value="设置" />
+    <String Key="UI_Setting_Windowed" Value="窗口" />
+    <String Key="UI_SkipAnim" Value="跳过动画" />
+    <String Key="UI_SkipSettle" Value="跳过动画，结算中..." />
+    <String Key="UI_Staff_Artist" Value="美术" />
+    <String Key="UI_Staff_Credits" Value="特别鸣谢" />
+    <String Key="UI_Staff_Designer" Value="策划" />
+    <String Key="UI_Staff_Programmer" Value="程序" />
+    <String Key="UI_Staff_SpecialThanks" Value="理解并支持我们的家人，默默帮助我们的朋友，还有屏幕前的你！" />
+    <String Key="UI_Staff_Title" Value="制作人员" />
+    <String Key="UI_Summary_BestRecord" Value="历史最佳" />
+    <String Key="UI_Summary_MaxDayMoney" Value="最大每日收益：" />
+    <String Key="UI_Summary_MVP" Value="全场最佳：" />
+    <String Key="UI_Summary_Summary" Value="上贡结算" />
+    <String Key="UI_Summary_TotalDay" Value="上贡天数：" />
+    <String Key="UI_Summary_TotalGold" Value="总获得罐头：" />
+    <String Key="UI_Summary_TotalMoney" Value="总收获金额：" />
+    <String Key="UI_Toy_Lock" Value="通过晴天牧场难度{0}后解锁" />
+    <String Key="UI_Toy_SelectInGame" Value="选择1个玩具" />
+  </Dictionary>
+  <Dictionary Language="English">
+    <String Key="Ability_InstDesc_Count" Value="Current: {0}/{1}" />
+    <String Key="Ability_Lieflat_NotEnough" Value="Insufficient {0} to pay tribute in advance" />
+    <String Key="UI_Animal_BaseMoney" Value="{0}{1}{2}/Day" />
+    <String Key="UI_AnimalFamily_CountLimit" Value="Select at most {0} animal families" />
+    <String Key="UI_AnimalFamily_Lock" Value="Unlocked after completing the tutorial" />
+    <String Key="UI_AnimalFamily_SelectInGame" Value="Select 1 animal family" />
+    <String Key="UI_AnimalType_None" Value="Empty" />
+    <String Key="UI_Award_SelectAnimal" Value="Select an animal" />
+    <String Key="UI_Award_SelectHero" Value="Replace Cat God" />
+    <String Key="UI_Award_SelectItem" Value="Select an item" />
+    <String Key="UI_Award_SelectToy" Value="Select a toy" />
+    <String Key="UI_Award_Title" Value="Cat God's Reward" />
+    <String Key="UI_Book_All" Value="All" />
+    <String Key="UI_Book_Animal" Value="Animal" />
+    <String Key="UI_Book_AnimalFamilyLock" Value="The animal family is locked" />
+    <String Key="UI_Book_Clear" Value="Read" />
+    <String Key="UI_Book_Collect" Value="Collection: {0}" />
+    <String Key="UI_Book_Item" Value="Item" />
+    <String Key="UI_Book_NotDiscover" Value="Not Discovered" />
+    <String Key="UI_Book_UnlockCondition" Value="Unlock Condition: {0}" />
+    <String Key="UI_Book_UnlockDisable" Value="Locked" />
+    <String Key="UI_BugReport_ContactPlaceholder" Value="Please leave your contact information (optional)" />
+    <String Key="UI_BugReport_Placeholder" Value="Please describe the bug you've encountered in detail" />
+    <String Key="UI_Dialog_CancelButton" Value="Cancel" />
+    <String Key="UI_Dialog_ConfirmButton" Value="OK" />
+    <String Key="UI_Dialog_OtherButton" Value="Other" />
+    <String Key="UI_Dlc_LockTip" Value="Requires purchase of DLC: {0}" />
+    <String Key="UI_Game_Name" Value="Cat God Ranch" />
+    <String Key="UI_Hero_SelectInGame" Value="Select Cat God" />
+    <String Key="UI_HeroAbility_Active" Value="Active" />
+    <String Key="UI_HeroAbility_CoolDownDay" Value="{0} Day" />
+    <String Key="UI_HeroAbility_CoolDownStage" Value="Stage {0}" />
+    <String Key="UI_HeroAbility_Passive" Value="Passive" />
+    <String Key="UI_Inventory_Count" Value="Total: {0}" />
+    <String Key="UI_Leaderboard_DayMoney" Value="Max Daily Money" />
+    <String Key="UI_Leaderboard_Days" Value="Max Days" />
+    <String Key="UI_Leaderboard_Friend" Value="Friends" />
+    <String Key="UI_Leaderboard_Global" Value="Global" />
+    <String Key="UI_Leaderboard_Loading" Value="Loading..." />
+    <String Key="UI_Leaderboard_TotalMoney" Value="Max Total Money" />
+    <String Key="UI_Level_AdventureMode" Value="Adventure Mode" />
+    <String Key="UI_Level_ChallengeDesc" Value="{0} is cleared after each tribute" />
+    <String Key="UI_Level_ChallengeMode" Value="Challenge Mode" />
+    <String Key="UI_Level_EndlessMode" Value="Endless Mode" />
+    <String Key="UI_Level_LevelDescTitle" Value="Map Intro" />
+    <String Key="UI_Level_LevelDifficutyTitle" Value="Difficulty Tag" />
+    <String Key="UI_Level_NormalMode" Value="Normal Mode" />
+    <String Key="UI_Main_Achievement" Value="Achievement" />
+    <String Key="UI_Main_Book" Value="Collection" />
+    <String Key="UI_Main_CatGod" Value="Cat God" />
+    <String Key="UI_Main_ConfirmButton" Value="Confirm" />
+    <String Key="UI_Main_FamilySelect" Value="Family Selection" />
+    <String Key="UI_Main_FamilySelectTip" Value="Please select 3 Animal families" />
+    <String Key="UI_Main_FeatureLock" Value="Locked" />
+    <String Key="UI_Main_Leaderboard" Value="Rank" />
+    <String Key="UI_Main_LevelSelectTip" Value="Please complete the current difficulty first" />
+    <String Key="UI_Main_LevelTitle" Value="Difficulty {0}" />
+    <String Key="UI_Main_Map" Value="Map" />
+    <String Key="UI_Main_NoneLevel" Value="Difficulty 0" />
+    <String Key="UI_Main_Select" Value="Select" />
+    <String Key="UI_Main_SelectAnimalFamily" Value="Family Selection" />
+    <String Key="UI_Main_SelectCatGod" Value="Cat God Selection" />
+    <String Key="UI_Main_Selected" Value="Selected" />
+    <String Key="UI_Main_Start" Value="Start!" />
+    <String Key="UI_Main_Talent" Value="Toys" />
+    <String Key="UI_Main_Toy" Value="Toys" />
+    <String Key="UI_MainOption_ReturnButton" Value="Return" />
+    <String Key="UI_MainOption_ReturnMenu" Value="Return To Menu" />
+    <String Key="UI_Menu_AboutButton" Value="About" />
+    <String Key="UI_Menu_Book" Value="Collection" />
+    <String Key="UI_Menu_BugReport" Value="Bug Report" />
+    <String Key="UI_Menu_Close" Value="Close" />
+    <String Key="UI_Menu_Confirm" Value="Confirm" />
+    <String Key="UI_Menu_ContinueButton" Value="Continue" />
+    <String Key="UI_Menu_ContinueTitle" Value="Do you want to continue?" />
+    <String Key="UI_Menu_DemoTitle" Value="Demo" />
+    <String Key="UI_Menu_ExitButton" Value="Exit Game" />
+    <String Key="UI_Menu_Leaderboard" Value="Rank" />
+    <String Key="UI_Menu_LoadingHint" Value="Loading..." />
+    <String Key="UI_Menu_LoadingTips" Value="Tips: The day when the Cat God appears again, the ranch is about to be liberated" />
+    <String Key="UI_Menu_NewButton" Value="New Game" />
+    <String Key="UI_Menu_Questionnaire" Value="Questionnaire" />
+    <String Key="UI_Menu_QuitButton" Value="Exit" />
+    <String Key="UI_Menu_Return" Value="Return" />
+    <String Key="UI_Menu_ReturnToMain" Value="Return To Hut" />
+    <String Key="UI_Menu_SettingButton" Value="Setting" />
+    <String Key="UI_Menu_StaffButton" Value="Developer" />
+    <String Key="UI_Menu_StartButton" Value="Start Game" />
+    <String Key="UI_Menu_StartGame" Value="Start Game" />
+    <String Key="UI_Menu_Unlocked" Value="Unlocked" />
+    <String Key="UI_Menu_Wishlist" Value="Wishlist" />
+    <String Key="UI_Option_RestartButton" Value="Restart" />
+    <String Key="UI_Option_ReturnButton" Value="Return" />
+    <String Key="UI_Option_ReturnToMainButton" Value="Return To Hut" />
+    <String Key="UI_Option_ReturnToMenuButton" Value="Save And Return To Menu" />
+    <String Key="UI_Option_SettingButton" Value="Setting" />
+    <String Key="UI_Option_Title" Value="Options" />
+    <String Key="UI_Option_TutorialButton" Value="Tutorial" />
+    <String Key="UI_Prologue_HighlightTip" Value="Click Highlight to Continue" />
+    <String Key="UI_Prologue_Tip" Value="Click to Continue" />
+    <String Key="UI_Ranch_All" Value="All" />
+    <String Key="UI_Ranch_Award" Value="You got {0}{1} and {2}{3}" />
+    <String Key="UI_Ranch_BaseMoney" Value="{0}{1}{2}" />
+    <String Key="UI_Ranch_BeginnerTutorial" Value="You need to [strategically manage the animals] to earn {0} as an offering to Cat God. &lt;br&gt;&lt;br&gt;The initial offering amount is {1}{0}, due in {2} days." />
+    <String Key="UI_Ranch_BestDay" Value="Best Record&lt;br&gt;{0} days" />
+    <String Key="UI_Ranch_Cancel" Value="Cancel" />
+    <String Key="UI_Ranch_CannotSell" Value="Currently not available for sale" />
+    <String Key="UI_Ranch_CloseButton" Value="Return" />
+    <String Key="UI_Ranch_Collapse" Value="Click to Collapse" />
+    <String Key="UI_Ranch_CompleteGame" Value="Congratulations, the Cat God has been fed by you! &lt;br&gt;&lt;br&gt;Click the button and return to the hut." />
+    <String Key="UI_Ranch_CompleteTutorial" Value="Congratulations, the Cat God has been fed by you and you've passed the test!&lt;br&gt;&lt;br&gt;Click the button and return to the hut." />
+    <String Key="UI_Ranch_Day" Value="Day {0}" />
+    <String Key="UI_Ranch_DayDebt" Value="Offers {1}{2} After {0} Day" />
+    <String Key="UI_Ranch_DebtComplete" Value="Your tribute amount is {0}{1}, which must be paid in {2} days." />
+    <String Key="UI_Ranch_DebtTitle" Value="Cat God Bill" />
+    <String Key="UI_Ranch_DebtUp" Value="Your tribute amount has been increased to {0}{1} and must be paid in {2} days." />
+    <String Key="UI_Ranch_DisableSave" Value="Currently unable to save" />
+    <String Key="UI_Ranch_EndButton" Value="Game End" />
+    <String Key="UI_Ranch_EndlessMode_Tip" Value="(Contributions will only count towards the Endless Mode Leaderboard after entering Endless Mode)" />
+    <String Key="UI_Ranch_EndlessReturnToMainTip" Value="This run will be over. Do you want to return?" />
+    <String Key="UI_Ranch_Expand" Value="Click to Expand" />
+    <String Key="UI_Ranch_FossilReward" Value="Fossil Harvest" />
+    <String Key="UI_Ranch_GameOver" Value="You failed to pay tribute on time and lost the trust of the Cat God. You are fired!" />
+    <String Key="UI_Ranch_GetAll" Value="Claim All" />
+    <String Key="UI_Ranch_GiveUpButton" Value="Give Up" />
+    <String Key="UI_Ranch_GoldAward" Value="You got {0}{1}, with {2}{3} interest" />
+    <String Key="UI_Ranch_HideButton" Value="Hide" />
+    <String Key="UI_Ranch_Interest" Value="(Interest {0}{1})" />
+    <String Key="UI_Ranch_ItemFull" Value="The Inventory is full" />
+    <String Key="UI_Ranch_Items" Value="Item" />
+    <String Key="UI_Ranch_MapCellFull" Value="Field plots are full" />
+    <String Key="UI_Ranch_NewDayButton" Value="New Day" />
+    <String Key="UI_Ranch_NextStage" Value="Next Stage" />
+    <String Key="UI_Ranch_NotEnoughGold" Value="Insufficient {0}" />
+    <String Key="UI_Ranch_Notice" Value="Notice" />
+    <String Key="UI_Ranch_NotOnField" Value="Not in Play" />
+    <String Key="UI_Ranch_NotRemovable" Value="Unable to remove" />
+    <String Key="UI_Ranch_OnField" Value="On the Field" />
+    <String Key="UI_Ranch_PayButton" Value="Pay" />
+    <String Key="UI_Ranch_PayDebt" Value="It's time to make your tribute today! You must offer {0}{1} to Lord Cat God." />
+    <String Key="UI_Ranch_RefreshButton" Value="Refresh" />
+    <String Key="UI_Ranch_RemoveButton" Value="Remove" />
+    <String Key="UI_Ranch_ReserveFossil" Value="Keep Fossils" />
+    <String Key="UI_Ranch_Reset" Value="Reset" />
+    <String Key="UI_Ranch_ReturnToMainTip" Value="This run will be lost. Do you want to return?" />
+    <String Key="UI_Ranch_Sell" Value="Sell" />
+    <String Key="UI_Ranch_Shop" Value="Shop" />
+    <String Key="UI_Ranch_ShowButton" Value="Show" />
+    <String Key="UI_Ranch_SkipButton" Value="Skip" />
+    <String Key="UI_Ranch_SortByCon" Value="Sort by Contribution" />
+    <String Key="UI_Ranch_SortByRarity" Value="Sort by Rarity" />
+    <String Key="UI_Ranch_Stage" Value="Stage:" />
+    <String Key="UI_Ranch_Talents" Value="Talent" />
+    <String Key="UI_Ranch_Tiles" Value="Terrain" />
+    <String Key="UI_Ranch_UnlockButton" Value="Unlock" />
+    <String Key="UI_Rarity_Normal" Value="Normal" />
+    <String Key="UI_Rarity_Rare" Value="Rare" />
+    <String Key="UI_Rarity_SuperRare" Value="SuperRare" />
+    <String Key="UI_Rarity_SuperUltraRare" Value="Extinction" />
+    <String Key="UI_Rarity_UltraRare" Value="Precious" />
+    <String Key="UI_Save_Collect" Value="Collection Rate" />
+    <String Key="UI_Save_Create" Value="New Save" />
+    <String Key="UI_Save_Days" Value="Max Days" />
+    <String Key="UI_Save_Delete" Value="Delete Save" />
+    <String Key="UI_Save_DeleteConfirm" Value="Are you sure you want to delete this save?" />
+    <String Key="UI_Save_Empty" Value="Empty" />
+    <String Key="UI_Save_Money" Value="Max Gold" />
+    <String Key="UI_Save_NameInput" Value="Enter Name" />
+    <String Key="UI_Save_Pass" Value="Times Cleared" />
+    <String Key="UI_Save_SaveIndex" Value="Save {0}" />
+    <String Key="UI_Save_Stats" Value="Statistics" />
+    <String Key="UI_Save_UnlockAll" Value="Unlock All" />
+    <String Key="UI_Save_UnlockAllConfirm" Value="Unlocking all content will disable achievements for this save file. Are you sure you want to unlock?" />
+    <String Key="UI_Setting_ConfirmButton" Value="Save and return" />
+    <String Key="UI_Setting_Cursor" Value="Cursor Skin" />
+    <String Key="UI_Setting_DisplayMode" Value="Display Mode" />
+    <String Key="UI_Setting_FullScreen" Value="Fullscreen" />
+    <String Key="UI_Setting_Language" Value="Language" />
+    <String Key="UI_Setting_MusicVolume" Value="Music Vol" />
+    <String Key="UI_Setting_Native" Value="Native" />
+    <String Key="UI_Setting_Nolimit" Value="No Limit" />
+    <String Key="UI_Setting_Resolution" Value="Resolution" />
+    <String Key="UI_Setting_SoundVolume" Value="SFX Vol" />
+    <String Key="UI_Setting_Title" Value="Setting" />
+    <String Key="UI_Setting_Windowed" Value="Windowed" />
+    <String Key="UI_SkipAnim" Value="Skip" />
+    <String Key="UI_SkipSettle" Value="Skiping animation, please wait..." />
+    <String Key="UI_Staff_Artist" Value="Artist" />
+    <String Key="UI_Staff_Credits" Value="Special Thanks" />
+    <String Key="UI_Staff_Designer" Value="Designer" />
+    <String Key="UI_Staff_Programmer" Value="Programmer" />
+    <String Key="UI_Staff_SpecialThanks" Value="Our families who understand and support us, our friends who help us silently, and you, the player, in front of the screen!" />
+    <String Key="UI_Staff_Title" Value="Developer" />
+    <String Key="UI_Summary_BestRecord" Value="Best Record" />
+    <String Key="UI_Summary_MaxDayMoney" Value="Max Daily Money:" />
+    <String Key="UI_Summary_MVP" Value="MVP:" />
+    <String Key="UI_Summary_Summary" Value="Summary" />
+    <String Key="UI_Summary_TotalDay" Value="Total Days:" />
+    <String Key="UI_Summary_TotalGold" Value="Total Cans Obatined:" />
+    <String Key="UI_Summary_TotalMoney" Value="Total Money:" />
+    <String Key="UI_Toy_Lock" Value="Unlocked after clearing Sunny Ranch Difficulty {0}" />
+    <String Key="UI_Toy_SelectInGame" Value="Select 1 toy" />
+  </Dictionary>
+  <Dictionary Language="ChineseTraditional">
+    <String Key="Ability_InstDesc_Count" Value="目前：{0}/{1}" />
+    <String Key="Ability_Lieflat_NotEnough" Value="{0}不足，無法事先上貢" />
+    <String Key="UI_Animal_BaseMoney" Value="{0}{1}{2}/天" />
+    <String Key="UI_AnimalFamily_CountLimit" Value="最多選擇{0}個動物家族" />
+    <String Key="UI_AnimalFamily_Lock" Value="透過教程後解鎖" />
+    <String Key="UI_AnimalFamily_SelectInGame" Value="選擇1個動物家族" />
+    <String Key="UI_AnimalType_None" Value="空" />
+    <String Key="UI_Award_SelectAnimal" Value="選擇動物" />
+    <String Key="UI_Award_SelectHero" Value="更換貓神" />
+    <String Key="UI_Award_SelectItem" Value="獲得道具" />
+    <String Key="UI_Award_SelectToy" Value="獲得玩具" />
+    <String Key="UI_Award_Title" Value="貓神的獎勵" />
+    <String Key="UI_Book_All" Value="全部" />
+    <String Key="UI_Book_Animal" Value="動物" />
+    <String Key="UI_Book_AnimalFamilyLock" Value="所屬動物家族未解鎖" />
+    <String Key="UI_Book_Clear" Value="已閱" />
+    <String Key="UI_Book_Collect" Value="收集度：{0}" />
+    <String Key="UI_Book_Item" Value="道具" />
+    <String Key="UI_Book_NotDiscover" Value="在遊戲中使用後收入圖鑑" />
+    <String Key="UI_Book_UnlockCondition" Value="解鎖條件：{0}" />
+    <String Key="UI_Book_UnlockDisable" Value="暫未解鎖" />
+    <String Key="UI_BugReport_ContactPlaceholder" Value="請留下您的聯絡方式（可選）" />
+    <String Key="UI_BugReport_Placeholder" Value="請詳細描述您遇到的BUG" />
+    <String Key="UI_Dialog_CancelButton" Value="取消" />
+    <String Key="UI_Dialog_ConfirmButton" Value="好的" />
+    <String Key="UI_Dialog_OtherButton" Value="其他" />
+    <String Key="UI_Dlc_LockTip" Value="需要購買DLC：{0}" />
+    <String Key="UI_Game_Name" Value="貓神牧場" />
+    <String Key="UI_Hero_SelectInGame" Value="選擇貓神" />
+    <String Key="UI_HeroAbility_Active" Value="主動" />
+    <String Key="UI_HeroAbility_CoolDownDay" Value="{0}天" />
+    <String Key="UI_HeroAbility_CoolDownStage" Value="{0}階段" />
+    <String Key="UI_HeroAbility_Passive" Value="被動" />
+    <String Key="UI_Inventory_Count" Value="總數：{0}" />
+    <String Key="UI_Leaderboard_DayMoney" Value="每日貢獻榜" />
+    <String Key="UI_Leaderboard_Days" Value="天數榜" />
+    <String Key="UI_Leaderboard_Friend" Value="好友" />
+    <String Key="UI_Leaderboard_Global" Value="全球" />
+    <String Key="UI_Leaderboard_Loading" Value="加載中..." />
+    <String Key="UI_Leaderboard_TotalMoney" Value="總貢獻榜" />
+    <String Key="UI_Level_AdventureMode" Value="冒險模式" />
+    <String Key="UI_Level_ChallengeDesc" Value="每次上贡后{0}清零" />
+    <String Key="UI_Level_ChallengeMode" Value="挑战模式" />
+    <String Key="UI_Level_EndlessMode" Value="無盡模式" />
+    <String Key="UI_Level_LevelDescTitle" Value="地圖簡介" />
+    <String Key="UI_Level_LevelDifficutyTitle" Value="難度標籤" />
+    <String Key="UI_Level_NormalMode" Value="基礎模式" />
+    <String Key="UI_Main_Achievement" Value="成就" />
+    <String Key="UI_Main_Book" Value="圖鑑" />
+    <String Key="UI_Main_CatGod" Value="貓神" />
+    <String Key="UI_Main_ConfirmButton" Value="確定" />
+    <String Key="UI_Main_FamilySelect" Value="家族選擇" />
+    <String Key="UI_Main_FamilySelectTip" Value="請選擇3個家族" />
+    <String Key="UI_Main_FeatureLock" Value="暫未解鎖" />
+    <String Key="UI_Main_Leaderboard" Value="排行榜" />
+    <String Key="UI_Main_LevelSelectTip" Value="請先完成當前難度" />
+    <String Key="UI_Main_LevelTitle" Value="難度{0}" />
+    <String Key="UI_Main_Map" Value="地圖" />
+    <String Key="UI_Main_NoneLevel" Value="難度0" />
+    <String Key="UI_Main_Select" Value="選擇" />
+    <String Key="UI_Main_SelectAnimalFamily" Value="家族選擇" />
+    <String Key="UI_Main_SelectCatGod" Value="貓神選擇" />
+    <String Key="UI_Main_Selected" Value="已選擇" />
+    <String Key="UI_Main_Start" Value="出發上貢！" />
+    <String Key="UI_Main_Talent" Value=" 玩具" />
+    <String Key="UI_Main_Toy" Value=" 玩具" />
+    <String Key="UI_MainOption_ReturnButton" Value="返回" />
+    <String Key="UI_MainOption_ReturnMenu" Value="返回主菜單" />
+    <String Key="UI_Menu_AboutButton" Value="關於" />
+    <String Key="UI_Menu_Book" Value="圖鑑" />
+    <String Key="UI_Menu_BugReport" Value="Bug上報" />
+    <String Key="UI_Menu_Close" Value="關閉" />
+    <String Key="UI_Menu_Confirm" Value="確定" />
+    <String Key="UI_Menu_ContinueButton" Value="繼續遊戲" />
+    <String Key="UI_Menu_ContinueTitle" Value="要繼續上貢咩？" />
+    <String Key="UI_Menu_DemoTitle" Value="試玩版" />
+    <String Key="UI_Menu_ExitButton" Value="退出遊戲" />
+    <String Key="UI_Menu_Leaderboard" Value="排行榜" />
+    <String Key="UI_Menu_LoadingHint" Value="加載中..." />
+    <String Key="UI_Menu_LoadingTips" Value="小提示 : 貓神再次出現日 牧場即將解放時" />
+    <String Key="UI_Menu_NewButton" Value="新遊戲" />
+    <String Key="UI_Menu_Questionnaire" Value="問卷" />
+    <String Key="UI_Menu_QuitButton" Value="退出" />
+    <String Key="UI_Menu_Return" Value="返回" />
+    <String Key="UI_Menu_ReturnToMain" Value="返回小屋" />
+    <String Key="UI_Menu_SettingButton" Value="設置" />
+    <String Key="UI_Menu_StaffButton" Value="製作人員" />
+    <String Key="UI_Menu_StartButton" Value="開始遊戲" />
+    <String Key="UI_Menu_StartGame" Value="開始遊戲" />
+    <String Key="UI_Menu_Unlocked" Value="已解鎖" />
+    <String Key="UI_Menu_Wishlist" Value="加入願望單" />
+    <String Key="UI_Option_RestartButton" Value="重新開始" />
+    <String Key="UI_Option_ReturnButton" Value="返回遊戲" />
+    <String Key="UI_Option_ReturnToMainButton" Value="返回小屋" />
+    <String Key="UI_Option_ReturnToMenuButton" Value="保存並返回主菜單" />
+    <String Key="UI_Option_SettingButton" Value="設置" />
+    <String Key="UI_Option_Title" Value="選項" />
+    <String Key="UI_Option_TutorialButton" Value="教程" />
+    <String Key="UI_Prologue_HighlightTip" Value="點擊高亮處繼續" />
+    <String Key="UI_Prologue_Tip" Value="點擊繼續" />
+    <String Key="UI_Ranch_All" Value="全部" />
+    <String Key="UI_Ranch_Award" Value="你獲得了{0}{1}和{2}{3}" />
+    <String Key="UI_Ranch_BaseMoney" Value="{0}{1}{2}" />
+    <String Key="UI_Ranch_BeginnerTutorial" Value="你需要【合理安排動物上場】賺取{0}給貓神大人上貢。&lt;br&gt;&lt;br&gt;首期上貢金額是{1}{0}，需在{2}天後上交。" />
+    <String Key="UI_Ranch_BestDay" Value="歷史最佳&lt;br&gt;{0}天" />
+    <String Key="UI_Ranch_Cancel" Value="取消" />
+    <String Key="UI_Ranch_CannotSell" Value="目前無法出售" />
+    <String Key="UI_Ranch_CloseButton" Value="返回" />
+    <String Key="UI_Ranch_Collapse" Value="點擊收起" />
+    <String Key="UI_Ranch_CompleteGame" Value="恭喜你，貓神大人已被你餵飽！&lt;br&gt;&lt;br&gt;功成身退，返回小屋。" />
+    <String Key="UI_Ranch_CompleteTutorial" Value="恭喜你，貓神大人已被你餵飽，測試合格！&lt;br&gt;&lt;br&gt;結束教程，返回小屋。" />
+    <String Key="UI_Ranch_Day" Value="第{0}天" />
+    <String Key="UI_Ranch_DayDebt" Value="{0}天後上貢{1}{2}" />
+    <String Key="UI_Ranch_DebtComplete" Value="你的上貢金額是{0}{1}，需在{2}天之後上交。" />
+    <String Key="UI_Ranch_DebtTitle" Value="貓神賬單" />
+    <String Key="UI_Ranch_DebtUp" Value="你的上貢金額已增加至{0}{1}，需在{2}天之後上交。" />
+    <String Key="UI_Ranch_DisableSave" Value="目前無法儲存" />
+    <String Key="UI_Ranch_EndButton" Value="功成身退" />
+    <String Key="UI_Ranch_EndlessMode_Tip" Value="（進入無盡模式後貢獻將只計入無盡模式排行榜）" />
+    <String Key="UI_Ranch_EndlessReturnToMainTip" Value="返回小屋後本局將結束（目前貢獻計入排行榜），是否返回？" />
+    <String Key="UI_Ranch_Expand" Value="點擊展開" />
+    <String Key="UI_Ranch_FossilReward" Value="化石收穫" />
+    <String Key="UI_Ranch_GameOver" Value="你沒有按時上貢，失去了貓神大人的信任，你被開除了！" />
+    <String Key="UI_Ranch_GetAll" Value="全部拿走" />
+    <String Key="UI_Ranch_GiveUpButton" Value="放棄" />
+    <String Key="UI_Ranch_GoldAward" Value="你獲得了{0}{1}，利息{2}{3}" />
+    <String Key="UI_Ranch_HideButton" Value="隱藏" />
+    <String Key="UI_Ranch_Interest" Value="(利息{0}{1})" />
+    <String Key="UI_Ranch_ItemFull" Value="物品欄已滿" />
+    <String Key="UI_Ranch_Items" Value="道具" />
+    <String Key="UI_Ranch_MapCellFull" Value="場上地塊已滿" />
+    <String Key="UI_Ranch_NewDayButton" Value="新的一天" />
+    <String Key="UI_Ranch_NextStage" Value="下一階段" />
+    <String Key="UI_Ranch_NotEnoughGold" Value="沒有足夠的{0}" />
+    <String Key="UI_Ranch_Notice" Value="通知" />
+    <String Key="UI_Ranch_NotOnField" Value="未上場" />
+    <String Key="UI_Ranch_NotRemovable" Value="無法移除" />
+    <String Key="UI_Ranch_OnField" Value="已上場" />
+    <String Key="UI_Ranch_PayButton" Value="支付" />
+    <String Key="UI_Ranch_PayDebt" Value="你的上貢期限已到期，需要給貓神大人上貢{0}{1}" />
+    <String Key="UI_Ranch_RefreshButton" Value="刷新" />
+    <String Key="UI_Ranch_RemoveButton" Value="移除" />
+    <String Key="UI_Ranch_ReserveFossil" Value="保留化石" />
+    <String Key="UI_Ranch_Reset" Value="重置" />
+    <String Key="UI_Ranch_ReturnToMainTip" Value="返回小屋後本局進度將丟失，是否返回？" />
+    <String Key="UI_Ranch_Sell" Value="出售" />
+    <String Key="UI_Ranch_Shop" Value="商店" />
+    <String Key="UI_Ranch_ShowButton" Value="顯示" />
+    <String Key="UI_Ranch_SkipButton" Value="跳過" />
+    <String Key="UI_Ranch_SortByCon" Value="按貢獻排序" />
+    <String Key="UI_Ranch_SortByRarity" Value="按稀有度排序" />
+    <String Key="UI_Ranch_Stage" Value="階段:" />
+    <String Key="UI_Ranch_Talents" Value="天賦" />
+    <String Key="UI_Ranch_Tiles" Value="地形" />
+    <String Key="UI_Ranch_UnlockButton" Value="解鎖" />
+    <String Key="UI_Rarity_Normal" Value="普通" />
+    <String Key="UI_Rarity_Rare" Value="稀有" />
+    <String Key="UI_Rarity_SuperRare" Value="罕見" />
+    <String Key="UI_Rarity_SuperUltraRare" Value="絕跡" />
+    <String Key="UI_Rarity_UltraRare" Value="珍稀" />
+    <String Key="UI_Save_Collect" Value="收集度" />
+    <String Key="UI_Save_Create" Value="新建存檔" />
+    <String Key="UI_Save_Days" Value="最高天數" />
+    <String Key="UI_Save_Delete" Value="刪除存檔" />
+    <String Key="UI_Save_DeleteConfirm" Value="是否確認刪除該存檔？" />
+    <String Key="UI_Save_Empty" Value="空" />
+    <String Key="UI_Save_Money" Value="最高金幣" />
+    <String Key="UI_Save_NameInput" Value="輸入名字" />
+    <String Key="UI_Save_Pass" Value="通關數" />
+    <String Key="UI_Save_SaveIndex" Value="檔案{0}" />
+    <String Key="UI_Save_Stats" Value="統計" />
+    <String Key="UI_Save_UnlockAll" Value="解鎖全部" />
+    <String Key="UI_Save_UnlockAllConfirm" Value="解鎖全部內容後該檔案無法獲得成就，是否確認解鎖？" />
+    <String Key="UI_Setting_ConfirmButton" Value="保存並返回" />
+    <String Key="UI_Setting_Cursor" Value="滑鼠皮膚" />
+    <String Key="UI_Setting_DisplayMode" Value="顯示模式" />
+    <String Key="UI_Setting_FullScreen" Value="全屏" />
+    <String Key="UI_Setting_Language" Value="語言" />
+    <String Key="UI_Setting_MusicVolume" Value="音樂音量" />
+    <String Key="UI_Setting_Native" Value="原生" />
+    <String Key="UI_Setting_Nolimit" Value="不限制" />
+    <String Key="UI_Setting_Resolution" Value="分辨率" />
+    <String Key="UI_Setting_SoundVolume" Value="音效音量" />
+    <String Key="UI_Setting_Title" Value="設置" />
+    <String Key="UI_Setting_Windowed" Value="窗口" />
+    <String Key="UI_SkipAnim" Value="跳過動畫" />
+    <String Key="UI_SkipSettle" Value="跳過動畫，結算中..." />
+    <String Key="UI_Staff_Artist" Value="美術" />
+    <String Key="UI_Staff_Credits" Value="特別鳴謝" />
+    <String Key="UI_Staff_Designer" Value="策劃" />
+    <String Key="UI_Staff_Programmer" Value="程式" />
+    <String Key="UI_Staff_SpecialThanks" Value="理解並支持我們的家人，默默幫助我們的朋友，還有螢幕前的你！" />
+    <String Key="UI_Staff_Title" Value="製作人員" />
+    <String Key="UI_Summary_BestRecord" Value="歷史最佳" />
+    <String Key="UI_Summary_MaxDayMoney" Value="最大每日收益：" />
+    <String Key="UI_Summary_MVP" Value="全場最佳：" />
+    <String Key="UI_Summary_Summary" Value="上貢結算" />
+    <String Key="UI_Summary_TotalDay" Value="上貢天數：" />
+    <String Key="UI_Summary_TotalGold" Value="總獲得罐頭：" />
+    <String Key="UI_Summary_TotalMoney" Value="總收穫金額：" />
+    <String Key="UI_Toy_Lock" Value="透過晴天牧場難度{0}後解鎖" />
+    <String Key="UI_Toy_SelectInGame" Value="選擇1個玩具" />
+  </Dictionary>
+  <Dictionary Language="Japanese">
+    <String Key="Ability_InstDesc_Count" Value="現在: {0}/{1}" />
+    <String Key="Ability_Lieflat_NotEnough" Value="{0}不足のため、早めの献上ができません" />
+    <String Key="UI_Animal_BaseMoney" Value="{0}{1}{2}/日" />
+    <String Key="UI_AnimalFamily_CountLimit" Value="最大{0}つの動物家族を選択可能" />
+    <String Key="UI_AnimalFamily_Lock" Value="チュートリアルクリア後に解放" />
+    <String Key="UI_AnimalFamily_SelectInGame" Value="動物ファミリーを1つ選択" />
+    <String Key="UI_AnimalType_None" Value="空" />
+    <String Key="UI_Award_SelectAnimal" Value="動物を選ぶ" />
+    <String Key="UI_Award_SelectHero" Value="猫神の交代" />
+    <String Key="UI_Award_SelectItem" Value="小道具へのアクセス" />
+    <String Key="UI_Award_SelectToy" Value="おもちゃを手に入れる" />
+    <String Key="UI_Award_Title" Value="猫の神様のご褒美" />
+    <String Key="UI_Book_All" Value="すべて" />
+    <String Key="UI_Book_Animal" Value="動物" />
+    <String Key="UI_Book_AnimalFamilyLock" Value="所属動物家族が解放されていません" />
+    <String Key="UI_Book_Clear" Value="既読" />
+    <String Key="UI_Book_Collect" Value="達成度: {0}" />
+    <String Key="UI_Book_Item" Value="アイテム" />
+    <String Key="UI_Book_NotDiscover" Value="ゲーム内で使用すると、図鑑に登録されます" />
+    <String Key="UI_Book_UnlockCondition" Value="解放条件: {0}" />
+    <String Key="UI_Book_UnlockDisable" Value="まだ解放されていません" />
+    <String Key="UI_BugReport_ContactPlaceholder" Value="連絡先をご記入ください（任意）" />
+    <String Key="UI_BugReport_Placeholder" Value="発生したバグについて詳しく説明してください" />
+    <String Key="UI_Dialog_CancelButton" Value="取消" />
+    <String Key="UI_Dialog_ConfirmButton" Value="はい" />
+    <String Key="UI_Dialog_OtherButton" Value="その他" />
+    <String Key="UI_Dlc_LockTip" Value="DLCの購入が必要です：{0}" />
+    <String Key="UI_Game_Name" Value="猫神牧場" />
+    <String Key="UI_Hero_SelectInGame" Value="猫の神を選ぶ" />
+    <String Key="UI_HeroAbility_Active" Value="アクティブ" />
+    <String Key="UI_HeroAbility_CoolDownDay" Value="{0}日" />
+    <String Key="UI_HeroAbility_CoolDownStage" Value="{0}段階" />
+    <String Key="UI_HeroAbility_Passive" Value="パッシブ" />
+    <String Key="UI_Inventory_Count" Value="合計：{0}日" />
+    <String Key="UI_Leaderboard_DayMoney" Value="毎日貢献順位" />
+    <String Key="UI_Leaderboard_Days" Value="日数順位" />
+    <String Key="UI_Leaderboard_Friend" Value="フレンド" />
+    <String Key="UI_Leaderboard_Global" Value="グローバル" />
+    <String Key="UI_Leaderboard_Loading" Value="読み込み中..." />
+    <String Key="UI_Leaderboard_TotalMoney" Value="合計貢献順位" />
+    <String Key="UI_Level_AdventureMode" Value="アドベンチャー・モード" />
+    <String Key="UI_Level_ChallengeDesc" Value="献上するたびに{0}が0になる" />
+    <String Key="UI_Level_ChallengeMode" Value="挑戦モード" />
+    <String Key="UI_Level_EndlessMode" Value="無限モード" />
+    <String Key="UI_Level_LevelDescTitle" Value="マップ紹介" />
+    <String Key="UI_Level_LevelDifficutyTitle" Value="難易度タグ" />
+    <String Key="UI_Level_NormalMode" Value="基礎モード" />
+    <String Key="UI_Main_Achievement" Value="実績" />
+    <String Key="UI_Main_Book" Value="図鑑" />
+    <String Key="UI_Main_CatGod" Value="猫神" />
+    <String Key="UI_Main_ConfirmButton" Value="決定" />
+    <String Key="UI_Main_FamilySelect" Value="家族選択" />
+    <String Key="UI_Main_FamilySelectTip" Value="3つの家族を選んでください" />
+    <String Key="UI_Main_FeatureLock" Value="まだ解放されていません" />
+    <String Key="UI_Main_Leaderboard" Value="順位表" />
+    <String Key="UI_Main_LevelSelectTip" Value="まず今の難易度をクリアしてください" />
+    <String Key="UI_Main_LevelTitle" Value="難易度{0}" />
+    <String Key="UI_Main_Map" Value="マップ" />
+    <String Key="UI_Main_NoneLevel" Value="難易度0" />
+    <String Key="UI_Main_Select" Value="選択" />
+    <String Key="UI_Main_SelectAnimalFamily" Value="家族選択" />
+    <String Key="UI_Main_SelectCatGod" Value="猫神選択" />
+    <String Key="UI_Main_Selected" Value="選択済み" />
+    <String Key="UI_Main_Start" Value="出発！" />
+    <String Key="UI_Main_Talent" Value="おもちゃ" />
+    <String Key="UI_Main_Toy" Value="おもちゃ" />
+    <String Key="UI_MainOption_ReturnButton" Value="戻る" />
+    <String Key="UI_MainOption_ReturnMenu" Value="タイトルに戻る" />
+    <String Key="UI_Menu_AboutButton" Value="About" />
+    <String Key="UI_Menu_Book" Value="図鑑" />
+    <String Key="UI_Menu_BugReport" Value="バグ報告" />
+    <String Key="UI_Menu_Close" Value="閉じる" />
+    <String Key="UI_Menu_Confirm" Value="決定" />
+    <String Key="UI_Menu_ContinueButton" Value="ゲームを続ける" />
+    <String Key="UI_Menu_ContinueTitle" Value="ゲームを続けますか？" />
+    <String Key="UI_Menu_DemoTitle" Value="体験版" />
+    <String Key="UI_Menu_ExitButton" Value="ゲーム終了" />
+    <String Key="UI_Menu_Leaderboard" Value="順位表" />
+    <String Key="UI_Menu_LoadingHint" Value="読み込み中..." />
+    <String Key="UI_Menu_LoadingTips" Value="ヒント：猫神が再度現れる日、それぞ牧場が解放される時" />
+    <String Key="UI_Menu_NewButton" Value="ニューゲーム" />
+    <String Key="UI_Menu_Questionnaire" Value="アンケート" />
+    <String Key="UI_Menu_QuitButton" Value="終了" />
+    <String Key="UI_Menu_Return" Value="戻る" />
+    <String Key="UI_Menu_ReturnToMain" Value="小屋に戻る" />
+    <String Key="UI_Menu_SettingButton" Value="設定" />
+    <String Key="UI_Menu_StaffButton" Value="製作チーム" />
+    <String Key="UI_Menu_StartButton" Value="ゲーム開始" />
+    <String Key="UI_Menu_StartGame" Value="ゲーム開始" />
+    <String Key="UI_Menu_Unlocked" Value="解放済み" />
+    <String Key="UI_Menu_Wishlist" Value="ウィッシュリストに追加" />
+    <String Key="UI_Option_RestartButton" Value="やり直す" />
+    <String Key="UI_Option_ReturnButton" Value="ゲームに戻る" />
+    <String Key="UI_Option_ReturnToMainButton" Value="小屋に戻る" />
+    <String Key="UI_Option_ReturnToMenuButton" Value="セーブしてタイトルへ" />
+    <String Key="UI_Option_SettingButton" Value="設定" />
+    <String Key="UI_Option_Title" Value="オプション" />
+    <String Key="UI_Option_TutorialButton" Value="チュートリアル" />
+    <String Key="UI_Prologue_HighlightTip" Value="ハイライトをタップして続ける" />
+    <String Key="UI_Prologue_Tip" Value="タップで続ける" />
+    <String Key="UI_Ranch_All" Value="すべて" />
+    <String Key="UI_Ranch_Award" Value="{0}{1}と{2}{3}を獲得しました" />
+    <String Key="UI_Ranch_BaseMoney" Value="{0}{1}{2}" />
+    <String Key="UI_Ranch_BeginnerTutorial" Value="「適切に動物を配置」することで{0}を稼ぎ、猫神様に献上をする必要があります。&lt;br&gt;&lt;br&gt;初回の献上金額は{1}{0}で、{2}日後に献上します。" />
+    <String Key="UI_Ranch_BestDay" Value="過去最高&lt;br&gt;{0}日" />
+    <String Key="UI_Ranch_Cancel" Value="取消" />
+    <String Key="UI_Ranch_CannotSell" Value="現在は売却できません" />
+    <String Key="UI_Ranch_CloseButton" Value="戻る" />
+    <String Key="UI_Ranch_Collapse" Value="タップで回収" />
+    <String Key="UI_Ranch_CompleteGame" Value="おめでとうございます、猫神様はお腹一杯になりました！&lt;br&gt;&lt;br&gt;見事に目標を達成しました。小屋に戻りましょう。" />
+    <String Key="UI_Ranch_CompleteTutorial" Value="おめでとうございます、猫神様はお腹一杯になりました。テストに合格しました！&lt;br&gt;&lt;br&gt;チュートリアルを終えて、小屋に戻りましょう。" />
+    <String Key="UI_Ranch_Day" Value="{0}日目" />
+    <String Key="UI_Ranch_DayDebt" Value="{0}日後に{1}{2}を献上する" />
+    <String Key="UI_Ranch_DebtComplete" Value="献上金額は{0}{1}です。{2}日後に献上してください。" />
+    <String Key="UI_Ranch_DebtTitle" Value="猫神勘定書" />
+    <String Key="UI_Ranch_DebtUp" Value="献上金額は{0}{1}に増加しました。{2}日後に献上してください。" />
+    <String Key="UI_Ranch_DisableSave" Value="現在保存できません" />
+    <String Key="UI_Ranch_EndButton" Value="目標達成" />
+    <String Key="UI_Ranch_EndlessMode_Tip" Value="（無限モード入ると、貢献は無限モード順位表でのみカウントされます）" />
+    <String Key="UI_Ranch_EndlessReturnToMainTip" Value="小屋に戻ると今回のゲームは終了します。戻りますか？" />
+    <String Key="UI_Ranch_Expand" Value="タップで展開" />
+    <String Key="UI_Ranch_FossilReward" Value="化石収穫" />
+    <String Key="UI_Ranch_GameOver" Value="時間通りに献上しなかったので、猫神様の信頼を失いました。あなたは解雇されました！" />
+    <String Key="UI_Ranch_GetAll" Value="すべて受け取る" />
+    <String Key="UI_Ranch_GiveUpButton" Value="諦める" />
+    <String Key="UI_Ranch_GoldAward" Value="{0}{1}、利息{2}{3}を獲得しました" />
+    <String Key="UI_Ranch_HideButton" Value="隠す" />
+    <String Key="UI_Ranch_Interest" Value="(利息{0}{1})" />
+    <String Key="UI_Ranch_ItemFull" Value="アイテム欄がいっぱいです" />
+    <String Key="UI_Ranch_Items" Value="アイテム" />
+    <String Key="UI_Ranch_MapCellFull" Value="土地がいっぱいです" />
+    <String Key="UI_Ranch_NewDayButton" Value="新しい一日" />
+    <String Key="UI_Ranch_NextStage" Value="次の段階" />
+    <String Key="UI_Ranch_NotEnoughGold" Value="{0}が不足しています" />
+    <String Key="UI_Ranch_Notice" Value="通知" />
+    <String Key="UI_Ranch_NotOnField" Value="未出場" />
+    <String Key="UI_Ranch_NotRemovable" Value="除去不可" />
+    <String Key="UI_Ranch_OnField" Value="出場中" />
+    <String Key="UI_Ranch_PayButton" Value="支払い" />
+    <String Key="UI_Ranch_PayDebt" Value="献上期間が切れました。猫神様に{0}{1}を献上する必要があります。" />
+    <String Key="UI_Ranch_RefreshButton" Value="更新" />
+    <String Key="UI_Ranch_RemoveButton" Value="除去" />
+    <String Key="UI_Ranch_ReserveFossil" Value="化石を保持" />
+    <String Key="UI_Ranch_Reset" Value="リセット" />
+    <String Key="UI_Ranch_ReturnToMainTip" Value="小屋に戻ると今回の進行状況が失われます。戻りますか？" />
+    <String Key="UI_Ranch_Sell" Value="売却" />
+    <String Key="UI_Ranch_Shop" Value="ショップ" />
+    <String Key="UI_Ranch_ShowButton" Value="表示" />
+    <String Key="UI_Ranch_SkipButton" Value="スキップ" />
+    <String Key="UI_Ranch_SortByCon" Value="貢献で並べ替える" />
+    <String Key="UI_Ranch_SortByRarity" Value="レアリティで並べ替える" />
+    <String Key="UI_Ranch_Stage" Value="段階: " />
+    <String Key="UI_Ranch_Talents" Value="才能" />
+    <String Key="UI_Ranch_Tiles" Value="土地" />
+    <String Key="UI_Ranch_UnlockButton" Value="解除" />
+    <String Key="UI_Rarity_Normal" Value="ノーマル" />
+    <String Key="UI_Rarity_Rare" Value="レア" />
+    <String Key="UI_Rarity_SuperRare" Value="スーパーレア" />
+    <String Key="UI_Rarity_SuperUltraRare" Value="ウルトラレア" />
+    <String Key="UI_Rarity_UltraRare" Value="スペシャルレア" />
+    <String Key="UI_Save_Collect" Value="収集率" />
+    <String Key="UI_Save_Create" Value="新しく始める" />
+    <String Key="UI_Save_Days" Value="最高日数" />
+    <String Key="UI_Save_Delete" Value="セーブ削除" />
+    <String Key="UI_Save_DeleteConfirm" Value="このセーブデータを削除してもよろしいですか？" />
+    <String Key="UI_Save_Empty" Value="空" />
+    <String Key="UI_Save_Money" Value="最高所持金" />
+    <String Key="UI_Save_NameInput" Value="名前入力" />
+    <String Key="UI_Save_Pass" Value="クリア回数" />
+    <String Key="UI_Save_SaveIndex" Value="セーブデータ{0}" />
+    <String Key="UI_Save_Stats" Value="統計" />
+    <String Key="UI_Save_UnlockAll" Value="すべてアンロック" />
+    <String Key="UI_Save_UnlockAllConfirm" Value="すべてのコンテンツをアンロックすると、このセーブデータでは実績が獲得できなくなります。本当にアンロックしますか？" />
+    <String Key="UI_Setting_ConfirmButton" Value="セーブして戻る" />
+    <String Key="UI_Setting_Cursor" Value="カーソルスキン" />
+    <String Key="UI_Setting_DisplayMode" Value="表示モード" />
+    <String Key="UI_Setting_FullScreen" Value="フルスクリーン" />
+    <String Key="UI_Setting_Language" Value="言語" />
+    <String Key="UI_Setting_MusicVolume" Value="音楽音量" />
+    <String Key="UI_Setting_Native" Value="オリジナル" />
+    <String Key="UI_Setting_Nolimit" Value="無制限" />
+    <String Key="UI_Setting_Resolution" Value="解像度" />
+    <String Key="UI_Setting_SoundVolume" Value="SE音量" />
+    <String Key="UI_Setting_Title" Value="設定" />
+    <String Key="UI_Setting_Windowed" Value="ウィンドウ" />
+    <String Key="UI_SkipAnim" Value="アニメーションをスキップ" />
+    <String Key="UI_SkipSettle" Value="アニメーションをスキップ、集計中..." />
+    <String Key="UI_Staff_Artist" Value="デザイナー" />
+    <String Key="UI_Staff_Credits" Value="特別感謝" />
+    <String Key="UI_Staff_Designer" Value="プランナー" />
+    <String Key="UI_Staff_Programmer" Value="プログラマー" />
+    <String Key="UI_Staff_SpecialThanks" Value="私たちを理解して支えてくれた家族、助けてくれた友達、そして画面の前にいるあなたに、心から感謝を申し上げます。" />
+    <String Key="UI_Staff_Title" Value="製作チーム" />
+    <String Key="UI_Summary_BestRecord" Value="最高記録" />
+    <String Key="UI_Summary_MaxDayMoney" Value="1日の最高収入：" />
+    <String Key="UI_Summary_MVP" Value="MVP：" />
+    <String Key="UI_Summary_Summary" Value="献上集計" />
+    <String Key="UI_Summary_TotalDay" Value="献上日数：" />
+    <String Key="UI_Summary_TotalGold" Value="合計獲得缶詰め：" />
+    <String Key="UI_Summary_TotalMoney" Value="合計収入金額：" />
+    <String Key="UI_Toy_Lock" Value="晴天牧場の難易度{0}をクリアすると解放されます" />
+    <String Key="UI_Toy_SelectInGame" Value="おもちゃを1つ選ぶ" />
+  </Dictionary>
+  <Dictionary Language="Korean">
+    <String Key="Ability_InstDesc_Count" Value="현재: {0}/{1}" />
+    <String Key="Ability_Lieflat_NotEnough" Value="{0} 부족, 헌납 불가" />
+    <String Key="UI_Animal_BaseMoney" Value="{0}{1}{2}/일" />
+    <String Key="UI_AnimalFamily_CountLimit" Value="동물 가문 최대 {0}개 선택" />
+    <String Key="UI_AnimalFamily_Lock" Value="튜토리얼 완료 시 해금" />
+    <String Key="UI_AnimalFamily_SelectInGame" Value="동물 가족 1개 선택" />
+    <String Key="UI_AnimalType_None" Value="비어 있음" />
+    <String Key="UI_Award_SelectAnimal" Value="동물 선택" />
+    <String Key="UI_Award_SelectHero" Value="고양이 신 교체" />
+    <String Key="UI_Award_SelectItem" Value="소품에 액세스" />
+    <String Key="UI_Award_SelectToy" Value="장난감 받기" />
+    <String Key="UI_Award_Title" Value="고양이 신의 보상" />
+    <String Key="UI_Book_All" Value="전체" />
+    <String Key="UI_Book_Animal" Value="동물" />
+    <String Key="UI_Book_AnimalFamilyLock" Value="소속 동물 가문 미해금" />
+    <String Key="UI_Book_Clear" Value="읽음" />
+    <String Key="UI_Book_Collect" Value="수집도: {0}" />
+    <String Key="UI_Book_Item" Value="아이템" />
+    <String Key="UI_Book_NotDiscover" Value="게임 내 사용 시 도감 등록" />
+    <String Key="UI_Book_UnlockCondition" Value="해금 조건: {0}" />
+    <String Key="UI_Book_UnlockDisable" Value="미해금" />
+    <String Key="UI_BugReport_ContactPlaceholder" Value="연락처를 남겨주세요 (선택사항)" />
+    <String Key="UI_BugReport_Placeholder" Value="버그 내용을 자세히 적어주세요" />
+    <String Key="UI_Dialog_CancelButton" Value="취소" />
+    <String Key="UI_Dialog_ConfirmButton" Value="확인" />
+    <String Key="UI_Dialog_OtherButton" Value="기타" />
+    <String Key="UI_Dlc_LockTip" Value="DLC 구매가 필요합니다: {0}" />
+    <String Key="UI_Game_Name" Value="캣 갓 랜치" />
+    <String Key="UI_Hero_SelectInGame" Value="고양이 신 선택" />
+    <String Key="UI_HeroAbility_Active" Value="액티브" />
+    <String Key="UI_HeroAbility_CoolDownDay" Value="{0}일" />
+    <String Key="UI_HeroAbility_CoolDownStage" Value="{0}단계" />
+    <String Key="UI_HeroAbility_Passive" Value="패시브" />
+    <String Key="UI_Inventory_Count" Value="총 개수: {0}" />
+    <String Key="UI_Leaderboard_DayMoney" Value="일일 헌납 랭킹" />
+    <String Key="UI_Leaderboard_Days" Value="일수 랭킹" />
+    <String Key="UI_Leaderboard_Friend" Value="친구" />
+    <String Key="UI_Leaderboard_Global" Value="글로벌" />
+    <String Key="UI_Leaderboard_Loading" Value="로딩중..." />
+    <String Key="UI_Leaderboard_TotalMoney" Value="총헌납 랭킹" />
+    <String Key="UI_Level_AdventureMode" Value="모험 모드" />
+    <String Key="UI_Level_ChallengeDesc" Value="헌납 시 {0} 초기화" />
+    <String Key="UI_Level_ChallengeMode" Value="도전 모드" />
+    <String Key="UI_Level_EndlessMode" Value="무한 모드" />
+    <String Key="UI_Level_LevelDescTitle" Value="맵 정보" />
+    <String Key="UI_Level_LevelDifficutyTitle" Value="난이도 태그" />
+    <String Key="UI_Level_NormalMode" Value="일반 모드" />
+    <String Key="UI_Main_Achievement" Value="업적" />
+    <String Key="UI_Main_Book" Value="도감" />
+    <String Key="UI_Main_CatGod" Value="묘신" />
+    <String Key="UI_Main_ConfirmButton" Value="확인" />
+    <String Key="UI_Main_FamilySelect" Value="가문 선택" />
+    <String Key="UI_Main_FamilySelectTip" Value="3개의 가문을 선택하세요" />
+    <String Key="UI_Main_FeatureLock" Value="미해금" />
+    <String Key="UI_Main_Leaderboard" Value="랭킹" />
+    <String Key="UI_Main_LevelSelectTip" Value="현재 난이도를 먼저 클리어하세요" />
+    <String Key="UI_Main_LevelTitle" Value="난이도 {0}" />
+    <String Key="UI_Main_Map" Value="맵" />
+    <String Key="UI_Main_NoneLevel" Value="난이도 0" />
+    <String Key="UI_Main_Select" Value="선택" />
+    <String Key="UI_Main_SelectAnimalFamily" Value="가문 선택" />
+    <String Key="UI_Main_SelectCatGod" Value="묘신 선택" />
+    <String Key="UI_Main_Selected" Value="선택됨" />
+    <String Key="UI_Main_Start" Value="헌납 시작!" />
+    <String Key="UI_Main_Talent" Value="장난감" />
+    <String Key="UI_Main_Toy" Value="장난감" />
+    <String Key="UI_MainOption_ReturnButton" Value="돌아가기" />
+    <String Key="UI_MainOption_ReturnMenu" Value="메인 메뉴로 돌아가기" />
+    <String Key="UI_Menu_AboutButton" Value="소개" />
+    <String Key="UI_Menu_Book" Value="도감" />
+    <String Key="UI_Menu_BugReport" Value="버그 신고" />
+    <String Key="UI_Menu_Close" Value="닫기" />
+    <String Key="UI_Menu_Confirm" Value="확인" />
+    <String Key="UI_Menu_ContinueButton" Value="이어하기" />
+    <String Key="UI_Menu_ContinueTitle" Value="헌납을 계속하시겠습니까?" />
+    <String Key="UI_Menu_DemoTitle" Value="체험판" />
+    <String Key="UI_Menu_ExitButton" Value="게임 종료" />
+    <String Key="UI_Menu_Leaderboard" Value="랭킹" />
+    <String Key="UI_Menu_LoadingHint" Value="로딩중..." />
+    <String Key="UI_Menu_LoadingTips" Value="Tip: 묘신이 돌아오시는 날, 목장은 자유로워질 거예요." />
+    <String Key="UI_Menu_NewButton" Value="새 게임" />
+    <String Key="UI_Menu_Questionnaire" Value="설문조사" />
+    <String Key="UI_Menu_QuitButton" Value="나가기" />
+    <String Key="UI_Menu_Return" Value="돌아가기" />
+    <String Key="UI_Menu_ReturnToMain" Value="집으로 돌아가기" />
+    <String Key="UI_Menu_SettingButton" Value="설정" />
+    <String Key="UI_Menu_StaffButton" Value="CREDITS" />
+    <String Key="UI_Menu_StartButton" Value="게임 시작" />
+    <String Key="UI_Menu_StartGame" Value="게임 시작" />
+    <String Key="UI_Menu_Unlocked" Value="해금 완료" />
+    <String Key="UI_Menu_Wishlist" Value="위시리스트 추가" />
+    <String Key="UI_Option_RestartButton" Value="다시 시작" />
+    <String Key="UI_Option_ReturnButton" Value="돌아가기" />
+    <String Key="UI_Option_ReturnToMainButton" Value="집으로 돌아가기" />
+    <String Key="UI_Option_ReturnToMenuButton" Value="저장 후 메인 메뉴로 돌아가기" />
+    <String Key="UI_Option_SettingButton" Value="설정" />
+    <String Key="UI_Option_Title" Value="옵션" />
+    <String Key="UI_Option_TutorialButton" Value="튜토리얼" />
+    <String Key="UI_Prologue_HighlightTip" Value="하이라이트 클릭 후 계속" />
+    <String Key="UI_Prologue_Tip" Value="계속" />
+    <String Key="UI_Ranch_All" Value="모두" />
+    <String Key="UI_Ranch_Award" Value="{0}{1} 및 {2}{3} 획득" />
+    <String Key="UI_Ranch_BaseMoney" Value="{0}{1}{2}" />
+    <String Key="UI_Ranch_BeginnerTutorial" Value="[동물들을 전략적으로 배치]하여 {0}모아 묘신께 헌납하세요.&lt;br&gt;&lt;br&gt;첫 헌납 금액은 {1}{0}이며, {2}일 안에 바쳐야 합니다." />
+    <String Key="UI_Ranch_BestDay" Value="역대 최고&lt;br&gt;{0}일" />
+    <String Key="UI_Ranch_Cancel" Value="취소" />
+    <String Key="UI_Ranch_CannotSell" Value="현재 판매 불가" />
+    <String Key="UI_Ranch_CloseButton" Value="돌아가기" />
+    <String Key="UI_Ranch_Collapse" Value="숨기기" />
+    <String Key="UI_Ranch_CompleteGame" Value="축하합니다! 묘신께서 만족하셨습니다!&lt;br&gt;&lt;br&gt;목표 달성! 집으로 돌아갑니다." />
+    <String Key="UI_Ranch_CompleteTutorial" Value="축하합니다! 묘신께서 만족하셨습니다! 테스트 통과!&lt;br&gt;&lt;br&gt;튜토리얼을 종료하고 집으로 돌아갑니다." />
+    <String Key="UI_Ranch_Day" Value="{0}일차" />
+    <String Key="UI_Ranch_DayDebt" Value="{0}일 후 {1}{2} 헌납" />
+    <String Key="UI_Ranch_DebtComplete" Value="헌납 금액은 {0}{1}이며, {2}일 안에 바쳐야 합니다." />
+    <String Key="UI_Ranch_DebtTitle" Value="묘신 명세서" />
+    <String Key="UI_Ranch_DebtUp" Value="헌납 금액 {0}{1} 증가, {2}일 안에 바쳐야 합니다." />
+    <String Key="UI_Ranch_DisableSave" Value="현재 저장 불가" />
+    <String Key="UI_Ranch_EndButton" Value="목표 달성" />
+    <String Key="UI_Ranch_EndlessMode_Tip" Value="(무한 모드 진입 시 헌납은 무한 모드 랭킹에만 반영됩니다)" />
+    <String Key="UI_Ranch_EndlessReturnToMainTip" Value="집으로 돌아가면 이번 라운드는 종료됩니다. 돌아가시겠습니까?" />
+    <String Key="UI_Ranch_Expand" Value="펼치기" />
+    <String Key="UI_Ranch_FossilReward" Value="화석 수확" />
+    <String Key="UI_Ranch_GameOver" Value="제시간에 헌납하지 않아 묘신의 신뢰를 잃어 추방되었습니다!" />
+    <String Key="UI_Ranch_GetAll" Value="모두 받기" />
+    <String Key="UI_Ranch_GiveUpButton" Value="포기" />
+    <String Key="UI_Ranch_GoldAward" Value="{0}{1} 획득, 이자 {2}{3}" />
+    <String Key="UI_Ranch_HideButton" Value="숨기기" />
+    <String Key="UI_Ranch_Interest" Value="(이자 {0}{1})" />
+    <String Key="UI_Ranch_ItemFull" Value="슬롯 공간 부족" />
+    <String Key="UI_Ranch_Items" Value="아이템" />
+    <String Key="UI_Ranch_MapCellFull" Value="필드 타일 가득 참" />
+    <String Key="UI_Ranch_NewDayButton" Value="새로운 하루" />
+    <String Key="UI_Ranch_NextStage" Value="다음 단계" />
+    <String Key="UI_Ranch_NotEnoughGold" Value="{0} 부족" />
+    <String Key="UI_Ranch_Notice" Value="알림" />
+    <String Key="UI_Ranch_NotOnField" Value="대기 중 / 미출전" />
+    <String Key="UI_Ranch_NotRemovable" Value="제거 불가" />
+    <String Key="UI_Ranch_OnField" Value="필드 위" />
+    <String Key="UI_Ranch_PayButton" Value="바치기" />
+    <String Key="UI_Ranch_PayDebt" Value="헌납 만료일입니다. 묘신께 {0}{1} 바쳐야 합니다." />
+    <String Key="UI_Ranch_RefreshButton" Value="새로고침" />
+    <String Key="UI_Ranch_RemoveButton" Value="제거" />
+    <String Key="UI_Ranch_ReserveFossil" Value="화석 유지" />
+    <String Key="UI_Ranch_Reset" Value="초기화" />
+    <String Key="UI_Ranch_ReturnToMainTip" Value="집으로 돌아가면 이번 라운드 진행도가 저장되지 않습니다. 돌아가시겠습니까?" />
+    <String Key="UI_Ranch_Sell" Value="판매" />
+    <String Key="UI_Ranch_Shop" Value="상점" />
+    <String Key="UI_Ranch_ShowButton" Value="표시" />
+    <String Key="UI_Ranch_SkipButton" Value="건너뛰기" />
+    <String Key="UI_Ranch_SortByCon" Value="헌납순" />
+    <String Key="UI_Ranch_SortByRarity" Value="희귀도순" />
+    <String Key="UI_Ranch_Stage" Value="단계:" />
+    <String Key="UI_Ranch_Talents" Value="특성" />
+    <String Key="UI_Ranch_Tiles" Value="지형" />
+    <String Key="UI_Ranch_UnlockButton" Value="해금" />
+    <String Key="UI_Rarity_Normal" Value="노멀" />
+    <String Key="UI_Rarity_Rare" Value="레어" />
+    <String Key="UI_Rarity_SuperRare" Value="에픽" />
+    <String Key="UI_Rarity_SuperUltraRare" Value="레전드" />
+    <String Key="UI_Rarity_UltraRare" Value="미스틱" />
+    <String Key="UI_Save_Collect" Value="수집률" />
+    <String Key="UI_Save_Create" Value="새로 시작" />
+    <String Key="UI_Save_Days" Value="최고 일수" />
+    <String Key="UI_Save_Delete" Value="저장 파일 삭제" />
+    <String Key="UI_Save_DeleteConfirm" Value="이 저장 파일을 삭제하시겠습니까?" />
+    <String Key="UI_Save_Empty" Value="비어 있음" />
+    <String Key="UI_Save_Money" Value="최고 골드" />
+    <String Key="UI_Save_NameInput" Value="이름 입력" />
+    <String Key="UI_Save_Pass" Value="클리어 횟수" />
+    <String Key="UI_Save_SaveIndex" Value="저장 파일 {0}" />
+    <String Key="UI_Save_Stats" Value="통계" />
+    <String Key="UI_Save_UnlockAll" Value="모두 잠금 해제" />
+    <String Key="UI_Save_UnlockAllConfirm" Value="모든 콘텐츠를 잠금 해제하면 이 저장 파일로는 업적을 획득할 수 없게 됩니다. 정말로 잠금 해제하시겠습니까?" />
+    <String Key="UI_Setting_ConfirmButton" Value="저장 후 돌아가기" />
+    <String Key="UI_Setting_Cursor" Value="마우스 스킨" />
+    <String Key="UI_Setting_DisplayMode" Value="화면 모드" />
+    <String Key="UI_Setting_FullScreen" Value="전체화면" />
+    <String Key="UI_Setting_Language" Value="언어" />
+    <String Key="UI_Setting_MusicVolume" Value="배경음악" />
+    <String Key="UI_Setting_Native" Value="기본" />
+    <String Key="UI_Setting_Nolimit" Value="제한 없음" />
+    <String Key="UI_Setting_Resolution" Value="해상도" />
+    <String Key="UI_Setting_SoundVolume" Value="효과음" />
+    <String Key="UI_Setting_Title" Value="설정" />
+    <String Key="UI_Setting_Windowed" Value="창 모드" />
+    <String Key="UI_SkipAnim" Value="애니메이션 스킵" />
+    <String Key="UI_SkipSettle" Value="애니메이션 스킵, 결산 중..." />
+    <String Key="UI_Staff_Artist" Value="아트" />
+    <String Key="UI_Staff_Credits" Value="Special Thanks" />
+    <String Key="UI_Staff_Designer" Value="기획" />
+    <String Key="UI_Staff_Programmer" Value="개발" />
+    <String Key="UI_Staff_SpecialThanks" Value="응원과 도움을 준 가족들과 친구들, 그리고 소중한 시간을 함께해 주신 여러분들께 감사드립니다!" />
+    <String Key="UI_Staff_Title" Value="CREDITS" />
+    <String Key="UI_Summary_BestRecord" Value="역대 최고" />
+    <String Key="UI_Summary_MaxDayMoney" Value="최대 일일 수익:" />
+    <String Key="UI_Summary_MVP" Value="MVP:" />
+    <String Key="UI_Summary_Summary" Value="헌납 결산" />
+    <String Key="UI_Summary_TotalDay" Value="헌납 일수:" />
+    <String Key="UI_Summary_TotalGold" Value="총획득 캔:" />
+    <String Key="UI_Summary_TotalMoney" Value="총수익:" />
+    <String Key="UI_Toy_Lock" Value="맑음 목장 난이도 {0} 클리어 시 해금" />
+    <String Key="UI_Toy_SelectInGame" Value="장난감 1개 선택" />
+  </Dictionary>
+  <Dictionary Language="German">
+    <String Key="Ability_InstDesc_Count" Value="Aktuell: {0}/{1}" />
+    <String Key="Ability_Lieflat_NotEnough" Value="Unzureichend {0}, um den Beitrag im Voraus zu zahlen" />
+    <String Key="UI_Animal_BaseMoney" Value="{0}{1}{2}/Tag" />
+    <String Key="UI_AnimalFamily_CountLimit" Value="Wähle höchstens {0} Tierfamilien aus" />
+    <String Key="UI_AnimalFamily_Lock" Value="Freigeschaltet nach Abschluss des Tutorials" />
+    <String Key="UI_AnimalFamily_SelectInGame" Value="Wählen Sie 1 Tierfamilie" />
+    <String Key="UI_AnimalType_None" Value="Leer" />
+    <String Key="UI_Award_SelectAnimal" Value="Wählen Sie ein Tier" />
+    <String Key="UI_Award_SelectHero" Value="Ersetze den Katzengott" />
+    <String Key="UI_Award_SelectItem" Value="Holen Sie sich Requisiten" />
+    <String Key="UI_Award_SelectToy" Value="Spielzeug besorgen" />
+    <String Key="UI_Award_Title" Value="Katze Gottes Belohnung" />
+    <String Key="UI_Book_All" Value="Alle" />
+    <String Key="UI_Book_Animal" Value="Tiere" />
+    <String Key="UI_Book_AnimalFamilyLock" Value="Die Tierfamilie ist gesperrt" />
+    <String Key="UI_Book_Clear" Value="Lesen" />
+    <String Key="UI_Book_Collect" Value="Sammlung: {0}" />
+    <String Key="UI_Book_Item" Value="Gegenstand" />
+    <String Key="UI_Book_NotDiscover" Value="Nicht entdeckt" />
+    <String Key="UI_Book_UnlockCondition" Value="Freischaltbedingung: {0}" />
+    <String Key="UI_Book_UnlockDisable" Value="Gesperrt" />
+    <String Key="UI_BugReport_ContactPlaceholder" Value="Bitte hinterlasse deine Kontaktdaten (optional)" />
+    <String Key="UI_BugReport_Placeholder" Value="Beschreibe bitte den Fehler, den du gefunden hast, so genau wie möglich" />
+    <String Key="UI_Dialog_CancelButton" Value="Abbrechen" />
+    <String Key="UI_Dialog_ConfirmButton" Value="OK" />
+    <String Key="UI_Dialog_OtherButton" Value="Andere" />
+    <String Key="UI_Dlc_LockTip" Value="Kauf von DLC erforderlich: {0}" />
+    <String Key="UI_Game_Name" Value="Katzengott-Ranch" />
+    <String Key="UI_Hero_SelectInGame" Value="Wählen Sie Katzengott" />
+    <String Key="UI_HeroAbility_Active" Value="Aktiv" />
+    <String Key="UI_HeroAbility_CoolDownDay" Value="Tag {0}" />
+    <String Key="UI_HeroAbility_CoolDownStage" Value="Phase {0}" />
+    <String Key="UI_HeroAbility_Passive" Value="Passiv" />
+    <String Key="UI_Inventory_Count" Value="Gesamt: {0}" />
+    <String Key="UI_Leaderboard_DayMoney" Value="Maximales Tagesgeld" />
+    <String Key="UI_Leaderboard_Days" Value="Maximale Tage" />
+    <String Key="UI_Leaderboard_Friend" Value="Freunde" />
+    <String Key="UI_Leaderboard_Global" Value="Global" />
+    <String Key="UI_Leaderboard_Loading" Value="Lädt ..." />
+    <String Key="UI_Leaderboard_TotalMoney" Value="Maximales Gesamtgeld" />
+    <String Key="UI_Level_AdventureMode" Value="Abenteuermodus" />
+    <String Key="UI_Level_ChallengeDesc" Value="{0} wird nach jedem Beitrag zurückgesetzt" />
+    <String Key="UI_Level_ChallengeMode" Value="Herausforderungsmodus" />
+    <String Key="UI_Level_EndlessMode" Value="Endlosmodus" />
+    <String Key="UI_Level_LevelDescTitle" Value="Kartenübersicht" />
+    <String Key="UI_Level_LevelDifficutyTitle" Value="Schwierigkeitsgrad" />
+    <String Key="UI_Level_NormalMode" Value="Normaler Modus" />
+    <String Key="UI_Main_Achievement" Value="Erfolg" />
+    <String Key="UI_Main_Book" Value="Sammlung" />
+    <String Key="UI_Main_CatGod" Value="Katzengott" />
+    <String Key="UI_Main_ConfirmButton" Value="Bestätigen" />
+    <String Key="UI_Main_FamilySelect" Value="Familienauswahl" />
+    <String Key="UI_Main_FamilySelectTip" Value="Bitte wähle 3 Tierfamilien aus" />
+    <String Key="UI_Main_FeatureLock" Value="Gesperrt" />
+    <String Key="UI_Main_Leaderboard" Value="Rang" />
+    <String Key="UI_Main_LevelSelectTip" Value="Bitte schließe zuerst die aktuelle Schwierigkeitsstufe ab" />
+    <String Key="UI_Main_LevelTitle" Value="Schwierigkeit {0}" />
+    <String Key="UI_Main_Map" Value="Karte" />
+    <String Key="UI_Main_NoneLevel" Value="Schwierigkeit 0" />
+    <String Key="UI_Main_Select" Value="Auswählen" />
+    <String Key="UI_Main_SelectAnimalFamily" Value="Familienauswahl" />
+    <String Key="UI_Main_SelectCatGod" Value="Katzengott-Auswahl" />
+    <String Key="UI_Main_Selected" Value="Ausgewählt" />
+    <String Key="UI_Main_Start" Value="Start!" />
+    <String Key="UI_Main_Talent" Value="Spielzeug" />
+    <String Key="UI_Main_Toy" Value="Spielzeug" />
+    <String Key="UI_MainOption_ReturnButton" Value="Zurück" />
+    <String Key="UI_MainOption_ReturnMenu" Value="Zurück zum Menü" />
+    <String Key="UI_Menu_AboutButton" Value="Über" />
+    <String Key="UI_Menu_Book" Value="Sammlung" />
+    <String Key="UI_Menu_BugReport" Value="Fehlerbericht" />
+    <String Key="UI_Menu_Close" Value="Schließen" />
+    <String Key="UI_Menu_Confirm" Value="Bestätigen" />
+    <String Key="UI_Menu_ContinueButton" Value="Weiter" />
+    <String Key="UI_Menu_ContinueTitle" Value="Möchtest du weitermachen?" />
+    <String Key="UI_Menu_DemoTitle" Value="Demo" />
+    <String Key="UI_Menu_ExitButton" Value="Spiel beenden" />
+    <String Key="UI_Menu_Leaderboard" Value="Rang" />
+    <String Key="UI_Menu_LoadingHint" Value="Lädt ..." />
+    <String Key="UI_Menu_LoadingTips" Value="Tipp: Am Tag, an dem der Katzengott wieder erscheint, wird die Ranch befreit" />
+    <String Key="UI_Menu_NewButton" Value="Neues Spiel" />
+    <String Key="UI_Menu_Questionnaire" Value="Fragebogen" />
+    <String Key="UI_Menu_QuitButton" Value="Beenden" />
+    <String Key="UI_Menu_Return" Value="Zurück" />
+    <String Key="UI_Menu_ReturnToMain" Value="Zurück zur Hütte" />
+    <String Key="UI_Menu_SettingButton" Value="Einstellungen" />
+    <String Key="UI_Menu_StaffButton" Value="Entwickler" />
+    <String Key="UI_Menu_StartButton" Value="Spiel starten" />
+    <String Key="UI_Menu_StartGame" Value="Spiel starten" />
+    <String Key="UI_Menu_Unlocked" Value="Freigeschaltet" />
+    <String Key="UI_Menu_Wishlist" Value="Wunschliste" />
+    <String Key="UI_Option_RestartButton" Value="Neustart" />
+    <String Key="UI_Option_ReturnButton" Value="Zurück" />
+    <String Key="UI_Option_ReturnToMainButton" Value="Zurück zur Hütte" />
+    <String Key="UI_Option_ReturnToMenuButton" Value="Speichern und zum Menü zurückkehren" />
+    <String Key="UI_Option_SettingButton" Value="Einstellungen" />
+    <String Key="UI_Option_Title" Value="Optionen" />
+    <String Key="UI_Option_TutorialButton" Value="Tutorial" />
+    <String Key="UI_Prologue_HighlightTip" Value="Klicke auf das Hervorgehobene, um fortzufahren" />
+    <String Key="UI_Prologue_Tip" Value="Klicke, um fortzufahren" />
+    <String Key="UI_Ranch_All" Value="Alle" />
+    <String Key="UI_Ranch_Award" Value="Du hast {0}{1} und {2}{3} erhalten" />
+    <String Key="UI_Ranch_BaseMoney" Value="{0}{1}{2}" />
+    <String Key="UI_Ranch_BeginnerTutorial" Value="Du musst [die Tiere strategisch verwalten], um {0} als Beitrag an den Katzengott zu verdienen.&lt;br&gt;&lt;br&gt;Der anfängliche Beitrag beträgt {1}{0} und ist in {2} Tagen fällig." />
+    <String Key="UI_Ranch_BestDay" Value="Bester Rekord&lt;br&gt;{0}Tage" />
+    <String Key="UI_Ranch_Cancel" Value="Abbrechen" />
+    <String Key="UI_Ranch_CannotSell" Value="Derzeit nicht zum Verkauf verfügbar" />
+    <String Key="UI_Ranch_CloseButton" Value="Zurück" />
+    <String Key="UI_Ranch_Collapse" Value="Klicke, um einzuklappen" />
+    <String Key="UI_Ranch_CompleteGame" Value="Herzlichen Glückwunsch, der Katzengott wurde von dir gefüttert!&lt;br&gt;&lt;br&gt;Klicke auf den Button und kehre zur Hütte zurück." />
+    <String Key="UI_Ranch_CompleteTutorial" Value="Herzlichen Glückwunsch, der Katzengott wurde von dir gefüttert und du hast die Prüfung bestanden!&lt;br&gt;&lt;br&gt;Klicke auf den Button und kehre zur Hütte zurück." />
+    <String Key="UI_Ranch_Day" Value="Tag {0}" />
+    <String Key="UI_Ranch_DayDebt" Value="Bietet {1}{2} nach {0} Tagen" />
+    <String Key="UI_Ranch_DebtComplete" Value="Dein Beitrag beträgt {0}{1} und muss in {2} Tagen gezahlt werden." />
+    <String Key="UI_Ranch_DebtTitle" Value="Rechnung des Katzengotts" />
+    <String Key="UI_Ranch_DebtUp" Value="Dein Beitragsbetrag wurde auf {0}{1} erhöht und muss in {2} Tagen gezahlt werden." />
+    <String Key="UI_Ranch_DisableSave" Value="Derzeit nicht speicherbar" />
+    <String Key="UI_Ranch_EndButton" Value="Spielende" />
+    <String Key="UI_Ranch_EndlessMode_Tip" Value="(Beiträge zählen erst für die Endlosmodus-Rangliste, nachdem du den Modus betreten hast)" />
+    <String Key="UI_Ranch_EndlessReturnToMainTip" Value="Das Spiel endet nach der Rückkehr zur Hütte (der aktuelle Beitrag wird in die Rangliste einbezogen). Willst du zurückkehren?" />
+    <String Key="UI_Ranch_Expand" Value="Klicke, um zu erweitern" />
+    <String Key="UI_Ranch_FossilReward" Value="Fossilernte" />
+    <String Key="UI_Ranch_GameOver" Value="Du hast es versäumt, den Beitrag rechtzeitig zu zahlen, und das Vertrauen des Katzengotts verloren. Du wirst entlassen!" />
+    <String Key="UI_Ranch_GetAll" Value="Alles abholen" />
+    <String Key="UI_Ranch_GiveUpButton" Value="Aufgeben" />
+    <String Key="UI_Ranch_GoldAward" Value="Du hast {0}{1} erhalten, mit {2}{3} Zinsen" />
+    <String Key="UI_Ranch_HideButton" Value="Ausblenden" />
+    <String Key="UI_Ranch_Interest" Value="(Zinsen {0}{1})" />
+    <String Key="UI_Ranch_ItemFull" Value="Das Inventar ist voll" />
+    <String Key="UI_Ranch_Items" Value="Gegenstand" />
+    <String Key="UI_Ranch_MapCellFull" Value="Alle Felder sind belegt" />
+    <String Key="UI_Ranch_NewDayButton" Value="Neuer Tag" />
+    <String Key="UI_Ranch_NextStage" Value="Nächste Phase" />
+    <String Key="UI_Ranch_NotEnoughGold" Value="Unzureichend {0}" />
+    <String Key="UI_Ranch_Notice" Value="Hinweis" />
+    <String Key="UI_Ranch_NotOnField" Value="Nicht im Spiel" />
+    <String Key="UI_Ranch_NotRemovable" Value="Kann nicht entfernt werden" />
+    <String Key="UI_Ranch_OnField" Value="Auf dem Spielfeld" />
+    <String Key="UI_Ranch_PayButton" Value="Zahlen" />
+    <String Key="UI_Ranch_PayDebt" Value="Es ist Zeit, heute deinen Beitrag zu leisten! Du musst {0}{1} dem Katzengott darbringen." />
+    <String Key="UI_Ranch_RefreshButton" Value="Aktualisieren" />
+    <String Key="UI_Ranch_RemoveButton" Value="Entfernen" />
+    <String Key="UI_Ranch_ReserveFossil" Value="Fossilien behalten" />
+    <String Key="UI_Ranch_Reset" Value="Zurücksetzen" />
+    <String Key="UI_Ranch_ReturnToMainTip" Value="Diese Runde wird gelöscht. Möchtest du zurückkehren?" />
+    <String Key="UI_Ranch_Sell" Value="Verkaufen" />
+    <String Key="UI_Ranch_Shop" Value="Laden" />
+    <String Key="UI_Ranch_ShowButton" Value="Anzeigen" />
+    <String Key="UI_Ranch_SkipButton" Value="Überspringen" />
+    <String Key="UI_Ranch_SortByCon" Value="Sortieren nach Beitrag" />
+    <String Key="UI_Ranch_SortByRarity" Value="Sortieren nach Seltenheit" />
+    <String Key="UI_Ranch_Stage" Value="Phase:" />
+    <String Key="UI_Ranch_Talents" Value="Talent" />
+    <String Key="UI_Ranch_Tiles" Value="Gelände" />
+    <String Key="UI_Ranch_UnlockButton" Value="Freischalten" />
+    <String Key="UI_Rarity_Normal" Value="Normal" />
+    <String Key="UI_Rarity_Rare" Value="Selten" />
+    <String Key="UI_Rarity_SuperRare" Value="Super-selten" />
+    <String Key="UI_Rarity_SuperUltraRare" Value="Ausgestorben" />
+    <String Key="UI_Rarity_UltraRare" Value="Kostbar" />
+    <String Key="UI_Save_Collect" Value="Sammelrate" />
+    <String Key="UI_Save_Create" Value="Neuer Speicherstand" />
+    <String Key="UI_Save_Days" Value="Max. Tage" />
+    <String Key="UI_Save_Delete" Value="Speicherstand löschen" />
+    <String Key="UI_Save_DeleteConfirm" Value="Möchten Sie diesen Speicherstand wirklich löschen?" />
+    <String Key="UI_Save_Empty" Value="Leer" />
+    <String Key="UI_Save_Money" Value="Max. Gold" />
+    <String Key="UI_Save_NameInput" Value="Namen eingeben" />
+    <String Key="UI_Save_Pass" Value="Abgeschlossen" />
+    <String Key="UI_Save_SaveIndex" Value="Speicherstand {0}" />
+    <String Key="UI_Save_Stats" Value="Statistiken" />
+    <String Key="UI_Save_UnlockAll" Value="Alles freischalten" />
+    <String Key="UI_Save_UnlockAllConfirm" Value="Wenn alle Inhalte freigeschaltet werden, können mit diesem Spielstand keine Erfolge mehr erzielt werden. Möchtest du das wirklich freischalten?" />
+    <String Key="UI_Setting_ConfirmButton" Value="Speichern und zurück" />
+    <String Key="UI_Setting_Cursor" Value="Cursor-Skin" />
+    <String Key="UI_Setting_DisplayMode" Value="Anzeigemodus" />
+    <String Key="UI_Setting_FullScreen" Value="Vollbild" />
+    <String Key="UI_Setting_Language" Value="Sprache" />
+    <String Key="UI_Setting_MusicVolume" Value="Musiklautstärke" />
+    <String Key="UI_Setting_Native" Value="Nativ" />
+    <String Key="UI_Setting_Nolimit" Value="Keine Begrenzung" />
+    <String Key="UI_Setting_Resolution" Value="Auflösung" />
+    <String Key="UI_Setting_SoundVolume" Value="Effektlautstärke" />
+    <String Key="UI_Setting_Title" Value="Einstellungen" />
+    <String Key="UI_Setting_Windowed" Value="Fenstermodus" />
+    <String Key="UI_SkipAnim" Value="Überspringen" />
+    <String Key="UI_SkipSettle" Value="Animation wird übersprungen, bitte warten ..." />
+    <String Key="UI_Staff_Artist" Value="Künstler" />
+    <String Key="UI_Staff_Credits" Value="Credits" />
+    <String Key="UI_Staff_Designer" Value="Designer" />
+    <String Key="UI_Staff_Programmer" Value="Programmierer" />
+    <String Key="UI_Staff_SpecialThanks" Value="Unsere Familien, die uns verstehen und unterstützen, unsere Freunde, die uns still helfen, und du, der Spieler vor dem Bildschirm!" />
+    <String Key="UI_Staff_Title" Value="Entwickler" />
+    <String Key="UI_Summary_BestRecord" Value="Bester Rekord" />
+    <String Key="UI_Summary_MaxDayMoney" Value="Maximales Tagesgeld:" />
+    <String Key="UI_Summary_MVP" Value="MVP:" />
+    <String Key="UI_Summary_Summary" Value="Zusammenfassung" />
+    <String Key="UI_Summary_TotalDay" Value="Gesamttage:" />
+    <String Key="UI_Summary_TotalGold" Value="Gesamtdosen:" />
+    <String Key="UI_Summary_TotalMoney" Value="Gesamtgeld:" />
+    <String Key="UI_Toy_Lock" Value="Freigeschaltet nach Abschluss der Schwierigkeit {0}von „Sonnige Ranch“" />
+    <String Key="UI_Toy_SelectInGame" Value="Wähle 1 Spielzeug" />
+  </Dictionary>
+  <Dictionary Language="French">
+    <String Key="Ability_InstDesc_Count" Value="Actuel : {0}/{1}" />
+    <String Key="Ability_Lieflat_NotEnough" Value="{0} insuffisants pour faire l'offrande en avance" />
+    <String Key="UI_Animal_BaseMoney" Value="{0}{1}{2}/jour" />
+    <String Key="UI_AnimalFamily_CountLimit" Value="Maximum de {0} familles animales à sélectionner" />
+    <String Key="UI_AnimalFamily_Lock" Value="Débloqué après avoir terminé le tutoriel" />
+    <String Key="UI_AnimalFamily_SelectInGame" Value="Choisissez 1 famille d'animaux" />
+    <String Key="UI_AnimalType_None" Value="Vide" />
+    <String Key="UI_Award_SelectAnimal" Value="Choisir un animal" />
+    <String Key="UI_Award_SelectHero" Value="Remplacez le dieu chat" />
+    <String Key="UI_Award_SelectItem" Value="Obtenez des accessoires" />
+    <String Key="UI_Award_SelectToy" Value="obtenir des jouets" />
+    <String Key="UI_Award_Title" Value="La récompense du dieu chat" />
+    <String Key="UI_Book_All" Value="Tout" />
+    <String Key="UI_Book_Animal" Value="Animaux" />
+    <String Key="UI_Book_AnimalFamilyLock" Value="La famille animale est indisponible" />
+    <String Key="UI_Book_Clear" Value="Tout lire" />
+    <String Key="UI_Book_Collect" Value="Collection : {0}" />
+    <String Key="UI_Book_Item" Value="Objets" />
+    <String Key="UI_Book_NotDiscover" Value="Ajouté à la galerie après l'utilisation" />
+    <String Key="UI_Book_UnlockCondition" Value="Condition de déblocage : {0}" />
+    <String Key="UI_Book_UnlockDisable" Value="Indisponible" />
+    <String Key="UI_BugReport_ContactPlaceholder" Value="Veuillez laisser vos coordonnées (facultatif)" />
+    <String Key="UI_BugReport_Placeholder" Value="Veuillez décrire en détail le bug que vous avez rencontré" />
+    <String Key="UI_Dialog_CancelButton" Value="Annuler" />
+    <String Key="UI_Dialog_ConfirmButton" Value="Confirmer" />
+    <String Key="UI_Dialog_OtherButton" Value="Autre" />
+    <String Key="UI_Dlc_LockTip" Value="Achat du DLC requis : {0}" />
+    <String Key="UI_Game_Name" Value="Ferme du Dieu Chat" />
+    <String Key="UI_Hero_SelectInGame" Value="Choisissez le Dieu Chat" />
+    <String Key="UI_HeroAbility_Active" Value="Active" />
+    <String Key="UI_HeroAbility_CoolDownDay" Value="{0} jour(s)" />
+    <String Key="UI_HeroAbility_CoolDownStage" Value="Étape {0}" />
+    <String Key="UI_HeroAbility_Passive" Value="Passive" />
+    <String Key="UI_Inventory_Count" Value="Total : {0}" />
+    <String Key="UI_Leaderboard_DayMoney" Value="Or max quotidien" />
+    <String Key="UI_Leaderboard_Days" Value="Jours max" />
+    <String Key="UI_Leaderboard_Friend" Value="Amis" />
+    <String Key="UI_Leaderboard_Global" Value="Mondial" />
+    <String Key="UI_Leaderboard_Loading" Value="Chargement..." />
+    <String Key="UI_Leaderboard_TotalMoney" Value="Or max général" />
+    <String Key="UI_Level_AdventureMode" Value="Mode aventure" />
+    <String Key="UI_Level_ChallengeDesc" Value="{0} sont réinitialisés après chaque offrande" />
+    <String Key="UI_Level_ChallengeMode" Value="Mode défi" />
+    <String Key="UI_Level_EndlessMode" Value="Mode infini" />
+    <String Key="UI_Level_LevelDescTitle" Value="Détails de la carte" />
+    <String Key="UI_Level_LevelDifficutyTitle" Value="Difficulté" />
+    <String Key="UI_Level_NormalMode" Value="Mode normal" />
+    <String Key="UI_Main_Achievement" Value="Succès" />
+    <String Key="UI_Main_Book" Value="Galerie" />
+    <String Key="UI_Main_CatGod" Value="Dieu Chat" />
+    <String Key="UI_Main_ConfirmButton" Value="Confirmer" />
+    <String Key="UI_Main_FamilySelect" Value="Sélection de familles" />
+    <String Key="UI_Main_FamilySelectTip" Value="Veuillez sélectionner 3 familles animales" />
+    <String Key="UI_Main_FeatureLock" Value="Indisponible" />
+    <String Key="UI_Main_Leaderboard" Value="Classements" />
+    <String Key="UI_Main_LevelSelectTip" Value="Veuillez terminer d'abord la difficulté actuelle" />
+    <String Key="UI_Main_LevelTitle" Value="Difficulté {0}" />
+    <String Key="UI_Main_Map" Value="Carte" />
+    <String Key="UI_Main_NoneLevel" Value="Difficulté 0" />
+    <String Key="UI_Main_Select" Value="Sélectionner" />
+    <String Key="UI_Main_SelectAnimalFamily" Value="Sélection de familles" />
+    <String Key="UI_Main_SelectCatGod" Value="Sélection de Dieux Chats" />
+    <String Key="UI_Main_Selected" Value="Sélectionné" />
+    <String Key="UI_Main_Start" Value="Commencer !" />
+    <String Key="UI_Main_Talent" Value="Jouets" />
+    <String Key="UI_Main_Toy" Value="Jouets" />
+    <String Key="UI_MainOption_ReturnButton" Value="Retourner" />
+    <String Key="UI_MainOption_ReturnMenu" Value="Retourner au menu" />
+    <String Key="UI_Menu_AboutButton" Value="À propos" />
+    <String Key="UI_Menu_Book" Value="Galerie" />
+    <String Key="UI_Menu_BugReport" Value="Rapport de bug" />
+    <String Key="UI_Menu_Close" Value="Fermer" />
+    <String Key="UI_Menu_Confirm" Value="Confirmer" />
+    <String Key="UI_Menu_ContinueButton" Value="Continuer" />
+    <String Key="UI_Menu_ContinueTitle" Value="Voulez-vous continuer ?" />
+    <String Key="UI_Menu_DemoTitle" Value="Démo" />
+    <String Key="UI_Menu_ExitButton" Value="Quitter" />
+    <String Key="UI_Menu_Leaderboard" Value="Classements" />
+    <String Key="UI_Menu_LoadingHint" Value="Chargement..." />
+    <String Key="UI_Menu_LoadingTips" Value="Petit conseil : lorsque le Dieu Chat réapparaît, la ferme sera bientôt libérée." />
+    <String Key="UI_Menu_NewButton" Value="Nouvelle partie" />
+    <String Key="UI_Menu_Questionnaire" Value="Enquête" />
+    <String Key="UI_Menu_QuitButton" Value="Quitter" />
+    <String Key="UI_Menu_Return" Value="Retourner" />
+    <String Key="UI_Menu_ReturnToMain" Value="Retourner à la cabane" />
+    <String Key="UI_Menu_SettingButton" Value="Réglages" />
+    <String Key="UI_Menu_StaffButton" Value="Développeurs" />
+    <String Key="UI_Menu_StartButton" Value="Commencer" />
+    <String Key="UI_Menu_StartGame" Value="Commencer" />
+    <String Key="UI_Menu_Unlocked" Value="Débloqué" />
+    <String Key="UI_Menu_Wishlist" Value="Liste de souhaits" />
+    <String Key="UI_Option_RestartButton" Value="Recommencer" />
+    <String Key="UI_Option_ReturnButton" Value="Retourner" />
+    <String Key="UI_Option_ReturnToMainButton" Value="Retourner à la cabane" />
+    <String Key="UI_Option_ReturnToMenuButton" Value="Sauvegarder et retourner au menu" />
+    <String Key="UI_Option_SettingButton" Value="Réglages" />
+    <String Key="UI_Option_Title" Value="Options" />
+    <String Key="UI_Option_TutorialButton" Value="Tutoriel" />
+    <String Key="UI_Prologue_HighlightTip" Value="Cliquez sur la zone en surbrillance pour continuer" />
+    <String Key="UI_Prologue_Tip" Value="Cliquez pour continuer" />
+    <String Key="UI_Ranch_All" Value="Tous" />
+    <String Key="UI_Ranch_Award" Value="Vous avez obtenu {0}{1} et {2}{3}" />
+    <String Key="UI_Ranch_BaseMoney" Value="{0}{1}{2}" />
+    <String Key="UI_Ranch_BeginnerTutorial" Value="Vous devez [disposer les animaux de manière stratégique] pour gagner {0} en offrande au Dieu Chat.&lt;br&gt;&lt;br&gt;Le montant initial de l'offrande est {1}{0}, à remettre dans {2} jours." />
+    <String Key="UI_Ranch_BestDay" Value="Meilleur record&lt;br&gt;{0} jours" />
+    <String Key="UI_Ranch_Cancel" Value="Annuler" />
+    <String Key="UI_Ranch_CannotSell" Value="Impossible de vendre actuellement" />
+    <String Key="UI_Ranch_CloseButton" Value="Retourner" />
+    <String Key="UI_Ranch_Collapse" Value="Cliquez pour réduire" />
+    <String Key="UI_Ranch_CompleteGame" Value="Félicitations, le Dieu Chat a été nourri par vous !&lt;br&gt;&lt;br&gt;Terminez la partie et retournez à la cabane." />
+    <String Key="UI_Ranch_CompleteTutorial" Value="Félicitations, le Dieu Chat a été nourri par vous et vous avez réussi le test !&lt;br&gt;&lt;br&gt;Terminez le tutoriel et retournez à la cabane." />
+    <String Key="UI_Ranch_Day" Value="Jour {0}" />
+    <String Key="UI_Ranch_DayDebt" Value="Faites l'offrande {1}{2} dans {0} jours" />
+    <String Key="UI_Ranch_DebtComplete" Value="Votre montant d'offrande est de {0}{1}, à remettre dans {2} jours." />
+    <String Key="UI_Ranch_DebtTitle" Value="Note du Dieu Chat" />
+    <String Key="UI_Ranch_DebtUp" Value="Votre montant d'offrande a été augmenté à {0}{1}, à remettre dans {2} jours." />
+    <String Key="UI_Ranch_DisableSave" Value="Impossible de sauvegarder actuellement" />
+    <String Key="UI_Ranch_EndButton" Value="Fin de partie" />
+    <String Key="UI_Ranch_EndlessMode_Tip" Value="(Les contributions ne compteront que pour le classement du mode infini après être entré dans le mode infini)" />
+    <String Key="UI_Ranch_EndlessReturnToMainTip" Value="Le jeu se terminera après le retour à la cabane (la contribution actuelle sera incluse dans le classement). Voulez-vous revenir ?" />
+    <String Key="UI_Ranch_Expand" Value="Cliquez pour développer" />
+    <String Key="UI_Ranch_FossilReward" Value="Récolte de fossiles" />
+    <String Key="UI_Ranch_GameOver" Value="Vous n'avez pas réussi à faire l'offrande à temps et avez perdu la confiance du Dieu Chat. Vous êtes renvoyé !" />
+    <String Key="UI_Ranch_GetAll" Value="Tout récupérer" />
+    <String Key="UI_Ranch_GiveUpButton" Value="Abandonner" />
+    <String Key="UI_Ranch_GoldAward" Value="Vous avez obtenu {0}{1}, avec {2}{3} d'intérêts" />
+    <String Key="UI_Ranch_HideButton" Value="Masquer" />
+    <String Key="UI_Ranch_Interest" Value="({0}{1} d'intérêts)" />
+    <String Key="UI_Ranch_ItemFull" Value="L'inventaire est plein" />
+    <String Key="UI_Ranch_Items" Value="Objets" />
+    <String Key="UI_Ranch_MapCellFull" Value="Les parcelles de terrain sont pleines" />
+    <String Key="UI_Ranch_NewDayButton" Value="Prochain jour" />
+    <String Key="UI_Ranch_NextStage" Value="Prochaine étape" />
+    <String Key="UI_Ranch_NotEnoughGold" Value="{0} insuffisants" />
+    <String Key="UI_Ranch_Notice" Value="Avis" />
+    <String Key="UI_Ranch_NotOnField" Value="Hors jeu" />
+    <String Key="UI_Ranch_NotRemovable" Value="Impossible de retirer" />
+    <String Key="UI_Ranch_OnField" Value="Sur le terrain" />
+    <String Key="UI_Ranch_PayButton" Value="Remettre" />
+    <String Key="UI_Ranch_PayDebt" Value="Il est temps de faire l'offrande aujourd'hui ! Vous devez remettre {0}{1} au Dieu Chat." />
+    <String Key="UI_Ranch_RefreshButton" Value="Rafraîchir" />
+    <String Key="UI_Ranch_RemoveButton" Value="Retirer" />
+    <String Key="UI_Ranch_ReserveFossil" Value="Conserver les fossiles" />
+    <String Key="UI_Ranch_Reset" Value="Réinitialiser" />
+    <String Key="UI_Ranch_ReturnToMainTip" Value="Cette partie sera perdue après le retour. Voulez-vous retourner ?" />
+    <String Key="UI_Ranch_Sell" Value="Vendre" />
+    <String Key="UI_Ranch_Shop" Value="Boutique" />
+    <String Key="UI_Ranch_ShowButton" Value="Afficher" />
+    <String Key="UI_Ranch_SkipButton" Value="Passer" />
+    <String Key="UI_Ranch_SortByCon" Value="Tri par contribution" />
+    <String Key="UI_Ranch_SortByRarity" Value="Tri par rareté" />
+    <String Key="UI_Ranch_Stage" Value="Étape :" />
+    <String Key="UI_Ranch_Talents" Value="Talent" />
+    <String Key="UI_Ranch_Tiles" Value="Terrain" />
+    <String Key="UI_Ranch_UnlockButton" Value="Débloquer" />
+    <String Key="UI_Rarity_Normal" Value="Commun" />
+    <String Key="UI_Rarity_Rare" Value="Rare" />
+    <String Key="UI_Rarity_SuperRare" Value="Unique" />
+    <String Key="UI_Rarity_SuperUltraRare" Value="Éteint" />
+    <String Key="UI_Rarity_UltraRare" Value="Précieux" />
+    <String Key="UI_Save_Collect" Value="Taux de collection" />
+    <String Key="UI_Save_Create" Value="Nouvelle sauvegarde" />
+    <String Key="UI_Save_Days" Value="Jours max." />
+    <String Key="UI_Save_Delete" Value="Supprimer la sauvegarde" />
+    <String Key="UI_Save_DeleteConfirm" Value="Voulez-vous vraiment supprimer cette sauvegarde ?" />
+    <String Key="UI_Save_Empty" Value="Vide" />
+    <String Key="UI_Save_Money" Value="Or max." />
+    <String Key="UI_Save_NameInput" Value="Entrer le nom" />
+    <String Key="UI_Save_Pass" Value="Parties terminées" />
+    <String Key="UI_Save_SaveIndex" Value="Sauvegarde {0}" />
+    <String Key="UI_Save_Stats" Value="Statistiques" />
+    <String Key="UI_Save_UnlockAll" Value="Tout déverrouiller" />
+    <String Key="UI_Save_UnlockAllConfirm" Value="Déverrouiller tout le contenu désactivera les succès pour cette partie sauvegardée. Voulez-vous vraiment continuer ?" />
+    <String Key="UI_Setting_ConfirmButton" Value="Sauvegarder et retourner" />
+    <String Key="UI_Setting_Cursor" Value="Skin de curseur" />
+    <String Key="UI_Setting_DisplayMode" Value="Affichage" />
+    <String Key="UI_Setting_FullScreen" Value="Plein écran" />
+    <String Key="UI_Setting_Language" Value="Langues" />
+    <String Key="UI_Setting_MusicVolume" Value="Musique" />
+    <String Key="UI_Setting_Native" Value="Natif" />
+    <String Key="UI_Setting_Nolimit" Value="Sans limite" />
+    <String Key="UI_Setting_Resolution" Value="Résolution" />
+    <String Key="UI_Setting_SoundVolume" Value="Effets sonores" />
+    <String Key="UI_Setting_Title" Value="Réglages" />
+    <String Key="UI_Setting_Windowed" Value="Fenêtre" />
+    <String Key="UI_SkipAnim" Value="Passer" />
+    <String Key="UI_SkipSettle" Value="Passer l'animation, veuillez patienter..." />
+    <String Key="UI_Staff_Artist" Value="Artiste" />
+    <String Key="UI_Staff_Credits" Value="Remerciements à" />
+    <String Key="UI_Staff_Designer" Value="Designer" />
+    <String Key="UI_Staff_Programmer" Value="Programmeur" />
+    <String Key="UI_Staff_SpecialThanks" Value="Nos familles qui comprennent et nous soutiennent, nos amis qui nous aident en silence, et vous, le joueur, devant l'écran !" />
+    <String Key="UI_Staff_Title" Value="Développeurs" />
+    <String Key="UI_Summary_BestRecord" Value="Meilleur record" />
+    <String Key="UI_Summary_MaxDayMoney" Value="Or max par jour" />
+    <String Key="UI_Summary_MVP" Value="MVP :" />
+    <String Key="UI_Summary_Summary" Value="Résultats" />
+    <String Key="UI_Summary_TotalDay" Value="Jours totaux :" />
+    <String Key="UI_Summary_TotalGold" Value="Boîtes totales :" />
+    <String Key="UI_Summary_TotalMoney" Value="Or total :" />
+    <String Key="UI_Toy_Lock" Value="Débloqué après avoir terminé la difficulté {0} de la Ferme de soleil" />
+    <String Key="UI_Toy_SelectInGame" Value="Choisissez 1 jouet" />
+  </Dictionary>
+  <Dictionary Language="Russian">
+    <String Key="Ability_InstDesc_Count" Value="Текущий: {0}/{1}" />
+    <String Key="Ability_Lieflat_NotEnough" Value="Недостаточно {0}, невозможно сделать подношение" />
+    <String Key="UI_Animal_BaseMoney" Value="{0}{1}{2}/дн." />
+    <String Key="UI_AnimalFamily_CountLimit" Value="Выберите не более {0} семейств животных" />
+    <String Key="UI_AnimalFamily_Lock" Value="Разблокируется после прохождения обучения" />
+    <String Key="UI_AnimalFamily_SelectInGame" Value="Выберите 1 семейство животных" />
+    <String Key="UI_AnimalType_None" Value="Пусто" />
+    <String Key="UI_Award_SelectAnimal" Value="Выбрать животное" />
+    <String Key="UI_Award_SelectHero" Value="Замените кошачьего бога" />
+    <String Key="UI_Award_SelectItem" Value="Получить реквизит" />
+    <String Key="UI_Award_SelectToy" Value="получить игрушки" />
+    <String Key="UI_Award_Title" Value="Награда кошачьего бога" />
+    <String Key="UI_Book_All" Value="Все" />
+    <String Key="UI_Book_Animal" Value="Животные" />
+    <String Key="UI_Book_AnimalFamilyLock" Value="Семейство не разблокировано." />
+    <String Key="UI_Book_Clear" Value="Прочитано" />
+    <String Key="UI_Book_Collect" Value="Степень сбора: {0}" />
+    <String Key="UI_Book_Item" Value="Предмет" />
+    <String Key="UI_Book_NotDiscover" Value="Используется в игре и включен в иллюстрированную книгу" />
+    <String Key="UI_Book_UnlockCondition" Value="Условие разблокировки: {0}" />
+    <String Key="UI_Book_UnlockDisable" Value="Еще не разблокировано" />
+    <String Key="UI_BugReport_ContactPlaceholder" Value="Пожалуйста, оставьте свою контактную информацию (необязательно)" />
+    <String Key="UI_BugReport_Placeholder" Value="Пожалуйста, подробно опишите ОШИБКУ, с которой вы столкнулись" />
+    <String Key="UI_Dialog_CancelButton" Value="Отмена" />
+    <String Key="UI_Dialog_ConfirmButton" Value="Ок" />
+    <String Key="UI_Dialog_OtherButton" Value="Другое" />
+    <String Key="UI_Dlc_LockTip" Value="Требуется покупка DLC: {0}" />
+    <String Key="UI_Game_Name" Value="Ранчо Кошачьего Бога" />
+    <String Key="UI_Hero_SelectInGame" Value="Выбери кошачьего бога" />
+    <String Key="UI_HeroAbility_Active" Value="Активное" />
+    <String Key="UI_HeroAbility_CoolDownDay" Value="{0}дн." />
+    <String Key="UI_HeroAbility_CoolDownStage" Value="{0}уровень" />
+    <String Key="UI_HeroAbility_Passive" Value="Пассивное" />
+    <String Key="UI_Inventory_Count" Value="Всего: {0}" />
+    <String Key="UI_Leaderboard_DayMoney" Value="Список подношений" />
+    <String Key="UI_Leaderboard_Days" Value="Список дней" />
+    <String Key="UI_Leaderboard_Friend" Value="Друзья" />
+    <String Key="UI_Leaderboard_Global" Value="Весь мир" />
+    <String Key="UI_Leaderboard_Loading" Value="Загрузка..." />
+    <String Key="UI_Leaderboard_TotalMoney" Value="Общий список подношений" />
+    <String Key="UI_Level_AdventureMode" Value="Режим приключений" />
+    <String Key="UI_Level_ChallengeDesc" Value="{0} очищается после каждого подношения" />
+    <String Key="UI_Level_ChallengeMode" Value="Режим вызова" />
+    <String Key="UI_Level_EndlessMode" Value="Бесконечный режим" />
+    <String Key="UI_Level_LevelDescTitle" Value="Введение в карту" />
+    <String Key="UI_Level_LevelDifficutyTitle" Value="Сложность" />
+    <String Key="UI_Level_NormalMode" Value="Основной режим" />
+    <String Key="UI_Main_Achievement" Value="Достижения" />
+    <String Key="UI_Main_Book" Value="Иллюстрированная книга" />
+    <String Key="UI_Main_CatGod" Value="Кошачий Бог" />
+    <String Key="UI_Main_ConfirmButton" Value="Подтвердить" />
+    <String Key="UI_Main_FamilySelect" Value="Выбор семейства" />
+    <String Key="UI_Main_FamilySelectTip" Value="Пожалуйства выберите 3 семейства" />
+    <String Key="UI_Main_FeatureLock" Value="Еще не разблокировано" />
+    <String Key="UI_Main_Leaderboard" Value="Рейтинг" />
+    <String Key="UI_Main_LevelSelectTip" Value="Пожалуйста, сначала пройдите текущую сложность" />
+    <String Key="UI_Main_LevelTitle" Value="Сложность {0}" />
+    <String Key="UI_Main_Map" Value="Карта" />
+    <String Key="UI_Main_NoneLevel" Value="Сложность 0" />
+    <String Key="UI_Main_Select" Value="Выбрать" />
+    <String Key="UI_Main_SelectAnimalFamily" Value="Выбор семейства" />
+    <String Key="UI_Main_SelectCatGod" Value="Выбрать Кошачьего Бога" />
+    <String Key="UI_Main_Selected" Value="Выбрано" />
+    <String Key="UI_Main_Start" Value="Сделать подношение!" />
+    <String Key="UI_Main_Talent" Value="Игрушки" />
+    <String Key="UI_Main_Toy" Value="Игрушки" />
+    <String Key="UI_MainOption_ReturnButton" Value="Назад" />
+    <String Key="UI_MainOption_ReturnMenu" Value="Назад в меню" />
+    <String Key="UI_Menu_AboutButton" Value="О " />
+    <String Key="UI_Menu_Book" Value="Иллюстрированная книга" />
+    <String Key="UI_Menu_BugReport" Value="Сообщить об ошибке" />
+    <String Key="UI_Menu_Close" Value="Закрыть" />
+    <String Key="UI_Menu_Confirm" Value="Подтвердить" />
+    <String Key="UI_Menu_ContinueButton" Value="Продолжить игру" />
+    <String Key="UI_Menu_ContinueTitle" Value="Продолжить подношение?" />
+    <String Key="UI_Menu_DemoTitle" Value="Пробная версия" />
+    <String Key="UI_Menu_ExitButton" Value="Выйти из игры" />
+    <String Key="UI_Menu_Leaderboard" Value="Рейтинг" />
+    <String Key="UI_Menu_LoadingHint" Value="Загрузка..." />
+    <String Key="UI_Menu_LoadingTips" Value="Советы: День, когда снова появится Кошачий Бог, ранчо вот-вот будет освобождено" />
+    <String Key="UI_Menu_NewButton" Value="Новая игра" />
+    <String Key="UI_Menu_Questionnaire" Value="Вопросы" />
+    <String Key="UI_Menu_QuitButton" Value="Выйти" />
+    <String Key="UI_Menu_Return" Value="Назад" />
+    <String Key="UI_Menu_ReturnToMain" Value="Вернуться в комнату" />
+    <String Key="UI_Menu_SettingButton" Value="Настройки" />
+    <String Key="UI_Menu_StaffButton" Value="Производственный персонал" />
+    <String Key="UI_Menu_StartButton" Value="Начать игру" />
+    <String Key="UI_Menu_StartGame" Value="Начать игру" />
+    <String Key="UI_Menu_Unlocked" Value="Разблокировано" />
+    <String Key="UI_Menu_Wishlist" Value="Добавить в список желаний" />
+    <String Key="UI_Option_RestartButton" Value="Начать заново" />
+    <String Key="UI_Option_ReturnButton" Value="Назад к игре" />
+    <String Key="UI_Option_ReturnToMainButton" Value="Вернуться в комнату" />
+    <String Key="UI_Option_ReturnToMenuButton" Value="Сохранить и вернуться в главное меню" />
+    <String Key="UI_Option_SettingButton" Value="Настройки" />
+    <String Key="UI_Option_Title" Value="Параметры" />
+    <String Key="UI_Option_TutorialButton" Value="Обучение" />
+    <String Key="UI_Prologue_HighlightTip" Value="Нажмите на выделенное, чтобы продолжить" />
+    <String Key="UI_Prologue_Tip" Value="Нажмите, чтобы продолжить" />
+    <String Key="UI_Ranch_All" Value="Все" />
+    <String Key="UI_Ranch_Award" Value="Вы получили{0}{1}и{2}{3}" />
+    <String Key="UI_Ranch_BaseMoney" Value="{0}{1}{2}" />
+    <String Key="UI_Ranch_BeginnerTutorial" Value="Вам нужно [расположить животных соответствующим образом], чтобы заработать {0} и сделать подношение Кошачьему Богу. &lt;br&gt;&lt;br&gt;Первое подношение составляет {1}{0}, который необходимо передать через {2} дн." />
+    <String Key="UI_Ranch_BestDay" Value="Лучшие&lt;br&gt;{0} дни в истории" />
+    <String Key="UI_Ranch_Cancel" Value="Отмена" />
+    <String Key="UI_Ranch_CannotSell" Value="На данный момент нет в продаже" />
+    <String Key="UI_Ranch_CloseButton" Value="Назад" />
+    <String Key="UI_Ranch_Collapse" Value="Нажмите, чтобы свернуть" />
+    <String Key="UI_Ranch_CompleteGame" Value="Поздравляем, Кошачий Бог накормлен! &lt;br&gt;&lt;br&gt;Вернитесь в комнату" />
+    <String Key="UI_Ranch_CompleteTutorial" Value="Поздравляем, Кошачий Ког накормлен и испытание пройдено! &lt;br&gt;&lt;br&gt;Завершите обучение и вернитесь в комнату" />
+    <String Key="UI_Ranch_Day" Value="{0}дн." />
+    <String Key="UI_Ranch_DayDebt" Value="Подношение {1}{2} через {0} дн." />
+    <String Key="UI_Ranch_DebtComplete" Value="Ваша сумма подношения составляет {0}{1}, которую необходимо выплатить в течение {2} дн." />
+    <String Key="UI_Ranch_DebtTitle" Value="квитанция Кошачьего Бога" />
+    <String Key="UI_Ranch_DebtUp" Value="Ваша сумма подношения составляет {0}{1}, которую необходимо выплатить в течение {2} дн." />
+    <String Key="UI_Ranch_DisableSave" Value="На данный момент невозможно сохранить" />
+    <String Key="UI_Ranch_EndButton" Value="Уйти после победы" />
+    <String Key="UI_Ranch_EndlessMode_Tip" Value="(Вклады после входа в бесконечный режим будут учитываться только в рейтинге бесконечного режима)" />
+    <String Key="UI_Ranch_EndlessReturnToMainTip" Value="Игра завершится после возвращения в хижину (текущий вклад будет учтен в рейтинге). Хотите вернуться?" />
+    <String Key="UI_Ranch_Expand" Value="Нажмите, чтобы развернуть" />
+    <String Key="UI_Ranch_FossilReward" Value="Сбор ископаемых" />
+    <String Key="UI_Ranch_GameOver" Value="Вы не сделали вовремя подношения и потеряли доверие Кошачьего Бога. Вы уволены!" />
+    <String Key="UI_Ranch_GetAll" Value="Забрать всё" />
+    <String Key="UI_Ranch_GiveUpButton" Value="Сдаться" />
+    <String Key="UI_Ranch_GoldAward" Value="Вы получили {0}{1}, проценты {2}{3}" />
+    <String Key="UI_Ranch_HideButton" Value="Скрыть" />
+    <String Key="UI_Ranch_Interest" Value="(проценты{0}{1})" />
+    <String Key="UI_Ranch_ItemFull" Value="Инвентарь полон" />
+    <String Key="UI_Ranch_Items" Value="Предмет" />
+    <String Key="UI_Ranch_MapCellFull" Value="Поле заполнено" />
+    <String Key="UI_Ranch_NewDayButton" Value="Новый день" />
+    <String Key="UI_Ranch_NextStage" Value="Следующий уровень" />
+    <String Key="UI_Ranch_NotEnoughGold" Value="Недостаточно {0}" />
+    <String Key="UI_Ranch_Notice" Value="Уведомить" />
+    <String Key="UI_Ranch_NotOnField" Value="Вне игры" />
+    <String Key="UI_Ranch_NotRemovable" Value="Невозможно удалить" />
+    <String Key="UI_Ranch_OnField" Value="На поле" />
+    <String Key="UI_Ranch_PayButton" Value="Оплатить" />
+    <String Key="UI_Ranch_PayDebt" Value="Ваш период подношения истек, и вам нужно сделать подношение Великому Кошачьему Богу{0}{1}" />
+    <String Key="UI_Ranch_RefreshButton" Value="Обновить" />
+    <String Key="UI_Ranch_RemoveButton" Value="Удалить" />
+    <String Key="UI_Ranch_ReserveFossil" Value="Сохранить ископаемые" />
+    <String Key="UI_Ranch_Reset" Value="Перезагрузить" />
+    <String Key="UI_Ranch_ReturnToMainTip" Value="После возвращения в комнату прогресс этой игры будет потерян. Хотите вернуться?" />
+    <String Key="UI_Ranch_Sell" Value="Продать" />
+    <String Key="UI_Ranch_Shop" Value="Магазин" />
+    <String Key="UI_Ranch_ShowButton" Value="Показать" />
+    <String Key="UI_Ranch_SkipButton" Value="Перепрыгнуть" />
+    <String Key="UI_Ranch_SortByCon" Value="Сортировать по вкладу" />
+    <String Key="UI_Ranch_SortByRarity" Value="Сортировать по редкости" />
+    <String Key="UI_Ranch_Stage" Value="Уровень:" />
+    <String Key="UI_Ranch_Talents" Value="Талант" />
+    <String Key="UI_Ranch_Tiles" Value="Ландшафт" />
+    <String Key="UI_Ranch_UnlockButton" Value="Разблокировать" />
+    <String Key="UI_Rarity_Normal" Value="Обычный" />
+    <String Key="UI_Rarity_Rare" Value="Редкий" />
+    <String Key="UI_Rarity_SuperRare" Value="Редкий" />
+    <String Key="UI_Rarity_SuperUltraRare" Value="Вымерший" />
+    <String Key="UI_Rarity_UltraRare" Value="Редкий" />
+    <String Key="UI_Save_Collect" Value="Уровень сбора" />
+    <String Key="UI_Save_Create" Value="Новое сохранение" />
+    <String Key="UI_Save_Days" Value="Макс. дней" />
+    <String Key="UI_Save_Delete" Value="Удалить сохранение" />
+    <String Key="UI_Save_DeleteConfirm" Value="Вы уверены, что хотите удалить это сохранение?" />
+    <String Key="UI_Save_Empty" Value="Пусто" />
+    <String Key="UI_Save_Money" Value="Макс. золота" />
+    <String Key="UI_Save_NameInput" Value="Введите имя" />
+    <String Key="UI_Save_Pass" Value="Пройдено раз" />
+    <String Key="UI_Save_SaveIndex" Value="Сохранение {0}" />
+    <String Key="UI_Save_Stats" Value="Статистика" />
+    <String Key="UI_Save_UnlockAll" Value="Разблокировать всё" />
+    <String Key="UI_Save_UnlockAllConfirm" Value="После разблокировки всего контента получение достижений для этого сохранения станет невозможным. Вы уверены, что хотите продолжить?" />
+    <String Key="UI_Setting_ConfirmButton" Value="Сохранить и вернуться" />
+    <String Key="UI_Setting_Cursor" Value="Мышиная кожа" />
+    <String Key="UI_Setting_DisplayMode" Value="Режим отображения" />
+    <String Key="UI_Setting_FullScreen" Value="Полноэкранный" />
+    <String Key="UI_Setting_Language" Value="Язык" />
+    <String Key="UI_Setting_MusicVolume" Value="Музыка" />
+    <String Key="UI_Setting_Native" Value="Основное" />
+    <String Key="UI_Setting_Nolimit" Value="Без ограничений" />
+    <String Key="UI_Setting_Resolution" Value="Разрешение" />
+    <String Key="UI_Setting_SoundVolume" Value="Музыка" />
+    <String Key="UI_Setting_Title" Value="Настройки" />
+    <String Key="UI_Setting_Windowed" Value="Окно" />
+    <String Key="UI_SkipAnim" Value="Пропустить анимацию" />
+    <String Key="UI_SkipSettle" Value="Пропустить анимацию, успокоиться..." />
+    <String Key="UI_Staff_Artist" Value="Искусство" />
+    <String Key="UI_Staff_Credits" Value="Особая благодарность" />
+    <String Key="UI_Staff_Designer" Value="План" />
+    <String Key="UI_Staff_Programmer" Value="Программа" />
+    <String Key="UI_Staff_SpecialThanks" Value="Наши семьи, которые нас понимают и поддерживают, наши друзья, которые помогают нам молча, и вы перед экраном!" />
+    <String Key="UI_Staff_Title" Value="Производственный персонал" />
+    <String Key="UI_Summary_BestRecord" Value="Лучший в истории" />
+    <String Key="UI_Summary_MaxDayMoney" Value="Максимальная дневная прибыль:" />
+    <String Key="UI_Summary_MVP" Value="Лучшее в матче:" />
+    <String Key="UI_Summary_Summary" Value="Урегулирование подношения" />
+    <String Key="UI_Summary_TotalDay" Value="Количество дней подношений:" />
+    <String Key="UI_Summary_TotalGold" Value="Всего получено консервов:" />
+    <String Key="UI_Summary_TotalMoney" Value="Общий объем прибыли:" />
+    <String Key="UI_Toy_Lock" Value="Разблокируется после прохождения сложности «Солнечное ранчо» {0}." />
+    <String Key="UI_Toy_SelectInGame" Value="Выберите 1 игрушку" />
+  </Dictionary>
+  <Dictionary Language="Spanish">
+    <String Key="Ability_InstDesc_Count" Value="Actual: {0}/{1}" />
+    <String Key="Ability_Lieflat_NotEnough" Value="No tienes suficientes {0}, no puedes hacer ninguna ofrenda por adelantado." />
+    <String Key="UI_Animal_BaseMoney" Value="{0}{1}{2}/d" />
+    <String Key="UI_AnimalFamily_CountLimit" Value="Puedes elegir un máximo de {0} familias animales." />
+    <String Key="UI_AnimalFamily_Lock" Value="Se desbloquea tras superar el tutorial." />
+    <String Key="UI_AnimalFamily_SelectInGame" Value="Elige 1 familia de animales" />
+    <String Key="UI_AnimalType_None" Value="Vacío" />
+    <String Key="UI_Award_SelectAnimal" Value="Elige animal" />
+    <String Key="UI_Award_SelectHero" Value="Reemplazar al dios gato" />
+    <String Key="UI_Award_SelectItem" Value="conseguir accesorios" />
+    <String Key="UI_Award_SelectToy" Value="conseguir juguetes" />
+    <String Key="UI_Award_Title" Value="La recompensa del dios gato" />
+    <String Key="UI_Book_All" Value="Completo" />
+    <String Key="UI_Book_Animal" Value="Animales" />
+    <String Key="UI_Book_AnimalFamilyLock" Value="La familia animal correspondiente no está desbloqueada." />
+    <String Key="UI_Book_Clear" Value="Leído" />
+    <String Key="UI_Book_Collect" Value="Completado: {0}" />
+    <String Key="UI_Book_Item" Value="Objetos" />
+    <String Key="UI_Book_NotDiscover" Value="Al usarlo durante el juego, se añadirá al álbum." />
+    <String Key="UI_Book_UnlockCondition" Value="Condiciones de desbloqueo: {0}" />
+    <String Key="UI_Book_UnlockDisable" Value="Sin desbloquear" />
+    <String Key="UI_BugReport_ContactPlaceholder" Value="Déjanos un método de contacto (se puede elegir)" />
+    <String Key="UI_BugReport_Placeholder" Value="Describe el error o bug que has encontrado." />
+    <String Key="UI_Dialog_CancelButton" Value="Cancelar" />
+    <String Key="UI_Dialog_ConfirmButton" Value="De acuerdo" />
+    <String Key="UI_Dialog_OtherButton" Value="Otros" />
+    <String Key="UI_Dlc_LockTip" Value="Requiere la compra del DLC: {0}" />
+    <String Key="UI_Game_Name" Value="Granja de Nekokami" />
+    <String Key="UI_Hero_SelectInGame" Value="Elige al dios gato" />
+    <String Key="UI_HeroAbility_Active" Value="Activo" />
+    <String Key="UI_HeroAbility_CoolDownDay" Value="{0} d" />
+    <String Key="UI_HeroAbility_CoolDownStage" Value="Nivel {0}" />
+    <String Key="UI_HeroAbility_Passive" Value="Pasivo" />
+    <String Key="UI_Inventory_Count" Value="Puntos totales: {0}" />
+    <String Key="UI_Leaderboard_DayMoney" Value="Tabla de ofrendas diarias" />
+    <String Key="UI_Leaderboard_Days" Value="Tabla de días" />
+    <String Key="UI_Leaderboard_Friend" Value="Amigos" />
+    <String Key="UI_Leaderboard_Global" Value="Global" />
+    <String Key="UI_Leaderboard_Loading" Value="Cargando..." />
+    <String Key="UI_Leaderboard_TotalMoney" Value="Tabla de ofrendas totales" />
+    <String Key="UI_Level_AdventureMode" Value="Modo aventura" />
+    <String Key="UI_Level_ChallengeDesc" Value="Después de cada ofrenda, {0} se reinicia a cero." />
+    <String Key="UI_Level_ChallengeMode" Value="Modo desafío" />
+    <String Key="UI_Level_EndlessMode" Value="Modo interminable" />
+    <String Key="UI_Level_LevelDescTitle" Value="Información del mapa" />
+    <String Key="UI_Level_LevelDifficutyTitle" Value="Etiquetas de dificultad" />
+    <String Key="UI_Level_NormalMode" Value="Modo básico" />
+    <String Key="UI_Main_Achievement" Value="Logros" />
+    <String Key="UI_Main_Book" Value="Álbum" />
+    <String Key="UI_Main_CatGod" Value="Nekokami" />
+    <String Key="UI_Main_ConfirmButton" Value="Confirmar" />
+    <String Key="UI_Main_FamilySelect" Value="Elegir familia animal" />
+    <String Key="UI_Main_FamilySelectTip" Value="Elige 3 familias animales" />
+    <String Key="UI_Main_FeatureLock" Value="Sin desbloquear" />
+    <String Key="UI_Main_Leaderboard" Value="Clasificación" />
+    <String Key="UI_Main_LevelSelectTip" Value="Completa primero el nivel de dificultad actual" />
+    <String Key="UI_Main_LevelTitle" Value="Dificultad: {0}" />
+    <String Key="UI_Main_Map" Value="Mapa" />
+    <String Key="UI_Main_NoneLevel" Value="Dificultad: 0" />
+    <String Key="UI_Main_Select" Value="Elegir" />
+    <String Key="UI_Main_SelectAnimalFamily" Value="Elegir familia" />
+    <String Key="UI_Main_SelectCatGod" Value="Elegir familia animal" />
+    <String Key="UI_Main_Selected" Value="¡Elegida!" />
+    <String Key="UI_Main_Start" Value="¡A hacer una ofrenda!" />
+    <String Key="UI_Main_Talent" Value="Juguetes" />
+    <String Key="UI_Main_Toy" Value="Juguetes" />
+    <String Key="UI_MainOption_ReturnButton" Value="Volver" />
+    <String Key="UI_MainOption_ReturnMenu" Value="Volver al menú principal" />
+    <String Key="UI_Menu_AboutButton" Value="Sobre" />
+    <String Key="UI_Menu_Book" Value="Álbum" />
+    <String Key="UI_Menu_BugReport" Value="Informe de errores" />
+    <String Key="UI_Menu_Close" Value="Cerrar" />
+    <String Key="UI_Menu_Confirm" Value="Confirmar" />
+    <String Key="UI_Menu_ContinueButton" Value="Seguir jugando" />
+    <String Key="UI_Menu_ContinueTitle" Value="¿Quieres seguir haciendo ofrendas?" />
+    <String Key="UI_Menu_DemoTitle" Value="Versión de prueba" />
+    <String Key="UI_Menu_ExitButton" Value="Salir del juego" />
+    <String Key="UI_Menu_Leaderboard" Value="Clasificación" />
+    <String Key="UI_Menu_LoadingHint" Value="Cargando..." />
+    <String Key="UI_Menu_LoadingTips" Value="Consejo: Nekokami aparecerá cuando la granja esté a punto de liberarse." />
+    <String Key="UI_Menu_NewButton" Value="Nuevo juego" />
+    <String Key="UI_Menu_Questionnaire" Value="Encuesta" />
+    <String Key="UI_Menu_QuitButton" Value="Salir" />
+    <String Key="UI_Menu_Return" Value="Volver" />
+    <String Key="UI_Menu_ReturnToMain" Value="Volver a la cabaña" />
+    <String Key="UI_Menu_SettingButton" Value="Ajustes" />
+    <String Key="UI_Menu_StaffButton" Value="Equipo de producción" />
+    <String Key="UI_Menu_StartButton" Value="Comenzar a jugar" />
+    <String Key="UI_Menu_StartGame" Value="Comenzar a jugar" />
+    <String Key="UI_Menu_Unlocked" Value="Desbloqueado" />
+    <String Key="UI_Menu_Wishlist" Value="Añadir a la lista de deseos" />
+    <String Key="UI_Option_RestartButton" Value="Reiniciar" />
+    <String Key="UI_Option_ReturnButton" Value="Volver al juego" />
+    <String Key="UI_Option_ReturnToMainButton" Value="Volver a la cabaña" />
+    <String Key="UI_Option_ReturnToMenuButton" Value="Guardar y volver al menú principal" />
+    <String Key="UI_Option_SettingButton" Value="Ajustes" />
+    <String Key="UI_Option_Title" Value="Selección" />
+    <String Key="UI_Option_TutorialButton" Value="Tutorial" />
+    <String Key="UI_Prologue_HighlightTip" Value="Pulsa sobre la zona iluminada para continuar" />
+    <String Key="UI_Prologue_Tip" Value="Pulsa para continuar" />
+    <String Key="UI_Ranch_All" Value="Todos" />
+    <String Key="UI_Ranch_Award" Value="Has obtenido {0}, {1} y {2}{3}." />
+    <String Key="UI_Ranch_BaseMoney" Value="{0}{1}{2}" />
+    <String Key="UI_Ranch_BeginnerTutorial" Value="Tienes que organizar con cabeza la participación de los animales para ganar {0} y hacer una ofrenda al gran Nekokami.&lt;br&gt;&lt;br&gt;La cantidad inicial de la ofrenda es de {1}{0},  y tiene que entregarse en {2} días." />
+    <String Key="UI_Ranch_BestDay" Value="Mejor registro histórico&lt;br&gt;{0} d" />
+    <String Key="UI_Ranch_Cancel" Value="Cancelar" />
+    <String Key="UI_Ranch_CannotSell" Value="No se puede vender en este momento" />
+    <String Key="UI_Ranch_CloseButton" Value="Volver" />
+    <String Key="UI_Ranch_Collapse" Value="Pulsa para recoger" />
+    <String Key="UI_Ranch_CompleteGame" Value="¡Felicidades, has alimentado al gran Nekokami!&lt;br&gt;&lt;br&gt;Misión cumplida, regresa a la cabaña." />
+    <String Key="UI_Ranch_CompleteTutorial" Value="¡Felicidades, has alimentado al gran Nekokami! ¡Prueba superada!&lt;br&gt;&lt;br&gt;Ahora que has cumplido tu misión, regresa a la cabaña." />
+    <String Key="UI_Ranch_Day" Value="Día {0}" />
+    <String Key="UI_Ranch_DayDebt" Value="Tras {0}días, dona {1} {2}." />
+    <String Key="UI_Ranch_DebtComplete" Value="La cantidad de tu ofrenda ha ascendido a {0}{1}; debes entregarla en {2} días." />
+    <String Key="UI_Ranch_DebtTitle" Value="Cuenta de Nekokami" />
+    <String Key="UI_Ranch_DebtUp" Value="La cantidad de tu ofrenda ha aumentado a {0}{1}, debes entregarla en {2} días." />
+    <String Key="UI_Ranch_DisableSave" Value="No se puede guardar en este momento" />
+    <String Key="UI_Ranch_EndButton" Value="Misión cumplida" />
+    <String Key="UI_Ranch_EndlessMode_Tip" Value="(Al entrar en el modo interminable, las ofrendas solo se contarán en la tabla de clasificación del modo interminable)." />
+    <String Key="UI_Ranch_EndlessReturnToMainTip" Value="El juego terminará después de regresar a la cabaña (la contribución actual se incluirá en la clasificación. ¿Quieres volver?)." />
+    <String Key="UI_Ranch_Expand" Value="Pulsa sobre desplegar" />
+    <String Key="UI_Ranch_FossilReward" Value="Cosecha de fósiles" />
+    <String Key="UI_Ranch_GameOver" Value="¡No has hecho tu ofrenda a tiempo! ¡Has perdido la confianza del gran Nekokami y te ha expulsado!" />
+    <String Key="UI_Ranch_GetAll" Value="Reclamar todo" />
+    <String Key="UI_Ranch_GiveUpButton" Value="Abandonar" />
+    <String Key="UI_Ranch_GoldAward" Value="Has obtenido {0} {1}. Intereses: {2}{3}" />
+    <String Key="UI_Ranch_HideButton" Value="Ocultar" />
+    <String Key="UI_Ranch_Interest" Value="(Intereses: {0}{1})" />
+    <String Key="UI_Ranch_ItemFull" Value="El inventario está lleno" />
+    <String Key="UI_Ranch_Items" Value="Objetos" />
+    <String Key="UI_Ranch_MapCellFull" Value="No hay más espacio en la granja." />
+    <String Key="UI_Ranch_NewDayButton" Value="Un nuevo día" />
+    <String Key="UI_Ranch_NextStage" Value="Siguiente nivel" />
+    <String Key="UI_Ranch_NotEnoughGold" Value="No tienes suficientes {0}" />
+    <String Key="UI_Ranch_Notice" Value="Aviso" />
+    <String Key="UI_Ranch_NotOnField" Value="Fuera de juego" />
+    <String Key="UI_Ranch_NotRemovable" Value="No se puede quitar" />
+    <String Key="UI_Ranch_OnField" Value="En el campo" />
+    <String Key="UI_Ranch_PayButton" Value="Pagar" />
+    <String Key="UI_Ranch_PayDebt" Value="El plazo para hacer ofrendas ha terminado. Tienes que entregar a Nekokami {0}{1}." />
+    <String Key="UI_Ranch_RefreshButton" Value="Actualizar" />
+    <String Key="UI_Ranch_RemoveButton" Value="Quitar" />
+    <String Key="UI_Ranch_ReserveFossil" Value="Conservar fósiles" />
+    <String Key="UI_Ranch_Reset" Value="Reiniciar" />
+    <String Key="UI_Ranch_ReturnToMainTip" Value="Al regresar a la cabaña, el progreso de esta partida se perderá. ¿Quieres volver?" />
+    <String Key="UI_Ranch_Sell" Value="Vender" />
+    <String Key="UI_Ranch_Shop" Value="Tienda" />
+    <String Key="UI_Ranch_ShowButton" Value="Mostrar" />
+    <String Key="UI_Ranch_SkipButton" Value="Saltar" />
+    <String Key="UI_Ranch_SortByCon" Value="Ordenar por ofrendas" />
+    <String Key="UI_Ranch_SortByRarity" Value="Ordenar por rareza" />
+    <String Key="UI_Ranch_Stage" Value="Nivel:" />
+    <String Key="UI_Ranch_Talents" Value="Talento" />
+    <String Key="UI_Ranch_Tiles" Value="Terreno" />
+    <String Key="UI_Ranch_UnlockButton" Value="Desbloquear" />
+    <String Key="UI_Rarity_Normal" Value="Común" />
+    <String Key="UI_Rarity_Rare" Value="Raro" />
+    <String Key="UI_Rarity_SuperRare" Value="Inusual" />
+    <String Key="UI_Rarity_SuperUltraRare" Value="Extinto" />
+    <String Key="UI_Rarity_UltraRare" Value="Excepcional" />
+    <String Key="UI_Save_Collect" Value="Tasa de colección" />
+    <String Key="UI_Save_Create" Value="Nuevo guardado" />
+    <String Key="UI_Save_Days" Value="Días máx." />
+    <String Key="UI_Save_Delete" Value="Borrar guardado" />
+    <String Key="UI_Save_DeleteConfirm" Value="¿Estás seguro de que quieres eliminar este guardado?" />
+    <String Key="UI_Save_Empty" Value="Vacío" />
+    <String Key="UI_Save_Money" Value="Oro máx." />
+    <String Key="UI_Save_NameInput" Value="Ingresar nombre" />
+    <String Key="UI_Save_Pass" Value="Veces completado" />
+    <String Key="UI_Save_SaveIndex" Value="Guardado {0}" />
+    <String Key="UI_Save_Stats" Value="Estadísticas" />
+    <String Key="UI_Save_UnlockAll" Value="Desbloquear todo" />
+    <String Key="UI_Save_UnlockAllConfirm" Value="Si desbloqueas todo el contenido, los logros se desactivarán para esta partida guardada. ¿Estás seguro de que quieres continuar?" />
+    <String Key="UI_Setting_ConfirmButton" Value="Guardar y volver" />
+    <String Key="UI_Setting_Cursor" Value="Apariencia de ratón" />
+    <String Key="UI_Setting_DisplayMode" Value="Mostrar modo" />
+    <String Key="UI_Setting_FullScreen" Value="Pantalla completa" />
+    <String Key="UI_Setting_Language" Value="Idioma" />
+    <String Key="UI_Setting_MusicVolume" Value="Volumen de música" />
+    <String Key="UI_Setting_Native" Value="Original" />
+    <String Key="UI_Setting_Nolimit" Value="Sin límite" />
+    <String Key="UI_Setting_Resolution" Value="Resolución" />
+    <String Key="UI_Setting_SoundVolume" Value="Volumen de efectos especiales" />
+    <String Key="UI_Setting_Title" Value="Ajustes" />
+    <String Key="UI_Setting_Windowed" Value="Ventana" />
+    <String Key="UI_SkipAnim" Value="Saltar animación" />
+    <String Key="UI_SkipSettle" Value="Saltando animación. Calculando resultados..." />
+    <String Key="UI_Staff_Artist" Value="Arte" />
+    <String Key="UI_Staff_Credits" Value="Agradecimientos especiales" />
+    <String Key="UI_Staff_Designer" Value="Diseñadores" />
+    <String Key="UI_Staff_Programmer" Value="Programadores" />
+    <String Key="UI_Staff_SpecialThanks" Value="Gracias a nuestras familias por su apoyo, a los amigos que nos ayudaron en silencio y, por supuesto, a ti, que estás frente a la pantalla." />
+    <String Key="UI_Staff_Title" Value="Equipo de producción" />
+    <String Key="UI_Summary_BestRecord" Value="Mejor récord histórico" />
+    <String Key="UI_Summary_MaxDayMoney" Value="Beneficio diario más alto:" />
+    <String Key="UI_Summary_MVP" Value="Mejor resultado general:" />
+    <String Key="UI_Summary_Summary" Value="Resultado de ofrendas" />
+    <String Key="UI_Summary_TotalDay" Value="Días de ofrendas:" />
+    <String Key="UI_Summary_TotalGold" Value="Latas totales obtenidas:" />
+    <String Key="UI_Summary_TotalMoney" Value="Dinero total obtenido:" />
+    <String Key="UI_Toy_Lock" Value="Se desbloquea al superar la dificultad {0} de la granja soleada." />
+    <String Key="UI_Toy_SelectInGame" Value="Elige 1 juguete" />
+  </Dictionary>
+  <Dictionary Language="PortugueseBrazil">
+    <String Key="Ability_InstDesc_Count" Value="Atual: {0}/{1}" />
+    <String Key="Ability_Lieflat_NotEnough" Value="{0} insuficiente para pagar tributo" />
+    <String Key="UI_Animal_BaseMoney" Value="{0}{1}{2}/dia" />
+    <String Key="UI_AnimalFamily_CountLimit" Value="Até {0} famílias de animais" />
+    <String Key="UI_AnimalFamily_Lock" Value="Desbloquear após tutorial" />
+    <String Key="UI_AnimalFamily_SelectInGame" Value="Escolha 1 família de animais" />
+    <String Key="UI_AnimalType_None" Value="Vazio" />
+    <String Key="UI_Award_SelectAnimal" Value="Escolha o animal" />
+    <String Key="UI_Award_SelectHero" Value="Substitua o deus gato" />
+    <String Key="UI_Award_SelectItem" Value="Obtenha adereços" />
+    <String Key="UI_Award_SelectToy" Value="pegar brinquedos" />
+    <String Key="UI_Award_Title" Value="Recompensa de Deus Gato" />
+    <String Key="UI_Book_All" Value="Tudo" />
+    <String Key="UI_Book_Animal" Value="Animal" />
+    <String Key="UI_Book_AnimalFamilyLock" Value="Família de animais não desbloqueada" />
+    <String Key="UI_Book_Clear" Value="Lido" />
+    <String Key="UI_Book_Collect" Value="Grau de coleta: {0}" />
+    <String Key="UI_Book_Item" Value="Item" />
+    <String Key="UI_Book_NotDiscover" Value="Entra no álbum após o uso no jogo" />
+    <String Key="UI_Book_UnlockCondition" Value="Condições de desbloqueio: {0}" />
+    <String Key="UI_Book_UnlockDisable" Value="Não desbloqueado" />
+    <String Key="UI_BugReport_ContactPlaceholder" Value="Seu contato (opcional)" />
+    <String Key="UI_BugReport_Placeholder" Value="Descreva detalhadamente o BUG" />
+    <String Key="UI_Dialog_CancelButton" Value="Cancelar" />
+    <String Key="UI_Dialog_ConfirmButton" Value="OK" />
+    <String Key="UI_Dialog_OtherButton" Value="Outros" />
+    <String Key="UI_Dlc_LockTip" Value="Requer a compra do DLC: {0}" />
+    <String Key="UI_Game_Name" Value="Cat God Ranch" />
+    <String Key="UI_Hero_SelectInGame" Value="Escolha Deus Gato" />
+    <String Key="UI_HeroAbility_Active" Value="Ativo" />
+    <String Key="UI_HeroAbility_CoolDownDay" Value="{0} dia" />
+    <String Key="UI_HeroAbility_CoolDownStage" Value="{0} estágio" />
+    <String Key="UI_HeroAbility_Passive" Value="Passivo" />
+    <String Key="UI_Inventory_Count" Value="Total: {0}" />
+    <String Key="UI_Leaderboard_DayMoney" Value="Lista de Contribuições Diárias" />
+    <String Key="UI_Leaderboard_Days" Value="Lista de Dias" />
+    <String Key="UI_Leaderboard_Friend" Value="Amigo" />
+    <String Key="UI_Leaderboard_Global" Value="Global" />
+    <String Key="UI_Leaderboard_Loading" Value="Carregando..." />
+    <String Key="UI_Leaderboard_TotalMoney" Value="Lista de Contribuições Totais" />
+    <String Key="UI_Level_AdventureMode" Value="Modo aventura" />
+    <String Key="UI_Level_ChallengeDesc" Value="{0} apagado após cada tributo" />
+    <String Key="UI_Level_ChallengeMode" Value="Modo Desafio" />
+    <String Key="UI_Level_EndlessMode" Value="Modo Infinito" />
+    <String Key="UI_Level_LevelDescTitle" Value="Introdução ao Mapa" />
+    <String Key="UI_Level_LevelDifficutyTitle" Value="Dificuldade" />
+    <String Key="UI_Level_NormalMode" Value="Modo Básico" />
+    <String Key="UI_Main_Achievement" Value="Conquistas" />
+    <String Key="UI_Main_Book" Value="Álbum" />
+    <String Key="UI_Main_CatGod" Value="Deus Gato" />
+    <String Key="UI_Main_ConfirmButton" Value="Confirmar" />
+    <String Key="UI_Main_FamilySelect" Value="Seleção de Família" />
+    <String Key="UI_Main_FamilySelectTip" Value="Selecione 3 famílias" />
+    <String Key="UI_Main_FeatureLock" Value="Não desbloqueado" />
+    <String Key="UI_Main_Leaderboard" Value="Lista" />
+    <String Key="UI_Main_LevelSelectTip" Value="Complete a dificuldade atual" />
+    <String Key="UI_Main_LevelTitle" Value="Dificuldade {0}" />
+    <String Key="UI_Main_Map" Value="Mapa" />
+    <String Key="UI_Main_NoneLevel" Value="Dificuldade 0" />
+    <String Key="UI_Main_Select" Value="Selecionar" />
+    <String Key="UI_Main_SelectAnimalFamily" Value="Seleção de Família" />
+    <String Key="UI_Main_SelectCatGod" Value="Seleção de Deus Gato" />
+    <String Key="UI_Main_Selected" Value="Selecionado" />
+    <String Key="UI_Main_Start" Value="Vamos!" />
+    <String Key="UI_Main_Talent" Value="Brinquedo" />
+    <String Key="UI_Main_Toy" Value="Brinquedo" />
+    <String Key="UI_MainOption_ReturnButton" Value="Voltar" />
+    <String Key="UI_MainOption_ReturnMenu" Value="Voltar ao menu" />
+    <String Key="UI_Menu_AboutButton" Value="Sobre" />
+    <String Key="UI_Menu_Book" Value="Álbum" />
+    <String Key="UI_Menu_BugReport" Value="Reportar Bug" />
+    <String Key="UI_Menu_Close" Value="Fechar" />
+    <String Key="UI_Menu_Confirm" Value="Confirmar" />
+    <String Key="UI_Menu_ContinueButton" Value="Continuar" />
+    <String Key="UI_Menu_ContinueTitle" Value="Quer continuar pagando tributo?" />
+    <String Key="UI_Menu_DemoTitle" Value="Versão de Teste" />
+    <String Key="UI_Menu_ExitButton" Value="Sair" />
+    <String Key="UI_Menu_Leaderboard" Value="Lista" />
+    <String Key="UI_Menu_LoadingHint" Value="Carregando..." />
+    <String Key="UI_Menu_LoadingTips" Value="Dica: O rancho será liberado se o Deus Gato reaparecer" />
+    <String Key="UI_Menu_NewButton" Value="Novo jogo" />
+    <String Key="UI_Menu_Questionnaire" Value="Questionário" />
+    <String Key="UI_Menu_QuitButton" Value="Sair" />
+    <String Key="UI_Menu_Return" Value="Voltar" />
+    <String Key="UI_Menu_ReturnToMain" Value="Voltar à cabana" />
+    <String Key="UI_Menu_SettingButton" Value="Configuração" />
+    <String Key="UI_Menu_StaffButton" Value="Produtor" />
+    <String Key="UI_Menu_StartButton" Value="Iniciar" />
+    <String Key="UI_Menu_StartGame" Value="Iniciar" />
+    <String Key="UI_Menu_Unlocked" Value="Desbloqueado" />
+    <String Key="UI_Menu_Wishlist" Value="Adicionar à lista de desejos" />
+    <String Key="UI_Option_RestartButton" Value="Reiniciar" />
+    <String Key="UI_Option_ReturnButton" Value="Voltar ao jogo" />
+    <String Key="UI_Option_ReturnToMainButton" Value="Voltar à cabana" />
+    <String Key="UI_Option_ReturnToMenuButton" Value="Salvar e voltar ao menu" />
+    <String Key="UI_Option_SettingButton" Value="Configuração" />
+    <String Key="UI_Option_Title" Value="Opções" />
+    <String Key="UI_Option_TutorialButton" Value="Tutorial" />
+    <String Key="UI_Prologue_HighlightTip" Value="Clique no destaque para continuar" />
+    <String Key="UI_Prologue_Tip" Value="Clique para continuar" />
+    <String Key="UI_Ranch_All" Value="Todos" />
+    <String Key="UI_Ranch_Award" Value="Você obtém {0}{1} e {2}{3}" />
+    <String Key="UI_Ranch_BaseMoney" Value="{0}{1}{2}" />
+    <String Key="UI_Ranch_BeginnerTutorial" Value="Deve [Racionalizar animais no campo] para ganhar {0} e pagar o tributo ao Deus Gato.&lt;br&gt;&lt;br&gt;A primeira parcela do tributo é {1}{0}, que deve ser paga após {2} dias." />
+    <String Key="UI_Ranch_BestDay" Value="Melhor Registro&lt;br&gt;{0} dia" />
+    <String Key="UI_Ranch_Cancel" Value="Cancelar" />
+    <String Key="UI_Ranch_CannotSell" Value="Indisponível agora" />
+    <String Key="UI_Ranch_CloseButton" Value="Voltar" />
+    <String Key="UI_Ranch_Collapse" Value="Clique para guardar" />
+    <String Key="UI_Ranch_CompleteGame" Value="Parabéns, o Deus Gato está cheio!&lt;br&gt;&lt;br&gt;Sucesso, voltar à cabana." />
+    <String Key="UI_Ranch_CompleteTutorial" Value="Parabéns, o Deus Gato está cheio! Passou no teste!&lt;br&gt;&lt;br&gt;Terminar o tutorial e voltar à cabana." />
+    <String Key="UI_Ranch_Day" Value="Dia {0}" />
+    <String Key="UI_Ranch_DayDebt" Value="Tributo {1}{2} após {0} dias" />
+    <String Key="UI_Ranch_DebtComplete" Value="O valor do tributo é {0}{1}, precisa ser enviado após {2} dias." />
+    <String Key="UI_Ranch_DebtTitle" Value="Conta do Deus Gato" />
+    <String Key="UI_Ranch_DebtUp" Value="O valor do tributo é aumentado a {0}{1}, precisa ser enviado após {2} dias." />
+    <String Key="UI_Ranch_DisableSave" Value="Não é possível salvar agora" />
+    <String Key="UI_Ranch_EndButton" Value="Sucesso" />
+    <String Key="UI_Ranch_EndlessMode_Tip" Value="(As contribuições só serão contadas para a Lista do Modo Infinito no Modo Infinito)" />
+    <String Key="UI_Ranch_EndlessReturnToMainTip" Value="O jogo terminará após o retorno à cabana (a contribuição atual será incluída no ranking)." />
+    <String Key="UI_Ranch_Expand" Value="Clique para expandir" />
+    <String Key="UI_Ranch_FossilReward" Value="Colheita de Fósseis" />
+    <String Key="UI_Ranch_GameOver" Value="Você perdeu a confiança do Deus Gato por não tributar no prazo e está dispensado!" />
+    <String Key="UI_Ranch_GetAll" Value="Coletar Tudo" />
+    <String Key="UI_Ranch_GiveUpButton" Value="Abandonar" />
+    <String Key="UI_Ranch_GoldAward" Value="Você obtém {0}{1}, interesse {2}{3}" />
+    <String Key="UI_Ranch_HideButton" Value="Esconder" />
+    <String Key="UI_Ranch_Interest" Value="(Interesse {0}{1})" />
+    <String Key="UI_Ranch_ItemFull" Value="Barra de itens cheia" />
+    <String Key="UI_Ranch_Items" Value="Item" />
+    <String Key="UI_Ranch_MapCellFull" Value="Lotes cheios" />
+    <String Key="UI_Ranch_NewDayButton" Value="Amanhã" />
+    <String Key="UI_Ranch_NextStage" Value="Próximo estágio" />
+    <String Key="UI_Ranch_NotEnoughGold" Value="{0} insuficiente" />
+    <String Key="UI_Ranch_Notice" Value="Notificações" />
+    <String Key="UI_Ranch_NotOnField" Value="Fora de Jogo" />
+    <String Key="UI_Ranch_NotRemovable" Value="Não pode ser removido" />
+    <String Key="UI_Ranch_OnField" Value="Em Campo" />
+    <String Key="UI_Ranch_PayButton" Value="Pagar" />
+    <String Key="UI_Ranch_PayDebt" Value="Hora de tributo, deve tributar ao Deus Gato {0}{1}" />
+    <String Key="UI_Ranch_RefreshButton" Value="Atualizar" />
+    <String Key="UI_Ranch_RemoveButton" Value="Remover" />
+    <String Key="UI_Ranch_ReserveFossil" Value="Manter Fósseis" />
+    <String Key="UI_Ranch_Reset" Value="Reiniciar" />
+    <String Key="UI_Ranch_ReturnToMainTip" Value="O retorno à cabana apagará a sessão. Continuar?" />
+    <String Key="UI_Ranch_Sell" Value="Vender" />
+    <String Key="UI_Ranch_Shop" Value="Loja" />
+    <String Key="UI_Ranch_ShowButton" Value="Mostrar" />
+    <String Key="UI_Ranch_SkipButton" Value="Pular" />
+    <String Key="UI_Ranch_SortByCon" Value="Por contribuição" />
+    <String Key="UI_Ranch_SortByRarity" Value="Por raridade" />
+    <String Key="UI_Ranch_Stage" Value="Estágio:" />
+    <String Key="UI_Ranch_Talents" Value="Talento" />
+    <String Key="UI_Ranch_Tiles" Value="Terreno" />
+    <String Key="UI_Ranch_UnlockButton" Value="Desbloquear" />
+    <String Key="UI_Rarity_Normal" Value="Normal" />
+    <String Key="UI_Rarity_Rare" Value="Incomum" />
+    <String Key="UI_Rarity_SuperRare" Value="Raro" />
+    <String Key="UI_Rarity_SuperUltraRare" Value="Extinto" />
+    <String Key="UI_Rarity_UltraRare" Value="Precioso" />
+    <String Key="UI_Save_Collect" Value="Taxa de Coleta" />
+    <String Key="UI_Save_Create" Value="Novo Salvo" />
+    <String Key="UI_Save_Days" Value="Máx. Dias" />
+    <String Key="UI_Save_Delete" Value="Excluir Salvo" />
+    <String Key="UI_Save_DeleteConfirm" Value="Tem certeza de que deseja excluir este arquivo salvo?" />
+    <String Key="UI_Save_Empty" Value="Vazio" />
+    <String Key="UI_Save_Money" Value="Máx. Ouro" />
+    <String Key="UI_Save_NameInput" Value="Digitar nome" />
+    <String Key="UI_Save_Pass" Value="Vezes concluído" />
+    <String Key="UI_Save_SaveIndex" Value="Salvo {0}" />
+    <String Key="UI_Save_Stats" Value="Estatísticas" />
+    <String Key="UI_Save_UnlockAll" Value="Desbloquear Tudo" />
+    <String Key="UI_Save_UnlockAllConfirm" Value="Desbloquear todo o conteúdo irá desativar as conquistas para este jogo salvo. Tem certeza que deseja continuar?" />
+    <String Key="UI_Setting_ConfirmButton" Value="Salvar e voltar" />
+    <String Key="UI_Setting_Cursor" Value="Pele do mouse" />
+    <String Key="UI_Setting_DisplayMode" Value="Modo de exibição" />
+    <String Key="UI_Setting_FullScreen" Value="Tela cheia" />
+    <String Key="UI_Setting_Language" Value="Idioma" />
+    <String Key="UI_Setting_MusicVolume" Value="Volume da música" />
+    <String Key="UI_Setting_Native" Value="Original" />
+    <String Key="UI_Setting_Nolimit" Value="Ilimitado" />
+    <String Key="UI_Setting_Resolution" Value="Resolução" />
+    <String Key="UI_Setting_SoundVolume" Value="Volume de áudio" />
+    <String Key="UI_Setting_Title" Value="Configuração" />
+    <String Key="UI_Setting_Windowed" Value="Janela" />
+    <String Key="UI_SkipAnim" Value="Pular animação" />
+    <String Key="UI_SkipSettle" Value="Pular animação, liquidando..." />
+    <String Key="UI_Staff_Artist" Value="Arte" />
+    <String Key="UI_Staff_Credits" Value="Agradecimentos" />
+    <String Key="UI_Staff_Designer" Value="Planejamento" />
+    <String Key="UI_Staff_Programmer" Value="Programação" />
+    <String Key="UI_Staff_SpecialThanks" Value="Família compreensiva e solidária, amigos prestativos e vocês na frente da tela!" />
+    <String Key="UI_Staff_Title" Value="Produtor" />
+    <String Key="UI_Summary_BestRecord" Value="Melhor Registro" />
+    <String Key="UI_Summary_MaxDayMoney" Value="Ganhos diários máx.:" />
+    <String Key="UI_Summary_MVP" Value="Melhor Jogo:" />
+    <String Key="UI_Summary_Summary" Value="Liquidação do Tributo" />
+    <String Key="UI_Summary_TotalDay" Value="Dias do Tributo:" />
+    <String Key="UI_Summary_TotalGold" Value="Total de latas:" />
+    <String Key="UI_Summary_TotalMoney" Value="Total de valor:" />
+    <String Key="UI_Toy_Lock" Value="Desbloqueado após passar pela dificuldade {0} do Rancho Ensolarado" />
+    <String Key="UI_Toy_SelectInGame" Value="Escolha 1 brinquedo" />
+  </Dictionary>
+</Dictionaries>  

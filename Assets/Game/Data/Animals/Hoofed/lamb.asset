@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: lamb
+  m_EditorClassIdentifier: 
+  id: Lamb
+  animalName: "\u7f8a\u7f94"
+  family: Hoofed
+  rarity: "1"
+  baseMoney: 0
+  ability: {fileID: 11400000, guid: f0c6f9a145a64f87b1e6f0be9162c004, type: 2}
+  description: "5\u5929\u540e\u6210\u957f\u4e3a\u7ef5\u7f8a"
+  icon: {fileID: 21300000, guid: 540bd70e88af0624b8530c5c6f027fa3, type: 3}

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: goat
+  m_EditorClassIdentifier: 
+  id: Goat
+  animalName: "\u5c71\u7f8a"
+  family: Hoofed
+  rarity: "1"
+  baseMoney: 2
+  ability: {fileID: 11400000, guid: f0c6f9a145a64f87b1e6f0be9162c009, type: 2}
+  description: "\u6bcf\u65e5\u7ed3\u675f\u65f6\u751f\u6210\u4e00\u53ea\u7f8a\u7f94"
+  icon: {fileID: 21300000, guid: 633725fa77622194db09a0749a07ed67, type: 3}
