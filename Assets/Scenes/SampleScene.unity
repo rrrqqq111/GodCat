@@ -3955,7 +3955,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2032885275}
   - component: {fileID: 2032885277}
-  - component: {fileID: 2032885276}
+  - component: {fileID: 2032885278}
   m_Layer: 0
   m_Name: RanchManager
   m_TagString: Untagged
@@ -3978,23 +3978,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2032885276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2032885273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de2d9ec8d8b019540943ac926cbfab6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offerPool: []
-  allowDuplicateOffers: 0
-  lockLegendaryBeforeDay: 1
-  legendaryUnlockDay: 5
-  legendaryRarity: 4
 --- !u!114 &2032885277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4020,7 +4003,24 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c9dca31873c433043baf7eedafb3eb8d, type: 2}
   - {fileID: 11400000, guid: 44a22eda009bf0b4c9e086d442d2bca5, type: 2}
   - {fileID: 11400000, guid: 66ddb2d60b3d4fffb6b76febbd4e98a2, type: 2}
-  offerRoller: {fileID: 0}
+  offerRoller: {fileID: 2032885278}
+--- !u!114 &2032885278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032885273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de2d9ec8d8b019540943ac926cbfab6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offerPool: []
+  allowDuplicateOffers: 0
+  lockLegendaryBeforeDay: 1
+  legendaryUnlockDay: 5
+  legendaryRarity: 4
 --- !u!1 &2051840370
 GameObject:
   m_ObjectHideFlags: 0
