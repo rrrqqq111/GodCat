@@ -17,11 +17,17 @@ MonoBehaviour:
   priority: 0
   impactType: Adjacent
   stackable: 0
-  desc: 相邻动物获得的额外收益增加 2 倍
+  desc: "\u5468\u56f4\u52a8\u7269\u89e6\u53d1\u80fd\u529b\u83b7\u5f97\u7684\u91d1\u5e01\u7ffb\u500d"
   triggerType: DayStart
-  effectType: AddMoney
+  triggerChancePercent: 100
+  triggerLimit: 0
+  effectType: ExtraMoneyMultiplier
+  effectScriptId: AlpacaAbilityEffect
   effectParams:
     money: 2
+    delayDays: 0
+    durationDays: 0
+    transformChancePercent: 100
     type: Multiplier
     target: Other
     targetFamily: None

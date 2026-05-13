@@ -3994,7 +3994,7 @@ MonoBehaviour:
   allowDuplicateOffers: 0
   lockLegendaryBeforeDay: 1
   legendaryUnlockDay: 5
-  legendaryRarity: 5
+  legendaryRarity: 4
 --- !u!114 &2032885277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4019,6 +4019,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fcdf96998902b0a449dd60e3e29e5b85, type: 2}
   - {fileID: 11400000, guid: c9dca31873c433043baf7eedafb3eb8d, type: 2}
   - {fileID: 11400000, guid: 44a22eda009bf0b4c9e086d442d2bca5, type: 2}
+  - {fileID: 11400000, guid: 66ddb2d60b3d4fffb6b76febbd4e98a2, type: 2}
   offerRoller: {fileID: 0}
 --- !u!1 &2051840370
 GameObject:

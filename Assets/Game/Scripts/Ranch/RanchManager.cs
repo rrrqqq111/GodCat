@@ -27,6 +27,7 @@ namespace NekogamiRanch.Ranch
         private bool waitingForOfferSelection;
         private bool waitingToEnterNextDay;
         private string lastSettlementReport = "\u6682\u65e0\u7ed3\u7b97";
+        private Animal activeExtraMoneyOwner;
 
         public event Action StateChanged;
 
@@ -121,6 +122,16 @@ namespace NekogamiRanch.Ranch
 
         public void AddMoney(int amount)
         {
+            AddExtraMoney(activeExtraMoneyOwner, amount);
+        }
+
+        public void AddExtraMoney(Animal source, int amount)
+        {
+            if (source != null)
+            {
+                amount = source.ResolveExtraMoney(amount);
+            }
+
             money += amount;
         }
 
@@ -323,7 +334,16 @@ namespace NekogamiRanch.Ranch
             }
 
             var beforeMoney = money;
-            animal.Ability.TryExecute(new AnimalAbilityContext(this, animal), triggerType);
+            var previousExtraMoneyOwner = activeExtraMoneyOwner;
+            activeExtraMoneyOwner = animal;
+            try
+            {
+                animal.Ability.TryExecute(new AnimalAbilityContext(this, animal), triggerType);
+            }
+            finally
+            {
+                activeExtraMoneyOwner = previousExtraMoneyOwner;
+            }
 
             var moneyDelta = money - beforeMoney;
             if (moneyDelta == 0)
@@ -343,6 +363,10 @@ namespace NekogamiRanch.Ranch
             settlementReportBuilder.Clear();
             settlementAnimalReports.Clear();
             settlementReportByAnimal.Clear();
+            foreach (var animal in animals)
+            {
+                animal.ResetSettlementModifiers();
+            }
         }
 
         private void AppendSettlementLine(string line)

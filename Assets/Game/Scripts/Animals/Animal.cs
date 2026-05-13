@@ -9,6 +9,7 @@ namespace NekogamiRanch.Animals
     {
         private readonly List<TemporaryIncomeMultiplier> temporaryIncomeMultipliers = new List<TemporaryIncomeMultiplier>();
         private int baseMoneyBonus;
+        private int extraMoneyMultiplier = 1;
 
         public Animal(AnimalData data, Vector2Int coords)
         {
@@ -70,6 +71,31 @@ namespace NekogamiRanch.Animals
                 MultiplierBonus = bonus,
                 RemainingDays = durationDays
             });
+        }
+
+        public void AddExtraMoneyMultiplier(int multiplier, bool stackable)
+        {
+            if (multiplier <= 1)
+            {
+                return;
+            }
+
+            extraMoneyMultiplier = stackable ? extraMoneyMultiplier * multiplier : Mathf.Max(extraMoneyMultiplier, multiplier);
+        }
+
+        public int ResolveExtraMoney(int amount)
+        {
+            if (amount <= 0 || extraMoneyMultiplier <= 1)
+            {
+                return amount;
+            }
+
+            return amount * extraMoneyMultiplier;
+        }
+
+        public void ResetSettlementModifiers()
+        {
+            extraMoneyMultiplier = 1;
         }
 
         public void AddBaseMoneyBonus(int bonus)
