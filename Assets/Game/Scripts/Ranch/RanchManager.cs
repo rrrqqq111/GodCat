@@ -10,7 +10,7 @@ namespace NekogamiRanch.Ranch
 {
     public class RanchManager : MonoBehaviour
     {
-        [SerializeField] private int mapWidth = 5;
+        [SerializeField] private int mapWidth = 4;
         [SerializeField] private int mapHeight = 5;
         [SerializeField] private int day = 1;
         [SerializeField] private int money;
@@ -26,6 +26,7 @@ namespace NekogamiRanch.Ranch
         private MapCell selectedCell;
         private bool waitingForOfferSelection;
         private bool waitingToEnterNextDay;
+        private bool testMode;
         private string lastSettlementReport = "\u6682\u65e0\u7ed3\u7b97";
         private Animal activeExtraMoneyOwner;
 
@@ -37,6 +38,7 @@ namespace NekogamiRanch.Ranch
         public MapCell SelectedCell => selectedCell;
         public bool IsWaitingForOfferSelection => waitingForOfferSelection;
         public bool IsWaitingToEnterNextDay => waitingToEnterNextDay;
+        public bool IsTestMode => testMode;
         public IReadOnlyList<AnimalData> CurrentOffers => currentOffers;
         public string LastSettlementReport => lastSettlementReport;
 
@@ -83,30 +85,13 @@ namespace NekogamiRanch.Ranch
                 return;
             }
 
-            BeginSettlementReport();
-
-            ResolveAbilitiesByMapScan("SettlementPrepare");
-            ResolveAbilitiesByMapScan("DayStart");
-            ResolveAbilitiesByMapScan("DayEnd");
-
-            var income = 0;
-            foreach (var cell in ranchMap.GetCellsInScanOrder())
+            ResolveDailySettlement();
+            if (testMode)
             {
-                var animal = cell.Animal;
-                if (animal == null)
-                {
-                    continue;
-                }
-
-                var resolvedMoney = animal.ResolveBaseMoney(ranchMap);
-                income += resolvedMoney;
-                var report = GetSettlementAnimalReport(animal);
-                report.BaseMoney += resolvedMoney;
+                waitingToEnterNextDay = true;
+                NotifyStateChanged();
+                return;
             }
-
-            money += income;
-            BuildCompactSettlementReport();
-            lastSettlementReport = settlementReportBuilder.ToString();
 
             RollOffers(3);
             if (currentOffers.Count > 0)
@@ -224,6 +209,77 @@ namespace NekogamiRanch.Ranch
             return true;
         }
 
+        public bool TrySetAnimalAt(Vector2Int coords, AnimalData animalData)
+        {
+            if (ranchMap == null || animalData == null || !ranchMap.TryGetCell(coords, out var cell))
+            {
+                return false;
+            }
+
+            if (cell.Animal != null)
+            {
+                RemoveAnimal(cell.Animal);
+            }
+
+            var animal = new Animal(animalData, coords);
+            if (!ranchMap.TryPlaceAnimal(animal, coords))
+            {
+                return false;
+            }
+
+            animals.Add(animal);
+            SelectCell(cell);
+            NotifyStateChanged();
+            return true;
+        }
+
+        public bool TryClearAnimalAt(Vector2Int coords)
+        {
+            if (ranchMap == null || !ranchMap.TryGetCell(coords, out var cell) || cell.Animal == null)
+            {
+                return false;
+            }
+
+            var removed = RemoveAnimal(cell.Animal);
+            SelectCell(cell);
+            NotifyStateChanged();
+            return removed;
+        }
+
+        public void ClearAllAnimals()
+        {
+            if (ranchMap != null)
+            {
+                foreach (var cell in ranchMap.GetCells())
+                {
+                    cell.RemoveAnimal();
+                }
+            }
+
+            animals.Clear();
+            SelectCell(null);
+            NotifyStateChanged();
+        }
+
+        public void EnterTestMode()
+        {
+            testMode = true;
+            waitingForOfferSelection = false;
+            waitingToEnterNextDay = false;
+            currentOffers.Clear();
+            lastSettlementReport = "\u6d4b\u8bd5\u6a21\u5f0f\uff1a\u8bf7\u70b9\u51fb\u5730\u5757\u5e76\u6dfb\u52a0\u52a8\u7269";
+            ClearAllAnimals();
+        }
+
+        public void ExitTestMode()
+        {
+            testMode = false;
+            waitingForOfferSelection = false;
+            waitingToEnterNextDay = false;
+            currentOffers.Clear();
+            NotifyStateChanged();
+        }
+
         public bool SelectOffer(int index)
         {
             if (!waitingForOfferSelection || index < 0 || index >= currentOffers.Count)
@@ -303,6 +359,34 @@ namespace NekogamiRanch.Ranch
         private void NotifyStateChanged()
         {
             StateChanged?.Invoke();
+        }
+
+        private void ResolveDailySettlement()
+        {
+            BeginSettlementReport();
+
+            ResolveAbilitiesByMapScan("SettlementPrepare");
+            ResolveAbilitiesByMapScan("DayStart");
+            ResolveAbilitiesByMapScan("DayEnd");
+
+            var income = 0;
+            foreach (var cell in ranchMap.GetCellsInScanOrder())
+            {
+                var animal = cell.Animal;
+                if (animal == null)
+                {
+                    continue;
+                }
+
+                var resolvedMoney = animal.ResolveBaseMoney(ranchMap);
+                income += resolvedMoney;
+                var report = GetSettlementAnimalReport(animal);
+                report.BaseMoney += resolvedMoney;
+            }
+
+            money += income;
+            BuildCompactSettlementReport();
+            lastSettlementReport = settlementReportBuilder.ToString();
         }
 
         private void ResolveAbilitiesByMapScan(string triggerType)

@@ -13,8 +13,8 @@ namespace NekogamiRanch.Abilities
                 return false;
             }
 
-            var aboveCoords = context.Owner.Coords + Vector2Int.up;
-            if (!context.RanchManager.Map.TryGetCell(aboveCoords, out var aboveCell) || aboveCell.Animal == null)
+            var aboveCell = context.RanchManager.Map.GetFirstUpperNeighborWithAnimal(context.Owner.Coords);
+            if (aboveCell == null)
             {
                 return false;
             }

@@ -55,6 +55,7 @@ namespace NekogamiRanch.Bootstrap
             var tileSprite = LoadSpriteByGuid(Tile1Guid) ?? CreateSquareSprite("M1 Tile Sprite", Color.white, 64);
             var animalSprite = CreateCircleSprite("M1 Animal Sprite", new Color(0.95f, 0.69f, 0.35f), 64);
             manager.Initialize(map, CreateStartingAnimals(), tileSprite, animalSprite, sceneTiles);
+
             if (uiController != null)
             {
                 uiController.Initialize(manager);

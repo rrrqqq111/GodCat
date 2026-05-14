@@ -67,13 +67,17 @@ namespace NekogamiRanch.Abilities
                     }
                     break;
                 case "up":
-                    if (map.TryGetCell(origin + Vector2Int.up, out var upCell))
+                case "upper":
+                case "upperadjacent":
+                    foreach (var upCell in map.GetUpperNeighbors(origin))
                     {
                         yield return upCell;
                     }
                     break;
                 case "down":
-                    if (map.TryGetCell(origin + Vector2Int.down, out var downCell))
+                case "lower":
+                case "loweradjacent":
+                    foreach (var downCell in map.GetLowerNeighbors(origin))
                     {
                         yield return downCell;
                     }

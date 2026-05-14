@@ -28,7 +28,7 @@ namespace NekogamiRanch.EditorTools
                 return;
             }
 
-            var mapWidth = 5;
+            var mapWidth = 4;
             var mapHeight = 5;
             var ranchMap = root.GetComponentInParent<RanchMap>();
             if (ranchMap != null)
@@ -51,8 +51,7 @@ namespace NekogamiRanch.EditorTools
             for (var index = 0; index < expectedCount; index++)
             {
                 var x = index % mapWidth;
-                var rowFromTop = index / mapWidth;
-                var y = mapHeight - 1 - rowFromTop;
+                var y = index / mapWidth;
                 var coords = new Vector2Int(x, y);
                 var tile = tiles[index];
                 var marker = tile.GetComponent<SceneGridCellMarker>();

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using NekogamiRanch.Animals;
 using UnityEngine;
 
@@ -7,9 +6,8 @@ namespace NekogamiRanch.Ranch
 {
     public class RanchMap : MonoBehaviour
     {
-        [SerializeField] private int width = 5;
+        [SerializeField] private int width = 4;
         [SerializeField] private int height = 5;
-        [SerializeField] private float cellSize = 1.12f;
 
         private readonly Dictionary<Vector2Int, MapCell> cells = new Dictionary<Vector2Int, MapCell>();
         private Sprite tileSprite;
@@ -26,14 +24,15 @@ namespace NekogamiRanch.Ranch
             tileSprite = tile;
             animalSprite = animal;
 
-            if (sceneTiles != null && sceneTiles.Count >= width * height)
+            if (sceneTiles == null || sceneTiles.Count < width * height)
             {
-                BindSceneTiles(manager, sceneTiles);
+                cells.Clear();
+                var count = sceneTiles != null ? sceneTiles.Count : 0;
+                Debug.LogError($"[RanchMap] Scene needs {width * height} tile renderers but only found {count}. Please place map tiles in the scene.");
+                return;
             }
-            else
-            {
-                BuildCells(manager);
-            }
+
+            BindSceneTiles(manager, sceneTiles);
         }
 
         public bool TryGetCell(Vector2Int coords, out MapCell cell)
@@ -118,7 +117,7 @@ namespace NekogamiRanch.Ranch
 
         public IEnumerable<MapCell> GetCellsInScanOrder()
         {
-            for (var y = height - 1; y >= 0; y--)
+            for (var y = 0; y < height; y++)
             {
                 for (var x = 0; x < width; x++)
                 {
@@ -132,47 +131,97 @@ namespace NekogamiRanch.Ranch
 
         public IEnumerable<MapCell> GetNeighbors(Vector2Int coords)
         {
-            var offsets = new[]
+            foreach (var neighborCoords in GetNeighborCoords(coords))
             {
-                Vector2Int.up,
-                Vector2Int.down,
-                Vector2Int.left,
-                Vector2Int.right
-            };
-
-            foreach (var offset in offsets)
-            {
-                if (TryGetCell(coords + offset, out var cell))
+                if (TryGetCell(neighborCoords, out var cell))
                 {
                     yield return cell;
                 }
             }
         }
 
-        private void BuildCells(RanchManager manager)
+        public IEnumerable<MapCell> GetUpperNeighbors(Vector2Int coords)
         {
-            foreach (Transform child in transform)
+            foreach (var neighborCoords in GetUpperNeighborCoords(coords))
             {
-                Destroy(child.gameObject);
-            }
-
-            cells.Clear();
-            var offset = new Vector2((width - 1) * cellSize * 0.5f, (height - 1) * cellSize * 0.5f);
-
-            for (var y = 0; y < height; y++)
-            {
-                for (var x = 0; x < width; x++)
+                if (TryGetCell(neighborCoords, out var cell))
                 {
-                    var coords = new Vector2Int(x, y);
-                    var cellObj = new GameObject($"Cell {x},{y}");
-                    cellObj.transform.SetParent(transform, false);
-                    cellObj.transform.localPosition = new Vector3(x * cellSize - offset.x, y * cellSize - offset.y, 0f);
-
-                    var cell = cellObj.AddComponent<MapCell>();
-                    cell.Initialize(manager, coords, tileSprite, animalSprite);
-                    cells.Add(coords, cell);
+                    yield return cell;
                 }
             }
+        }
+
+        public IEnumerable<MapCell> GetLowerNeighbors(Vector2Int coords)
+        {
+            foreach (var neighborCoords in GetLowerNeighborCoords(coords))
+            {
+                if (TryGetCell(neighborCoords, out var cell))
+                {
+                    yield return cell;
+                }
+            }
+        }
+
+        public MapCell GetFirstUpperNeighborWithAnimal(Vector2Int coords)
+        {
+            foreach (var cell in GetUpperNeighbors(coords))
+            {
+                if (cell.Animal != null)
+                {
+                    return cell;
+                }
+            }
+
+            return null;
+        }
+
+        private IEnumerable<Vector2Int> GetNeighborCoords(Vector2Int coords)
+        {
+            yield return coords + Vector2Int.left;
+            yield return coords + Vector2Int.right;
+
+            foreach (var upperCoords in GetUpperNeighborCoords(coords))
+            {
+                yield return upperCoords;
+            }
+
+            foreach (var lowerCoords in GetLowerNeighborCoords(coords))
+            {
+                yield return lowerCoords;
+            }
+        }
+
+        private IEnumerable<Vector2Int> GetUpperNeighborCoords(Vector2Int coords)
+        {
+            if (IsOddRow(coords.y))
+            {
+                yield return new Vector2Int(coords.x, coords.y - 1);
+                yield return new Vector2Int(coords.x + 1, coords.y - 1);
+            }
+            else
+            {
+                yield return new Vector2Int(coords.x - 1, coords.y - 1);
+                yield return new Vector2Int(coords.x, coords.y - 1);
+            }
+        }
+
+        private IEnumerable<Vector2Int> GetLowerNeighborCoords(Vector2Int coords)
+        {
+            if (IsOddRow(coords.y))
+            {
+                yield return new Vector2Int(coords.x, coords.y + 1);
+                yield return new Vector2Int(coords.x + 1, coords.y + 1);
+            }
+            else
+            {
+                yield return new Vector2Int(coords.x - 1, coords.y + 1);
+                yield return new Vector2Int(coords.x, coords.y + 1);
+            }
+        }
+
+        private static bool IsOddRow(int y)
+        {
+            return Mathf.Abs(y % 2) == 1;
         }
 
         private void BindSceneTiles(RanchManager manager, IReadOnlyList<SpriteRenderer> sceneTiles)
@@ -184,27 +233,7 @@ namespace NekogamiRanch.Ranch
                 return;
             }
 
-            Debug.LogWarning("[RanchMap] Scene tiles are missing complete SceneGridCellMarker data. Falling back to position-based tile ordering.");
-
-            var orderedTiles = sceneTiles
-                .OrderByDescending(tile => tile.transform.position.y)
-                .ThenBy(tile => tile.transform.position.x)
-                .Take(width * height)
-                .ToList();
-
-            for (var index = 0; index < orderedTiles.Count; index++)
-            {
-                var x = index % width;
-                var rowFromTop = index / width;
-                var y = height - 1 - rowFromTop;
-                var coords = new Vector2Int(x, y);
-                var tile = orderedTiles[index];
-                var cell = tile.GetComponent<MapCell>() ?? tile.gameObject.AddComponent<MapCell>();
-
-                tile.transform.SetParent(transform, true);
-                cell.Initialize(manager, coords, tile.sprite != null ? tile.sprite : tileSprite, animalSprite, true);
-                cells.Add(coords, cell);
-            }
+            Debug.LogError("[RanchMap] Scene tiles are missing complete SceneGridCellMarker data. Select the tile root and run Tools/Game/Assign Scene Grid Coords From Position.");
         }
 
         private bool TryBindWithExplicitCoords(RanchManager manager, IReadOnlyList<SpriteRenderer> sceneTiles)
