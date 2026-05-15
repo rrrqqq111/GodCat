@@ -771,13 +771,13 @@ namespace NekogamiRanch.Ranch
 
         private void RandomizeAnimalPositions()
         {
-            if (animals.Count <= 1)
+            if (animals.Count == 0)
             {
                 return;
             }
 
             var allCells = ranchMap.GetCells().Where(cell => cell != null).ToList();
-            if (allCells.Count == 0)
+            if (allCells.Count <= 1)
             {
                 return;
             }

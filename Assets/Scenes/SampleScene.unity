@@ -867,6 +867,7 @@ GameObject:
   m_Component:
   - component: {fileID: 115480565}
   - component: {fileID: 115480566}
+  - component: {fileID: 115480567}
   m_Layer: 0
   m_Name: "\u77EE\u704C\u67281 (1)"
   m_TagString: Untagged
@@ -941,6 +942,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &115480567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115480564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.25
+  angleAmplitude: 2
+  horizontalStretchAmplitude: 0
+  verticalStretchAmplitude: 0
+  phaseOffset: 3
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &124970414
 GameObject:
   m_ObjectHideFlags: 0
@@ -2730,6 +2753,7 @@ GameObject:
   m_Component:
   - component: {fileID: 415922263}
   - component: {fileID: 415922264}
+  - component: {fileID: 415922265}
   m_Layer: 0
   m_Name: "\u77EE\u704C\u67282"
   m_TagString: Untagged
@@ -2804,6 +2828,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &415922265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415922262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.25
+  angleAmplitude: 2
+  horizontalStretchAmplitude: 0
+  verticalStretchAmplitude: 0
+  phaseOffset: 3
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &424799083
 GameObject:
   m_ObjectHideFlags: 0
@@ -4378,6 +4424,7 @@ GameObject:
   m_Component:
   - component: {fileID: 728912084}
   - component: {fileID: 728912085}
+  - component: {fileID: 728912086}
   m_Layer: 0
   m_Name: "\u5C0F\u9EC4\u82B11"
   m_TagString: Untagged
@@ -4452,6 +4499,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &728912086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728912083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.8
+  angleAmplitude: 4
+  horizontalStretchAmplitude: 0.04
+  verticalStretchAmplitude: 0.015
+  phaseOffset: 0
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &734957286
 GameObject:
   m_ObjectHideFlags: 0
@@ -4462,6 +4531,7 @@ GameObject:
   m_Component:
   - component: {fileID: 734957287}
   - component: {fileID: 734957288}
+  - component: {fileID: 734957289}
   m_Layer: 0
   m_Name: "\u704C\u67283"
   m_TagString: Untagged
@@ -4536,6 +4606,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &734957289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734957286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.25
+  angleAmplitude: 2
+  horizontalStretchAmplitude: 0
+  verticalStretchAmplitude: 0
+  phaseOffset: 3
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &735502949
 GameObject:
   m_ObjectHideFlags: 0
@@ -4667,6 +4759,7 @@ GameObject:
   m_Component:
   - component: {fileID: 764957476}
   - component: {fileID: 764957477}
+  - component: {fileID: 764957478}
   m_Layer: 0
   m_Name: "\u80CC\u540E\u6811"
   m_TagString: Untagged
@@ -4741,6 +4834,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &764957478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764957475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.25
+  angleAmplitude: 2
+  horizontalStretchAmplitude: 0
+  verticalStretchAmplitude: 0
+  phaseOffset: 3
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &787082652
 GameObject:
   m_ObjectHideFlags: 0
@@ -4983,6 +5098,7 @@ GameObject:
   m_Component:
   - component: {fileID: 813742295}
   - component: {fileID: 813742296}
+  - component: {fileID: 813742297}
   m_Layer: 0
   m_Name: "\u83492 (1)"
   m_TagString: Untagged
@@ -5057,6 +5173,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &813742297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813742294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.8
+  angleAmplitude: 4
+  horizontalStretchAmplitude: 0.04
+  verticalStretchAmplitude: 0.015
+  phaseOffset: 0
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &832183869
 GameObject:
   m_ObjectHideFlags: 0
@@ -5297,7 +5435,7 @@ MonoBehaviour:
   setAnimalButton: {fileID: 1132597350}
   deleteAnimalButton: {fileID: 39559872}
   resetTestButton: {fileID: 1223994971}
-  randomizeOnDayStartToggle: {fileID: 0}
+  randomizeOnDayStartToggle: {fileID: 180988829}
   animalCatalog: []
 --- !u!4 &877861307
 Transform:
@@ -5542,6 +5680,7 @@ GameObject:
   m_Component:
   - component: {fileID: 902113349}
   - component: {fileID: 902113350}
+  - component: {fileID: 902113351}
   m_Layer: 0
   m_Name: "\u83493"
   m_TagString: Untagged
@@ -5616,6 +5755,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &902113351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902113348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.8
+  angleAmplitude: 4
+  horizontalStretchAmplitude: 0.04
+  verticalStretchAmplitude: 0.015
+  phaseOffset: 0
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &926382806
 GameObject:
   m_ObjectHideFlags: 0
@@ -6263,6 +6424,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1003732507}
   - component: {fileID: 1003732508}
+  - component: {fileID: 1003732509}
   m_Layer: 0
   m_Name: "\u80CC\u540E\u68111"
   m_TagString: Untagged
@@ -6337,6 +6499,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1003732509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003732506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.25
+  angleAmplitude: 2
+  horizontalStretchAmplitude: 0
+  verticalStretchAmplitude: 0
+  phaseOffset: 3
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &1041807351
 GameObject:
   m_ObjectHideFlags: 0
@@ -6431,6 +6615,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1045378620}
   - component: {fileID: 1045378621}
+  - component: {fileID: 1045378622}
   m_Layer: 0
   m_Name: "\u77EE\u704C\u67281"
   m_TagString: Untagged
@@ -6505,6 +6690,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1045378622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1045378619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.25
+  angleAmplitude: 2
+  horizontalStretchAmplitude: 0
+  verticalStretchAmplitude: 0
+  phaseOffset: 3
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &1054184390
 GameObject:
   m_ObjectHideFlags: 0
@@ -6515,6 +6722,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1054184391}
   - component: {fileID: 1054184392}
+  - component: {fileID: 1054184393}
   m_Layer: 0
   m_Name: "\u80CC\u540E\u68111"
   m_TagString: Untagged
@@ -6589,6 +6797,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1054184393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1054184390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.25
+  angleAmplitude: 2
+  horizontalStretchAmplitude: 0
+  verticalStretchAmplitude: 0
+  phaseOffset: 3
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &1079398951
 GameObject:
   m_ObjectHideFlags: 0
@@ -7097,6 +7327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1139693204}
   - component: {fileID: 1139693205}
+  - component: {fileID: 1139693206}
   m_Layer: 0
   m_Name: "\u83495"
   m_TagString: Untagged
@@ -7171,6 +7402,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1139693206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139693203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.8
+  angleAmplitude: 4
+  horizontalStretchAmplitude: 0.04
+  verticalStretchAmplitude: 0.015
+  phaseOffset: 0
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &1153910555
 GameObject:
   m_ObjectHideFlags: 0
@@ -8207,6 +8460,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1366046352}
   - component: {fileID: 1366046353}
+  - component: {fileID: 1366046354}
   m_Layer: 0
   m_Name: "\u83492"
   m_TagString: Untagged
@@ -8281,6 +8535,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1366046354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366046351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.8
+  angleAmplitude: 4
+  horizontalStretchAmplitude: 0.04
+  verticalStretchAmplitude: 0.015
+  phaseOffset: 0
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &1369533338
 GameObject:
   m_ObjectHideFlags: 0
@@ -8291,6 +8567,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1369533339}
   - component: {fileID: 1369533340}
+  - component: {fileID: 1369533341}
   m_Layer: 0
   m_Name: "\u704C\u67283 (1)"
   m_TagString: Untagged
@@ -8365,6 +8642,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1369533341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369533338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.25
+  angleAmplitude: 2
+  horizontalStretchAmplitude: 0
+  verticalStretchAmplitude: 0
+  phaseOffset: 3
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &1391074128
 GameObject:
   m_ObjectHideFlags: 0
@@ -9554,6 +9853,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1611114752}
   - component: {fileID: 1611114753}
+  - component: {fileID: 1611114754}
   m_Layer: 0
   m_Name: "\u83491"
   m_TagString: Untagged
@@ -9628,6 +9928,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1611114754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611114751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.8
+  angleAmplitude: 4
+  horizontalStretchAmplitude: 0.04
+  verticalStretchAmplitude: 0.015
+  phaseOffset: 0
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &1622362059
 GameObject:
   m_ObjectHideFlags: 0
@@ -10028,6 +10350,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1650597230}
+  - component: {fileID: 1650597231}
   m_Layer: 0
   m_Name: "\u62D6\u62C9\u673A"
   m_TagString: Untagged
@@ -10052,6 +10375,29 @@ Transform:
   - {fileID: 124970415}
   m_Father: {fileID: 1160474050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1650597231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650597229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eb093875d8e4314848f563d3bbb57a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animatedTarget: {fileID: 1975994382}
+  spriteRenderer: {fileID: 1975994383}
+  autoDetectBottomAnchor: 1
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  frequency: 5
+  verticalStretch: 0.018
+  horizontalSquash: 0
+  phaseOffset: 0
+  randomizePhaseOnEnable: 1
+  useUnscaledTime: 0
+  playOnEnable: 1
 --- !u!1 &1662512523
 GameObject:
   m_ObjectHideFlags: 0
@@ -10347,7 +10693,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1709911330
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11001,6 +11347,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1795502701}
   - component: {fileID: 1795502702}
+  - component: {fileID: 1795502703}
   m_Layer: 0
   m_Name: "\u5C0F\u9EC4\u82B12"
   m_TagString: Untagged
@@ -11075,6 +11422,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1795502703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795502700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.8
+  angleAmplitude: 4
+  horizontalStretchAmplitude: 0.04
+  verticalStretchAmplitude: 0.015
+  phaseOffset: 0
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &1803125490
 GameObject:
   m_ObjectHideFlags: 0
@@ -12198,6 +12567,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1972784619}
   - component: {fileID: 1972784620}
+  - component: {fileID: 1972784621}
   m_Layer: 0
   m_Name: "\u704C\u67283"
   m_TagString: Untagged
@@ -12272,6 +12642,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1972784621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972784618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.25
+  angleAmplitude: 2
+  horizontalStretchAmplitude: 0
+  verticalStretchAmplitude: 0
+  phaseOffset: 3
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &1975994381
 GameObject:
   m_ObjectHideFlags: 0
@@ -12366,6 +12758,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1988935726}
   - component: {fileID: 1988935727}
+  - component: {fileID: 1988935728}
   m_Layer: 0
   m_Name: "\u77EE\u704C\u67282"
   m_TagString: Untagged
@@ -12440,6 +12833,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1988935728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988935725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.25
+  angleAmplitude: 2
+  horizontalStretchAmplitude: 0
+  verticalStretchAmplitude: 0
+  phaseOffset: 3
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &1991039408
 GameObject:
   m_ObjectHideFlags: 0
@@ -12725,6 +13140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2045547722}
   - component: {fileID: 2045547723}
+  - component: {fileID: 2045547724}
   m_Layer: 0
   m_Name: "\u80CC\u540E\u6811"
   m_TagString: Untagged
@@ -12799,6 +13215,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2045547724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045547721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.25
+  angleAmplitude: 2
+  horizontalStretchAmplitude: 0
+  verticalStretchAmplitude: 0
+  phaseOffset: 3
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &2051840370
 GameObject:
   m_ObjectHideFlags: 0
@@ -12907,6 +13345,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2057532893}
   - component: {fileID: 2057532894}
+  - component: {fileID: 2057532895}
   m_Layer: 0
   m_Name: "\u83494"
   m_TagString: Untagged
@@ -12981,6 +13420,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2057532895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057532892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.8
+  angleAmplitude: 4
+  horizontalStretchAmplitude: 0.04
+  verticalStretchAmplitude: 0.015
+  phaseOffset: 0
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &2059530003
 GameObject:
   m_ObjectHideFlags: 0
@@ -13159,6 +13620,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2091044741}
   - component: {fileID: 2091044742}
+  - component: {fileID: 2091044743}
   m_Layer: 0
   m_Name: "\u77EE\u704C\u67281"
   m_TagString: Untagged
@@ -13233,6 +13695,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2091044743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091044740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06146ebaa84c4c01a00fe99b5342e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.25
+  angleAmplitude: 2
+  horizontalStretchAmplitude: 0
+  verticalStretchAmplitude: 0
+  phaseOffset: 3
+  useUnscaledTime: 0
+  randomizePhaseOnStart: 1
+  spriteRenderer: {fileID: 0}
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  autoDetectBottomAnchor: 1
 --- !u!1 &2093713172
 GameObject:
   m_ObjectHideFlags: 0
