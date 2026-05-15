@@ -8,22 +8,24 @@ namespace NekogamiRanch.Ranch
     public class MapCell : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer tileRenderer;
-        [SerializeField] private SpriteRenderer animalRenderer;
-        [SerializeField] private TextMesh label;
+        [SerializeField] private AnimalView animalView;
 
         private RanchManager manager;
         private Color normalColor;
         private Sprite defaultAnimalSprite;
+        private AnimalView animalViewPrefab;
+        private bool missingAnimalViewWarningLogged;
 
         public Vector2Int Coords { get; private set; }
         public Animal Animal { get; private set; }
         public bool IsEmpty => Animal == null;
 
-        public void Initialize(RanchManager ranchManager, Vector2Int coords, Sprite tileSprite, Sprite animalSprite, bool preserveTileSprite = false)
+        public void Initialize(RanchManager ranchManager, Vector2Int coords, Sprite tileSprite, Sprite animalSprite, bool preserveTileSprite = false, AnimalView viewPrefab = null)
         {
             manager = ranchManager;
             Coords = coords;
             name = $"Cell {coords.x},{coords.y}";
+            animalViewPrefab = viewPrefab;
 
             tileRenderer ??= GetComponent<SpriteRenderer>();
             tileRenderer ??= gameObject.AddComponent<SpriteRenderer>();
@@ -39,31 +41,6 @@ namespace NekogamiRanch.Ranch
 
             var collider2d = GetComponent<BoxCollider2D>();
             collider2d.size = tileRenderer.sprite != null ? (Vector2)tileRenderer.sprite.bounds.size : Vector2.one * 0.95f;
-
-            if (animalRenderer == null)
-            {
-                var animalObj = new GameObject("AnimalIcon");
-                animalObj.transform.SetParent(transform, false);
-                animalObj.transform.localPosition = new Vector3(0f, 0.14f, -0.1f);
-                animalRenderer = animalObj.AddComponent<SpriteRenderer>();
-            }
-
-            animalRenderer.sprite = animalSprite;
-            animalRenderer.sortingOrder = tileRenderer.sortingOrder + 2;
-            animalRenderer.enabled = false;
-
-            if (label == null)
-            {
-                var labelObj = new GameObject("Label");
-                labelObj.transform.SetParent(transform, false);
-                labelObj.transform.localPosition = new Vector3(0f, -0.36f, -0.2f);
-                label = labelObj.AddComponent<TextMesh>();
-                label.anchor = TextAnchor.MiddleCenter;
-                label.alignment = TextAlignment.Center;
-                label.characterSize = 0.12f;
-                label.fontSize = 34;
-                label.color = new Color(0.16f, 0.18f, 0.14f);
-            }
 
             RefreshView();
         }
@@ -96,30 +73,42 @@ namespace NekogamiRanch.Ranch
 
         private void RefreshView()
         {
-            animalRenderer.enabled = Animal != null;
-            animalRenderer.sprite = Animal?.Data.Icon != null ? Animal.Data.Icon : defaultAnimalSprite;
-            FitAnimalToTile();
-            label.text = Animal != null ? Animal.DisplayName : string.Empty;
+            if (Animal == null && animalView == null)
+            {
+                return;
+            }
+
+            if (!EnsureAnimalView())
+            {
+                return;
+            }
+
+            animalView.Refresh(Animal, defaultAnimalSprite, tileRenderer.sprite, tileRenderer.sortingOrder + 2);
         }
 
-        private void FitAnimalToTile()
+        private bool EnsureAnimalView()
         {
-            if (animalRenderer.sprite == null || tileRenderer.sprite == null)
+            if (animalView != null)
             {
-                return;
+                return true;
             }
 
-            var tileSize = tileRenderer.sprite.bounds.size;
-            var animalSize = animalRenderer.sprite.bounds.size;
-            var maxAnimalSize = Mathf.Max(animalSize.x, animalSize.y);
-            if (maxAnimalSize <= 0f)
+            if (animalViewPrefab == null)
             {
-                return;
+                if (!missingAnimalViewWarningLogged)
+                {
+                    Debug.LogWarning($"[MapCell] AnimalView prefab is missing for {name}. Assign it on RanchManager.");
+                    missingAnimalViewWarningLogged = true;
+                }
+
+                return false;
             }
 
-            var targetSize = Mathf.Min(tileSize.x, tileSize.y) * 0.62f;
-            var scale = Mathf.Min(1f, targetSize / maxAnimalSize);
-            animalRenderer.transform.localScale = Vector3.one * scale;
+            animalView = Instantiate(animalViewPrefab, transform);
+            animalView.transform.SetParent(transform, false);
+            animalView.transform.localPosition = Vector3.zero;
+            animalView.Initialize();
+            return true;
         }
 
         private void OnMouseDown()

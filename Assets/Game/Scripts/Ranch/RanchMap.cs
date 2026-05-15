@@ -12,17 +12,19 @@ namespace NekogamiRanch.Ranch
         private readonly Dictionary<Vector2Int, MapCell> cells = new Dictionary<Vector2Int, MapCell>();
         private Sprite tileSprite;
         private Sprite animalSprite;
+        private AnimalView animalViewPrefab;
 
         public int Width => width;
         public int Height => height;
         public IReadOnlyDictionary<Vector2Int, MapCell> Cells => cells;
 
-        public void Initialize(RanchManager manager, int mapWidth, int mapHeight, Sprite tile, Sprite animal, IReadOnlyList<SpriteRenderer> sceneTiles = null)
+        public void Initialize(RanchManager manager, int mapWidth, int mapHeight, Sprite tile, Sprite animal, IReadOnlyList<SpriteRenderer> sceneTiles = null, AnimalView viewPrefab = null)
         {
             width = mapWidth;
             height = mapHeight;
             tileSprite = tile;
             animalSprite = animal;
+            animalViewPrefab = viewPrefab;
 
             if (sceneTiles == null || sceneTiles.Count < width * height)
             {
@@ -268,7 +270,7 @@ namespace NekogamiRanch.Ranch
 
                 var cell = tile.GetComponent<MapCell>() ?? tile.gameObject.AddComponent<MapCell>();
                 tile.transform.SetParent(transform, true);
-                cell.Initialize(manager, coords, tile.sprite != null ? tile.sprite : tileSprite, animalSprite, true);
+                cell.Initialize(manager, coords, tile.sprite != null ? tile.sprite : tileSprite, animalSprite, true, animalViewPrefab);
                 cells.Add(coords, cell);
             }
 

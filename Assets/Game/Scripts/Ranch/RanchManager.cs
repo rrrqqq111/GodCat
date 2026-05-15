@@ -16,6 +16,7 @@ namespace NekogamiRanch.Ranch
         [SerializeField] private int money;
         [SerializeField] private List<AnimalData> offerPool = new List<AnimalData>();
         [SerializeField] private AnimalOfferRoller offerRoller;
+        [SerializeField] private AnimalView animalViewPrefab;
 
         private readonly List<Animal> animals = new List<Animal>();
         private readonly List<AnimalData> currentOffers = new List<AnimalData>();
@@ -50,7 +51,7 @@ namespace NekogamiRanch.Ranch
                 offerRoller = GetComponent<AnimalOfferRoller>();
             }
 
-            ranchMap.Initialize(this, mapWidth, mapHeight, tileSprite, animalSprite, sceneTiles);
+            ranchMap.Initialize(this, mapWidth, mapHeight, tileSprite, animalSprite, sceneTiles, animalViewPrefab);
             SeedAnimals(startingAnimals);
             SelectCell(null);
             NotifyStateChanged();
@@ -316,17 +317,52 @@ namespace NekogamiRanch.Ranch
         {
             if (selectedCell == null)
             {
-                return "Select a cell";
+                return "\u672a\u9009\u62e9\u5730\u5757";
             }
 
             if (selectedCell.Animal == null)
             {
-                return $"Cell {selectedCell.Coords.x},{selectedCell.Coords.y}: empty";
+                return $"\u5730\u5757 ({selectedCell.Coords.x},{selectedCell.Coords.y})\uff1a\u7a7a";
             }
 
             var animal = selectedCell.Animal;
-            var ability = animal.Ability != null ? $" ability {animal.Ability.Name}" : string.Empty;
-            return $"{animal.DisplayName}: {animal.BaseMoney:+#;-#;0} gold/day, age {animal.AgeDays}{ability}";
+            return $"{animal.DisplayName}\n" +
+                $"\u57fa\u7840\u6536\u76ca\uff1a{animal.BaseMoney:+#;-#;0}\n" +
+                $"\u5e74\u9f84\uff1a{animal.AgeDays}\n" +
+                $"\u6280\u80fd\uff1a{GetAnimalAbilityText(animal)}";
+        }
+
+        private static string GetAnimalAbilityText(Animal animal)
+        {
+            var ability = animal?.Data?.Ability;
+            if (ability == null)
+            {
+                return "\u65e0";
+            }
+
+            var descriptions = new List<string>();
+            if (!string.IsNullOrWhiteSpace(ability.Desc))
+            {
+                descriptions.Add(ability.Desc);
+            }
+
+            if (ability.SubAbilities != null)
+            {
+                foreach (var subAbility in ability.SubAbilities)
+                {
+                    if (subAbility != null && !string.IsNullOrWhiteSpace(subAbility.Desc))
+                    {
+                        descriptions.Add(subAbility.Desc);
+                    }
+                }
+            }
+
+            if (descriptions.Count > 0)
+            {
+                return string.Join("\n", descriptions);
+            }
+
+            return !string.IsNullOrWhiteSpace(animal.Data.Description) ? animal.Data.Description : "\u65e0";
         }
 
         private void SeedAnimals(IReadOnlyList<AnimalData> startingAnimals)

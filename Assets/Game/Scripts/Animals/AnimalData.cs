@@ -26,7 +26,7 @@ namespace NekogamiRanch.Animals
 
         public string AnimalId => Id;
         public string DisplayName => Name;
-        public string AbilityDescription => Description;
+        public string AbilityDescription => ability != null && !string.IsNullOrWhiteSpace(ability.Desc) ? ability.Desc : description;
 
         public void Initialize(string animalId, string displayName, string animalFamily, int animalRarity, int money, AbilityData animalAbility, string animalDescription, Sprite animalIcon = null)
         {
