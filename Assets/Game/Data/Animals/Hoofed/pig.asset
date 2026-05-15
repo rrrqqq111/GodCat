@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: pig
   m_EditorClassIdentifier: 
   id: Pig
-  animalName: "\u732a"
+  animalName: "\u732A"
   family: Hoofed
   rarity: 0
   baseMoney: -1
   ability: {fileID: 11400000, guid: f0c6f9a145a64f87b1e6f0be9162c001, type: 2}
-  description: "5\u5929\u540e\u81ea\u52a8\u5356\u51fa\uff0c\u83b7\u5f9712\u91d1\u5e01"
+  description: "5\u5929\u540E\u81EA\u52A8\u5356\u51FA\uFF0C\u83B7\u5F9712\u91D1\u5E01"
   icon: {fileID: 21300000, guid: 9ee816efba8268744a168023c57433d1, type: 3}
+  iconScale: 0.8

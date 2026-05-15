@@ -1,4 +1,5 @@
 using NekogamiRanch.Animals;
+using NekogamiRanch.Effects;
 using UnityEngine;
 
 namespace NekogamiRanch.Ranch
@@ -6,13 +7,20 @@ namespace NekogamiRanch.Ranch
     public class AnimalView : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer iconRenderer;
+        [SerializeField] private Vector3 viewLocalOffset;
         [SerializeField] private Vector3 iconLocalPosition = new Vector3(0f, 0.14f, -0.1f);
-        [SerializeField, Range(0.1f, 1f)] private float tileFill = 0.62f;
+        [SerializeField, Min(0.01f)] private float tileFill = 1.25f;
+        [SerializeField] private bool fitIconToTile = true;
+
+        private Vector3 iconBaseLocalScale = Vector3.one;
+        private bool hasIconBaseLocalScale;
+        private BobMotion bobMotion;
 
         public Animal Animal { get; private set; }
 
         public void Initialize()
         {
+            transform.localPosition = viewLocalOffset;
             EnsureIconRenderer();
         }
 
@@ -26,7 +34,8 @@ namespace NekogamiRanch.Ranch
             iconRenderer.sprite = animal?.Data.Icon != null ? animal.Data.Icon : fallbackSprite;
             iconRenderer.sortingOrder = sortingOrder;
 
-            FitToTile(tileSprite);
+            ApplyIconScale(tileSprite, animal?.Data.IconScale ?? 1f);
+            bobMotion?.ResetBaseTransform();
         }
 
         public void PlayAbilityFeedback()
@@ -41,12 +50,8 @@ namespace NekogamiRanch.Ranch
 
         private void EnsureIconRenderer()
         {
-            if (iconRenderer != null)
-            {
-                return;
-            }
-
-            iconRenderer = GetComponentInChildren<SpriteRenderer>(true);
+            iconRenderer ??= GetComponentInChildren<SpriteRenderer>(true);
+            bobMotion ??= GetComponentInChildren<BobMotion>(true);
             if (iconRenderer == null)
             {
                 var iconObj = new GameObject("Icon");
@@ -55,13 +60,24 @@ namespace NekogamiRanch.Ranch
             }
 
             iconRenderer.transform.localPosition = iconLocalPosition;
+            if (!hasIconBaseLocalScale)
+            {
+                iconBaseLocalScale = iconRenderer.transform.localScale;
+                hasIconBaseLocalScale = true;
+            }
         }
 
-        private void FitToTile(Sprite tileSprite)
+        private void ApplyIconScale(Sprite tileSprite, float animalIconScale)
+        {
+            var scale = fitIconToTile ? GetFitToTileScale(tileSprite) : 1f;
+            iconRenderer.transform.localScale = iconBaseLocalScale * (scale * animalIconScale);
+        }
+
+        private float GetFitToTileScale(Sprite tileSprite)
         {
             if (iconRenderer.sprite == null || tileSprite == null)
             {
-                return;
+                return 1f;
             }
 
             var tileSize = tileSprite.bounds.size;
@@ -69,12 +85,11 @@ namespace NekogamiRanch.Ranch
             var maxIconSize = Mathf.Max(iconSize.x, iconSize.y);
             if (maxIconSize <= 0f)
             {
-                return;
+                return 1f;
             }
 
             var targetSize = Mathf.Min(tileSize.x, tileSize.y) * tileFill;
-            var scale = Mathf.Min(1f, targetSize / maxIconSize);
-            iconRenderer.transform.localScale = Vector3.one * scale;
+            return targetSize / maxIconSize;
         }
     }
 }

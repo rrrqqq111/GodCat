@@ -104,9 +104,7 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
-            animalView = Instantiate(animalViewPrefab, transform);
-            animalView.transform.SetParent(transform, false);
-            animalView.transform.localPosition = Vector3.zero;
+            animalView = Instantiate(animalViewPrefab, transform, false);
             animalView.Initialize();
             return true;
         }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3962792139148499485}
   - component: {fileID: 4684799766008414033}
   - component: {fileID: 1147956489028073971}
+  - component: {fileID: 6082338275463276120}
   m_Layer: 0
   m_Name: AnimalViewPrefab
   m_TagString: Untagged
@@ -99,8 +100,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconRenderer: {fileID: 8310868899478364009}
+  viewLocalOffset: {x: 0, y: 0.5, z: 0}
   iconLocalPosition: {x: 0, y: 0.14, z: -0.1}
-  tileFill: 1
+  tileFill: 1.25
+  fitIconToTile: 1
+--- !u!114 &6082338275463276120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5569854642057045759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eb093875d8e4314848f563d3bbb57a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animatedTarget: {fileID: 7938268170556385245}
+  spriteRenderer: {fileID: 8310868899478364009}
+  autoDetectBottomAnchor: 1
+  bottomAnchorLocalOffset: {x: 0, y: 0, z: 0}
+  frequency: 1
+  verticalStretch: 0.08
+  horizontalSquash: 0.04
+  phaseOffset: 0
+  randomizePhaseOnEnable: 1
+  useUnscaledTime: 0
+  playOnEnable: 1
 --- !u!1 &6350582908569114848
 GameObject:
   m_ObjectHideFlags: 0
