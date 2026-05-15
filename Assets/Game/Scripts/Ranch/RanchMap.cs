@@ -13,10 +13,12 @@ namespace NekogamiRanch.Ranch
         private Sprite tileSprite;
         private Sprite animalSprite;
         private AnimalView animalViewPrefab;
+        private RanchTileSystem tileSystem;
 
         public int Width => width;
         public int Height => height;
         public IReadOnlyDictionary<Vector2Int, MapCell> Cells => cells;
+        public RanchTileSystem TileSystem => tileSystem;
 
         public void Initialize(RanchManager manager, int mapWidth, int mapHeight, Sprite tile, Sprite animal, IReadOnlyList<SpriteRenderer> sceneTiles = null, AnimalView viewPrefab = null)
         {
@@ -35,6 +37,7 @@ namespace NekogamiRanch.Ranch
             }
 
             BindSceneTiles(manager, sceneTiles);
+            InitializeTileSystem();
         }
 
         public bool TryGetCell(Vector2Int coords, out MapCell cell)
@@ -177,6 +180,51 @@ namespace NekogamiRanch.Ranch
             return null;
         }
 
+        public RanchTileType GetTileType(Vector2Int coords)
+        {
+            return tileSystem != null ? tileSystem.GetTileType(coords) : RanchTileType.Normal;
+        }
+
+        public RanchTileType GetTileType(Animal animal)
+        {
+            return tileSystem != null ? tileSystem.GetTileType(animal) : RanchTileType.Normal;
+        }
+
+        public bool IsTileType(Vector2Int coords, RanchTileType tileType)
+        {
+            return GetTileType(coords) == tileType;
+        }
+
+        public bool IsTileType(Animal animal, RanchTileType tileType)
+        {
+            return animal != null && GetTileType(animal) == tileType;
+        }
+
+        public bool TrySetTileType(Vector2Int coords, RanchTileType tileType)
+        {
+            return tileSystem != null && tileSystem.TrySetTileType(coords, tileType);
+        }
+
+        public bool TrySetTileType(MapCell cell, RanchTileType tileType)
+        {
+            return tileSystem != null && tileSystem.TrySetTileType(cell, tileType);
+        }
+
+        public bool TrySetTileType(Animal animal, RanchTileType tileType)
+        {
+            return tileSystem != null && tileSystem.TrySetTileType(animal, tileType);
+        }
+
+        public bool TrySetAnimalTileType(Animal animal, RanchTileType tileType)
+        {
+            return TrySetTileType(animal, tileType);
+        }
+
+        public bool TrySetCellTileType(MapCell cell, RanchTileType tileType)
+        {
+            return TrySetTileType(cell, tileType);
+        }
+
         private IEnumerable<Vector2Int> GetNeighborCoords(Vector2Int coords)
         {
             yield return coords + Vector2Int.left;
@@ -281,6 +329,12 @@ namespace NekogamiRanch.Ranch
             }
 
             return true;
+        }
+
+        private void InitializeTileSystem()
+        {
+            tileSystem = GetComponent<RanchTileSystem>();
+            tileSystem?.Initialize(this);
         }
 
         private bool IsInsideBounds(Vector2Int coords)

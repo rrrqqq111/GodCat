@@ -12,6 +12,8 @@ namespace NekogamiRanch.Ranch
 
         private RanchManager manager;
         private Color normalColor;
+        private Vector3 defaultTileLocalScale = Vector3.one;
+        private Vector2 defaultColliderSize = Vector2.one;
         private Sprite defaultAnimalSprite;
         private AnimalView animalViewPrefab;
         private bool missingAnimalViewWarningLogged;
@@ -37,10 +39,12 @@ namespace NekogamiRanch.Ranch
             }
 
             normalColor = tileRenderer.color;
+            defaultTileLocalScale = tileRenderer.transform.localScale;
             defaultAnimalSprite = animalSprite;
 
             var collider2d = GetComponent<BoxCollider2D>();
             collider2d.size = tileRenderer.sprite != null ? (Vector2)tileRenderer.sprite.bounds.size : Vector2.one * 0.95f;
+            defaultColliderSize = collider2d.size;
 
             RefreshView();
         }
@@ -69,6 +73,41 @@ namespace NekogamiRanch.Ranch
         public void SetSelected(bool selected)
         {
             tileRenderer.color = selected ? new Color(1f, 0.92f, 0.48f) : normalColor;
+        }
+
+        public void SetTileSprite(Sprite sprite, Vector2 sizeMultiplier, bool updateColliderSize)
+        {
+            if (sprite == null)
+            {
+                return;
+            }
+
+            tileRenderer ??= GetComponent<SpriteRenderer>();
+            if (tileRenderer == null)
+            {
+                return;
+            }
+
+            tileRenderer.sprite = sprite;
+            tileRenderer.transform.localScale = new Vector3(
+                defaultTileLocalScale.x * sizeMultiplier.x,
+                defaultTileLocalScale.y * sizeMultiplier.y,
+                defaultTileLocalScale.z);
+
+            var collider2d = GetComponent<BoxCollider2D>();
+            if (updateColliderSize)
+            {
+                collider2d.size = new Vector2(
+                    defaultColliderSize.x * sizeMultiplier.x,
+                    defaultColliderSize.y * sizeMultiplier.y);
+            }
+
+            RefreshView();
+        }
+
+        public void SetTileSprite(Sprite sprite)
+        {
+            SetTileSprite(sprite, Vector2.one, false);
         }
 
         private void RefreshView()
