@@ -81,6 +81,7 @@ namespace NekogamiRanch.UI
                 hud.Refresh(
                     manager.Day,
                     manager.Money,
+                    manager.Cans,
                     manager.GetSelectedCellText(),
                     manager.LastSettlementReport,
                     manager.IsWaitingForOfferSelection,

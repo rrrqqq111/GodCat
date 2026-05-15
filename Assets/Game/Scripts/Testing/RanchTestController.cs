@@ -22,6 +22,7 @@ namespace NekogamiRanch.Testing
         [SerializeField] private Button setAnimalButton;
         [SerializeField] private Button deleteAnimalButton;
         [SerializeField] private Button resetTestButton;
+        [SerializeField] private Toggle randomizeOnDayStartToggle;
         [SerializeField] private List<AnimalData> animalCatalog = new List<AnimalData>();
 
         private static TMP_FontAsset uiFont;
@@ -140,6 +141,13 @@ namespace NekogamiRanch.Testing
                 resetTestButton.onClick.AddListener(ResetTestMode);
             }
 
+            if (randomizeOnDayStartToggle != null)
+            {
+                randomizeOnDayStartToggle.onValueChanged.RemoveListener(SetRandomizeOnDayStart);
+                randomizeOnDayStartToggle.isOn = manager == null || manager.RandomizeAnimalPositionsInTestMode;
+                randomizeOnDayStartToggle.onValueChanged.AddListener(SetRandomizeOnDayStart);
+            }
+
             if (enterTestButton == null || panelRoot == null || selectedCellText == null ||
                 animalDropdown == null || setAnimalButton == null || deleteAnimalButton == null || resetTestButton == null)
             {
@@ -173,6 +181,11 @@ namespace NekogamiRanch.Testing
             if (deleteAnimalButton != null)
             {
                 deleteAnimalButton.interactable = manager != null && manager.IsTestMode && hasAnimal;
+            }
+
+            if (randomizeOnDayStartToggle != null && manager != null && randomizeOnDayStartToggle.isOn != manager.RandomizeAnimalPositionsInTestMode)
+            {
+                randomizeOnDayStartToggle.SetIsOnWithoutNotify(manager.RandomizeAnimalPositionsInTestMode);
             }
         }
 
@@ -218,6 +231,11 @@ namespace NekogamiRanch.Testing
         {
             manager?.EnterTestMode();
             SetPanelVisible(true);
+        }
+
+        private void SetRandomizeOnDayStart(bool enabled)
+        {
+            manager?.SetRandomizeAnimalPositionsInTestMode(enabled);
         }
 
         private void SetPanelVisible(bool visible)

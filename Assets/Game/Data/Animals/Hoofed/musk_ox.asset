@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: musk_ox
+  m_EditorClassIdentifier: 
+  id: MuskOx
+  animalName: "\u9E9D\u725B"
+  family: Hoofed
+  rarity: 0
+  baseMoney: 2
+  ability: {fileID: 11400000, guid: b4991dc85f4e421abe84f04acf45cb2a, type: 2}
+  description: "\u4F7F\u540C\u4E00\u884C\u5176\u4ED6\u6709\u8E44\u52A8\u7269\u57FA\u7840\u6536\u76CA+1"
+  icon: {fileID: 21300000, guid: c3eb31265cb70f44a9ad9b805a12d878, type: 3}
+  familyIcon: {fileID: 21300000, guid: be11099430914c942a52a28df7c3c808, type: 3}
+  iconScale: 1

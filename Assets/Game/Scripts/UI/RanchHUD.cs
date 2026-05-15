@@ -29,11 +29,11 @@ namespace NekogamiRanch.UI
             }
         }
 
-        public void Refresh(int day, int money, string selectionTextValue, string settlementReport, bool isWaitingForOfferSelection, bool isWaitingToEnterNextDay)
+        public void Refresh(int day, int money, int cans, string selectionTextValue, string settlementReport, bool isWaitingForOfferSelection, bool isWaitingToEnterNextDay)
         {
             if (statusText != null)
             {
-                statusText.text = $"Day {day}   Gold {money}";
+                statusText.text = $"Day {day}   Gold {money}   Cans {cans}";
             }
 
             if (selectionText != null)

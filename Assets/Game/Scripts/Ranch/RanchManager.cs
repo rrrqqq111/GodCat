@@ -14,6 +14,7 @@ namespace NekogamiRanch.Ranch
         [SerializeField] private int mapHeight = 5;
         [SerializeField] private int day = 1;
         [SerializeField] private int money;
+        [SerializeField, Min(0)] private int cans = 5;
         [SerializeField] private RanchMap ranchMap;
         [SerializeField] private List<AnimalData> offerPool = new List<AnimalData>();
         [SerializeField] private AnimalOfferRoller offerRoller;
@@ -30,19 +31,24 @@ namespace NekogamiRanch.Ranch
         private bool waitingForOfferSelection;
         private bool waitingToEnterNextDay;
         private bool testMode;
+        private bool randomizeAnimalPositionsInTestMode = true;
         private bool initialized;
         private string lastSettlementReport = "\u6682\u65e0\u7ed3\u7b97";
         private Animal activeExtraMoneyOwner;
+        private int externalAbilityTriggerDepth;
+        private const int MaxExternalAbilityTriggerDepth = 8;
 
         public event Action StateChanged;
 
         public int Day => day;
         public int Money => money;
+        public int Cans => cans;
         public RanchMap Map => ranchMap;
         public MapCell SelectedCell => selectedCell;
         public bool IsWaitingForOfferSelection => waitingForOfferSelection;
         public bool IsWaitingToEnterNextDay => waitingToEnterNextDay;
         public bool IsTestMode => testMode;
+        public bool RandomizeAnimalPositionsInTestMode => randomizeAnimalPositionsInTestMode;
         public IReadOnlyList<AnimalData> CurrentOffers => currentOffers;
         public string LastSettlementReport => lastSettlementReport;
 
@@ -152,6 +158,34 @@ namespace NekogamiRanch.Ranch
         public void AddMoney(int amount)
         {
             AddExtraMoney(activeExtraMoneyOwner, amount);
+        }
+
+        public void AddCans(int amount)
+        {
+            if (amount <= 0)
+            {
+                return;
+            }
+
+            cans += amount;
+            NotifyStateChanged();
+        }
+
+        public bool TrySpendCans(int amount)
+        {
+            if (amount <= 0)
+            {
+                return true;
+            }
+
+            if (cans < amount)
+            {
+                return false;
+            }
+
+            cans -= amount;
+            NotifyStateChanged();
+            return true;
         }
 
         public void AddExtraMoney(Animal source, int amount)
@@ -323,6 +357,12 @@ namespace NekogamiRanch.Ranch
             NotifyStateChanged();
         }
 
+        public void SetRandomizeAnimalPositionsInTestMode(bool enabled)
+        {
+            randomizeAnimalPositionsInTestMode = enabled;
+            NotifyStateChanged();
+        }
+
         public bool SelectOffer(int index)
         {
             if (!waitingForOfferSelection || index < 0 || index >= currentOffers.Count)
@@ -353,6 +393,32 @@ namespace NekogamiRanch.Ranch
         public bool HasAnimalById(string animalId)
         {
             return CountAnimalsById(animalId) > 0;
+        }
+
+        public bool TryTriggerAnimalAbility(Animal animal)
+        {
+            var abilityData = animal?.Data?.Ability;
+            if (animal == null || animal.Ability == null || abilityData == null || string.IsNullOrWhiteSpace(abilityData.TriggerType))
+            {
+                return false;
+            }
+
+            if (externalAbilityTriggerDepth >= MaxExternalAbilityTriggerDepth)
+            {
+                return false;
+            }
+
+            externalAbilityTriggerDepth++;
+            try
+            {
+                GetSettlementAnimalReport(animal);
+                ExecuteAbilityWithReport(animal, abilityData.TriggerType);
+                return true;
+            }
+            finally
+            {
+                externalAbilityTriggerDepth--;
+            }
         }
 
         public string GetSelectedCellText()
@@ -490,7 +556,11 @@ namespace NekogamiRanch.Ranch
 
         private void EnterNextDay()
         {
-            RandomizeAnimalPositions();
+            if (!testMode || randomizeAnimalPositionsInTestMode)
+            {
+                RandomizeAnimalPositions();
+            }
+
             day++;
             waitingToEnterNextDay = false;
             NotifyStateChanged();
