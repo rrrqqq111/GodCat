@@ -14,6 +14,7 @@ namespace NekogamiRanch.Animals
         [SerializeField] private AbilityData ability;
         [SerializeField, TextArea] private string description;
         [SerializeField] private Sprite icon;
+        [SerializeField] private Sprite familyIcon;
         [SerializeField, Min(0.01f)] private float iconScale = 1f;
 
         public string Id => id;
@@ -24,13 +25,14 @@ namespace NekogamiRanch.Animals
         public AbilityData Ability => ability;
         public string Description => description;
         public Sprite Icon => icon;
+        public Sprite FamilyIcon => familyIcon;
         public float IconScale => iconScale;
 
         public string AnimalId => Id;
         public string DisplayName => Name;
         public string AbilityDescription => ability != null && !string.IsNullOrWhiteSpace(ability.Desc) ? ability.Desc : description;
 
-        public void Initialize(string animalId, string displayName, string animalFamily, int animalRarity, int money, AbilityData animalAbility, string animalDescription, Sprite animalIcon = null, float animalIconScale = 1f)
+        public void Initialize(string animalId, string displayName, string animalFamily, int animalRarity, int money, AbilityData animalAbility, string animalDescription, Sprite animalIcon = null, Sprite animalFamilyIcon = null, float animalIconScale = 1f)
         {
             id = animalId;
             animalName = displayName;
@@ -40,6 +42,7 @@ namespace NekogamiRanch.Animals
             ability = animalAbility;
             description = animalDescription;
             icon = animalIcon;
+            familyIcon = animalFamilyIcon;
             iconScale = Mathf.Max(0.01f, animalIconScale);
         }
     }

@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: horse
   m_EditorClassIdentifier: 
   id: Horse
-  animalName: "\u9a6c"
+  animalName: "\u9A6C"
   family: Hoofed
   rarity: 0
   baseMoney: 1
   ability: {fileID: 11400000, guid: f0c6f9a145a64f87b1e6f0be9162c006, type: 2}
-  description: "\u76f8\u90bb\u52a8\u7269\u6536\u76ca\u500d\u7387\u989d\u5916\u589e\u52a02\u500d"
+  description: "\u76F8\u90BB\u52A8\u7269\u6536\u76CA\u500D\u7387\u989D\u5916\u589E\u52A02\u500D"
   icon: {fileID: 21300000, guid: 429f50d34d4117640a5861a5de640a44, type: 3}
+  familyIcon: {fileID: 21300000, guid: be11099430914c942a52a28df7c3c808, type: 3}
+  iconScale: 1

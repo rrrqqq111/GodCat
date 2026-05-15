@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: donkey
   m_EditorClassIdentifier: 
   id: Donkey
-  animalName: "\u9a74"
+  animalName: "\u9A74"
   family: Hoofed
   rarity: 0
   baseMoney: 1
   ability: {fileID: 11400000, guid: f0c6f9a145a64f87b1e6f0be9162c007, type: 2}
-  description: "\u573a\u4e0a\u6709\u9a6c\u6216\u6591\u9a6c\u65f6\u83b7\u5f971\u91d1\u5e01"
+  description: "\u573A\u4E0A\u6709\u9A6C\u6216\u6591\u9A6C\u65F6\u83B7\u5F971\u91D1\u5E01"
   icon: {fileID: 21300000, guid: dfdd1653ad666494c907ab99185e6f4a, type: 3}
+  familyIcon: {fileID: 21300000, guid: be11099430914c942a52a28df7c3c808, type: 3}
+  iconScale: 1

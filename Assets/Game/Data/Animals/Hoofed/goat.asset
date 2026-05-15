@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: goat
   m_EditorClassIdentifier: 
   id: Goat
-  animalName: "\u5c71\u7f8a"
+  animalName: "\u5C71\u7F8A"
   family: Hoofed
   rarity: 0
   baseMoney: 2
   ability: {fileID: 11400000, guid: f0c6f9a145a64f87b1e6f0be9162c009, type: 2}
-  description: "\u6bcf\u65e5\u7ed3\u675f\u65f6\u751f\u6210\u4e00\u53ea\u7f8a\u7f94"
+  description: "\u6BCF\u65E5\u7ED3\u675F\u65F6\u751F\u6210\u4E00\u53EA\u7F8A\u7F94"
   icon: {fileID: 21300000, guid: 633725fa77622194db09a0749a07ed67, type: 3}
+  familyIcon: {fileID: 21300000, guid: be11099430914c942a52a28df7c3c808, type: 3}
+  iconScale: 1

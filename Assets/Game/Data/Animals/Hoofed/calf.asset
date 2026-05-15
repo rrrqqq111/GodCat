@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: calf
   m_EditorClassIdentifier: 
   id: Calf
-  animalName: "\u5c0f\u725b"
+  animalName: "\u5C0F\u725B"
   family: Hoofed
   rarity: 0
   baseMoney: 0
   ability: {fileID: 11400000, guid: f0c6f9a145a64f87b1e6f0be9162c002, type: 2}
-  description: "\u6bcf\u65e5\u7ed3\u675f\u65f6\u6210\u957f\u4e3a\u5976\u725b"
+  description: "\u6BCF\u65E5\u7ED3\u675F\u65F6\u6210\u957F\u4E3A\u5976\u725B"
   icon: {fileID: 21300000, guid: 9efbd89947fe8a14e99f819a6f7977c3, type: 3}
+  familyIcon: {fileID: 21300000, guid: be11099430914c942a52a28df7c3c808, type: 3}
+  iconScale: 1

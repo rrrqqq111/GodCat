@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: zebra
   m_EditorClassIdentifier: 
   id: Zebra
-  animalName: "\u6591\u9a6c"
+  animalName: "\u6591\u9A6C"
   family: Hoofed
   rarity: 0
   baseMoney: 1
   ability: {fileID: 11400000, guid: f0c6f9a145a64f87b1e6f0be9162c00a, type: 2}
-  description: "\u79fb\u52a8\u65f6\u81ea\u8eab\u57fa\u7840\u6536\u76ca\u63d0\u53471"
+  description: "\u79FB\u52A8\u65F6\u81EA\u8EAB\u57FA\u7840\u6536\u76CA\u63D0\u53471"
   icon: {fileID: 21300000, guid: 8595b74e8886c0a469dbb06d14cea1e2, type: 3}
+  familyIcon: {fileID: 21300000, guid: be11099430914c942a52a28df7c3c808, type: 3}
+  iconScale: 1

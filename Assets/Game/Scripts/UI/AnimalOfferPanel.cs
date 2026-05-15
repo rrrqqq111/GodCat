@@ -15,6 +15,12 @@ namespace NekogamiRanch.UI
         [SerializeField] private TextMeshProUGUI titleText;
         [SerializeField] private Transform cardParent;
         [SerializeField] private GameObject cardTemplate;
+        [Header("Card Template Bindings")]
+        [SerializeField] private Image animalIconImage;
+        [SerializeField] private TextMeshProUGUI animalNameText;
+        [SerializeField] private Image familyIconImage;
+        [SerializeField] private TextMeshProUGUI baseMoneyText;
+        [SerializeField] private TextMeshProUGUI abilityText;
 
         private readonly List<GameObject> spawnedCards = new List<GameObject>();
         private Action<int> offerSelected;
@@ -147,24 +153,7 @@ namespace NekogamiRanch.UI
                 button.onClick.AddListener(() => SelectOffer(capturedIndex));
             }
 
-            var label = card.GetComponentInChildren<TextMeshProUGUI>(true);
-            if (label != null)
-            {
-                label.text = FormatOfferText(offer);
-            }
-
-            var images = card.GetComponentsInChildren<Image>(true);
-            foreach (var image in images)
-            {
-                if (image == null || image.gameObject == card || offer.Icon == null)
-                {
-                    continue;
-                }
-
-                image.sprite = offer.Icon;
-                image.preserveAspect = true;
-                break;
-            }
+            ApplyCardData(card, offer);
         }
 
         private void SelectOffer(int index)
@@ -173,7 +162,172 @@ namespace NekogamiRanch.UI
             HideAll();
         }
 
-        private static string FormatOfferText(AnimalData data)
+        private void ApplyCardData(GameObject card, AnimalData offer)
+        {
+            var animalImage = FindSpawnedComponent(card, animalIconImage);
+            if (animalImage != null)
+            {
+                ApplyImage(animalImage, offer.Icon);
+            }
+
+            var nameLabel = FindSpawnedComponent(card, animalNameText);
+            if (nameLabel != null)
+            {
+                nameLabel.text = offer.DisplayName;
+            }
+
+            var familyImage = FindSpawnedComponent(card, familyIconImage);
+            if (familyImage != null)
+            {
+                ApplyImage(familyImage, offer.FamilyIcon);
+            }
+
+            var moneyLabel = FindSpawnedComponent(card, baseMoneyText);
+            if (moneyLabel != null)
+            {
+                moneyLabel.text = FormatBaseMoney(offer);
+            }
+
+            var abilityLabel = FindSpawnedComponent(card, abilityText);
+            if (abilityLabel != null)
+            {
+                abilityLabel.text = FormatAbilityText(offer);
+            }
+
+            ApplyLegacyFallback(card, offer, nameLabel != null, animalImage != null);
+        }
+
+        private void ApplyLegacyFallback(GameObject card, AnimalData offer, bool hasNameLabel, bool hasAnimalImage)
+        {
+            if (!hasNameLabel)
+            {
+                var label = card.GetComponentInChildren<TextMeshProUGUI>(true);
+                if (label != null)
+                {
+                    label.text = FormatLegacyOfferText(offer);
+                }
+            }
+
+            if (hasAnimalImage || offer.Icon == null)
+            {
+                return;
+            }
+
+            var images = card.GetComponentsInChildren<Image>(true);
+            foreach (var image in images)
+            {
+                if (image == null || image.gameObject == card)
+                {
+                    continue;
+                }
+
+                ApplyImage(image, offer.Icon);
+                break;
+            }
+        }
+
+        private T FindSpawnedComponent<T>(GameObject spawnedCard, T templateComponent) where T : Component
+        {
+            if (spawnedCard == null || templateComponent == null || cardTemplate == null)
+            {
+                return null;
+            }
+
+            var path = GetRelativePath(cardTemplate.transform, templateComponent.transform);
+            if (string.IsNullOrEmpty(path))
+            {
+                return spawnedCard.GetComponent<T>();
+            }
+
+            var target = spawnedCard.transform.Find(path);
+            return target != null ? target.GetComponent<T>() : null;
+        }
+
+        private static string GetRelativePath(Transform root, Transform target)
+        {
+            if (root == null || target == null)
+            {
+                return null;
+            }
+
+            if (root == target)
+            {
+                return string.Empty;
+            }
+
+            var names = new List<string>();
+            var current = target;
+            while (current != null && current != root)
+            {
+                names.Add(current.name);
+                current = current.parent;
+            }
+
+            if (current != root)
+            {
+                return null;
+            }
+
+            names.Reverse();
+            return string.Join("/", names);
+        }
+
+        private static void ApplyImage(Image image, Sprite sprite)
+        {
+            if (image == null)
+            {
+                return;
+            }
+
+            image.sprite = sprite;
+            image.enabled = sprite != null;
+            image.preserveAspect = true;
+        }
+
+        private static string FormatBaseMoney(AnimalData data)
+        {
+            return data == null ? string.Empty : data.BaseMoney.ToString("+#;-#;0");
+        }
+
+        private static string FormatAbilityText(AnimalData data)
+        {
+            if (data == null)
+            {
+                return string.Empty;
+            }
+
+            var ability = data.Ability;
+            if (ability == null)
+            {
+                return string.IsNullOrWhiteSpace(data.Description) ? "\u65e0\u80fd\u529b" : data.Description;
+            }
+
+            var descriptions = new List<string>();
+            if (!string.IsNullOrWhiteSpace(ability.Desc))
+            {
+                descriptions.Add(ability.Desc);
+            }
+
+            if (ability.SubAbilities != null)
+            {
+                foreach (var subAbility in ability.SubAbilities)
+                {
+                    if (subAbility != null && !string.IsNullOrWhiteSpace(subAbility.Desc))
+                    {
+                        descriptions.Add(subAbility.Desc);
+                    }
+                }
+            }
+
+            if (descriptions.Count > 0)
+            {
+                return string.Join("\n", descriptions);
+            }
+
+            return string.IsNullOrWhiteSpace(data.Description) ? "\u65e0\u80fd\u529b" : data.Description;
+        }
+
+        private static string FormatLegacyOfferText(AnimalData data)
         {
             return data == null ? "\u672a\u77e5" : $"{data.DisplayName}  ({data.BaseMoney:+#;-#;0})";
         }

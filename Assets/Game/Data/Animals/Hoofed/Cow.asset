@@ -20,3 +20,5 @@ MonoBehaviour:
   ability: {fileID: 11400000, guid: f0c6f9a145a64f87b1e6f0be9162c008, type: 2}
   description: "\u6BCF\u65E5\u7ED3\u675F\u65F6\u6709\u6982\u7387\u751F\u6210\u4E00\u53EA\u5C0F\u725B"
   icon: {fileID: 21300000, guid: 84edcf9f4aa42ed47aa54092a716659b, type: 3}
+  familyIcon: {fileID: 21300000, guid: be11099430914c942a52a28df7c3c808, type: 3}
+  iconScale: 1
