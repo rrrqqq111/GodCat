@@ -14,20 +14,23 @@ namespace NekogamiRanch.Ranch
         [SerializeField] private int mapHeight = 5;
         [SerializeField] private int day = 1;
         [SerializeField] private int money;
+        [SerializeField] private RanchMap ranchMap;
         [SerializeField] private List<AnimalData> offerPool = new List<AnimalData>();
         [SerializeField] private AnimalOfferRoller offerRoller;
         [SerializeField] private AnimalView animalViewPrefab;
+        [SerializeField] private Sprite fallbackAnimalSprite;
+        [SerializeField, Min(0)] private int randomStartingAnimalCount = 3;
 
         private readonly List<Animal> animals = new List<Animal>();
         private readonly List<AnimalData> currentOffers = new List<AnimalData>();
         private readonly StringBuilder settlementReportBuilder = new StringBuilder();
         private readonly List<SettlementAnimalReport> settlementAnimalReports = new List<SettlementAnimalReport>();
         private readonly Dictionary<Animal, SettlementAnimalReport> settlementReportByAnimal = new Dictionary<Animal, SettlementAnimalReport>();
-        private RanchMap ranchMap;
         private MapCell selectedCell;
         private bool waitingForOfferSelection;
         private bool waitingToEnterNextDay;
         private bool testMode;
+        private bool initialized;
         private string lastSettlementReport = "\u6682\u65e0\u7ed3\u7b97";
         private Animal activeExtraMoneyOwner;
 
@@ -43,17 +46,56 @@ namespace NekogamiRanch.Ranch
         public IReadOnlyList<AnimalData> CurrentOffers => currentOffers;
         public string LastSettlementReport => lastSettlementReport;
 
+        private void Start()
+        {
+            InitializeFromScene();
+        }
+
+        private void InitializeFromScene()
+        {
+            if (initialized)
+            {
+                return;
+            }
+
+            if (ranchMap == null)
+            {
+                ranchMap = FindObjectOfType<RanchMap>();
+            }
+
+            if (ranchMap == null)
+            {
+                Debug.LogError("[RanchManager] RanchMap is missing. Add a RanchMap object to the scene and assign it.");
+                return;
+            }
+
+            var startingAnimals = RollRandomStartingAnimals(randomStartingAnimalCount);
+            Initialize(ranchMap, startingAnimals, null, GetFallbackAnimalSprite(), FindSceneTileRenderers());
+        }
+
         public void Initialize(RanchMap map, IReadOnlyList<AnimalData> startingAnimals, Sprite tileSprite, Sprite animalSprite, IReadOnlyList<SpriteRenderer> sceneTiles = null)
         {
+            if (initialized)
+            {
+                return;
+            }
+
             ranchMap = map;
+            if (ranchMap == null)
+            {
+                Debug.LogError("[RanchManager] Cannot initialize without a RanchMap.");
+                return;
+            }
+
             if (offerRoller == null)
             {
                 offerRoller = GetComponent<AnimalOfferRoller>();
             }
 
-            ranchMap.Initialize(this, mapWidth, mapHeight, tileSprite, animalSprite, sceneTiles, animalViewPrefab);
+            ranchMap.Initialize(this, mapWidth, mapHeight, tileSprite, animalSprite != null ? animalSprite : GetFallbackAnimalSprite(), sceneTiles ?? FindSceneTileRenderers(), animalViewPrefab);
             SeedAnimals(startingAnimals);
             SelectCell(null);
+            initialized = true;
             NotifyStateChanged();
         }
 
@@ -382,6 +424,68 @@ namespace NekogamiRanch.Ranch
             {
                 TryAddAnimalToRandomEmptyCell(startingAnimals[i]);
             }
+        }
+
+        private IReadOnlyList<AnimalData> RollRandomStartingAnimals(int count)
+        {
+            if (count <= 0 || offerPool == null || offerPool.Count == 0)
+            {
+                return Array.Empty<AnimalData>();
+            }
+
+            var validPool = offerPool.Where(data => data != null).ToList();
+            if (validPool.Count == 0)
+            {
+                return Array.Empty<AnimalData>();
+            }
+
+            var results = new List<AnimalData>();
+            for (var i = 0; i < count; i++)
+            {
+                results.Add(validPool[UnityEngine.Random.Range(0, validPool.Count)]);
+            }
+
+            return results;
+        }
+
+        private static IReadOnlyList<SpriteRenderer> FindSceneTileRenderers()
+        {
+            return FindObjectsOfType<SceneGridCellMarker>()
+                .Select(marker => marker.GetComponent<SpriteRenderer>())
+                .Where(renderer => renderer != null)
+                .OrderByDescending(renderer => renderer.transform.position.y)
+                .ThenBy(renderer => renderer.transform.position.x)
+                .ToList();
+        }
+
+        private Sprite GetFallbackAnimalSprite()
+        {
+            if (fallbackAnimalSprite == null)
+            {
+                fallbackAnimalSprite = CreateCircleSprite("Fallback Animal Sprite", new Color(0.95f, 0.69f, 0.35f), 64);
+            }
+
+            return fallbackAnimalSprite;
+        }
+
+        private static Sprite CreateCircleSprite(string spriteName, Color color, int size)
+        {
+            var texture = new Texture2D(size, size, TextureFormat.RGBA32, false);
+            var center = new Vector2((size - 1) * 0.5f, (size - 1) * 0.5f);
+            var radius = size * 0.42f;
+
+            for (var y = 0; y < size; y++)
+            {
+                for (var x = 0; x < size; x++)
+                {
+                    var distance = Vector2.Distance(new Vector2(x, y), center);
+                    texture.SetPixel(x, y, distance <= radius ? color : Color.clear);
+                }
+            }
+
+            texture.Apply();
+            texture.name = spriteName;
+            return Sprite.Create(texture, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), size);
         }
 
         private void EnterNextDay()

@@ -7,12 +7,28 @@ namespace NekogamiRanch.UI
     {
         [SerializeField] private RanchHUD hud;
         [SerializeField] private AnimalOfferPanel offerPanel;
+        [SerializeField] private RanchManager manager;
 
-        private RanchManager manager;
+        private bool initialized;
+
+        private void Start()
+        {
+            if (manager == null)
+            {
+                manager = FindObjectOfType<RanchManager>();
+            }
+
+            Initialize(manager);
+        }
 
         public void Initialize(RanchManager ranchManager)
         {
-            if (manager != null)
+            if (initialized && manager == ranchManager)
+            {
+                return;
+            }
+
+            if (manager != null && initialized)
             {
                 manager.StateChanged -= Refresh;
             }
@@ -36,6 +52,7 @@ namespace NekogamiRanch.UI
             }
 
             manager.StateChanged += Refresh;
+            initialized = true;
             Refresh();
         }
 
