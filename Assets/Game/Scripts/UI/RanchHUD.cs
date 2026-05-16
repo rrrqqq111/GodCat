@@ -1,18 +1,21 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace NekogamiRanch.UI
 {
     public class RanchHUD : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI titleText;
-        [SerializeField] private TextMeshProUGUI statusText;
-        [SerializeField] private TextMeshProUGUI selectionText;
-        [SerializeField] private TextMeshProUGUI settlementReportText;
+        [SerializeField] private TMP_Text dayText;
+        [FormerlySerializedAs("statusText")]
+        [SerializeField] private TMP_Text moneyText;
+        [SerializeField] private TMP_Text cansText;
+        [SerializeField] private TMP_Text selectionText;
+        [SerializeField] private TMP_Text settlementReportText;
         [SerializeField] private Button nextDayButton;
-        [SerializeField] private TextMeshProUGUI nextDayButtonLabel;
+        [SerializeField] private TMP_Text nextDayButtonLabel;
 
         public void Initialize(Action onNextDayClicked)
         {
@@ -31,9 +34,19 @@ namespace NekogamiRanch.UI
 
         public void Refresh(int day, int money, int cans, string selectionTextValue, string settlementReport, bool isWaitingForOfferSelection, bool isWaitingToEnterNextDay)
         {
-            if (statusText != null)
+            if (dayText != null)
             {
-                statusText.text = $"Day {day}   Gold {money}   Cans {cans}";
+                dayText.text = $"第 {day} 天";
+            }
+
+            if (moneyText != null)
+            {
+                moneyText.text = money.ToString();
+            }
+
+            if (cansText != null)
+            {
+                cansText.text = cans.ToString();
             }
 
             if (selectionText != null)
@@ -53,7 +66,7 @@ namespace NekogamiRanch.UI
         {
             if (nextDayButtonLabel == null && nextDayButton != null)
             {
-                nextDayButtonLabel = nextDayButton.GetComponentInChildren<TextMeshProUGUI>();
+                nextDayButtonLabel = nextDayButton.GetComponentInChildren<TMP_Text>();
             }
 
             if (nextDayButtonLabel == null)
@@ -63,11 +76,11 @@ namespace NekogamiRanch.UI
 
             if (isWaitingToEnterNextDay)
             {
-                nextDayButtonLabel.text = "Enter Next Day";
+                nextDayButtonLabel.text = "下一天";
             }
             else
             {
-                nextDayButtonLabel.text = "Settle Today";
+                nextDayButtonLabel.text = "结算";
             }
 
             nextDayButton.interactable = !isWaitingForOfferSelection;
