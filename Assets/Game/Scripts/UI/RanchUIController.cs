@@ -7,6 +7,7 @@ namespace NekogamiRanch.UI
     {
         [SerializeField] private RanchHUD hud;
         [SerializeField] private AnimalOfferPanel offerPanel;
+        [SerializeField] private AnimalDetailPanel animalDetailPanel;
         [SerializeField] private RanchManager manager;
 
         private bool initialized;
@@ -19,6 +20,24 @@ namespace NekogamiRanch.UI
             }
 
             Initialize(manager);
+        }
+
+        private void Update()
+        {
+            if (manager == null || animalDetailPanel == null || !animalDetailPanel.IsShowing)
+            {
+                return;
+            }
+
+            if (animalDetailPanel.LastShownFrame == Time.frameCount)
+            {
+                return;
+            }
+
+            if (TryGetPrimaryPointerDownPosition(out var screenPosition) && !IsPointerOverOccupiedCell(screenPosition))
+            {
+                manager.SelectCell(null);
+            }
         }
 
         public void Initialize(RanchManager ranchManager)
@@ -67,6 +86,11 @@ namespace NekogamiRanch.UI
             {
                 offerPanel = GetComponentInChildren<AnimalOfferPanel>(true);
             }
+
+            if (animalDetailPanel == null)
+            {
+                animalDetailPanel = GetComponentInChildren<AnimalDetailPanel>(true);
+            }
         }
 
         private void Refresh()
@@ -92,6 +116,11 @@ namespace NekogamiRanch.UI
             {
                 offerPanel.Refresh(manager.CurrentOffers, manager.IsWaitingForOfferSelection);
             }
+
+            if (animalDetailPanel != null)
+            {
+                animalDetailPanel.Refresh(manager.SelectedCell != null ? manager.SelectedCell.Animal : null);
+            }
         }
 
         private void OnOfferSelected(int index)
@@ -102,6 +131,47 @@ namespace NekogamiRanch.UI
             }
 
             manager.SelectOffer(index);
+        }
+
+        private static bool TryGetPrimaryPointerDownPosition(out Vector2 screenPosition)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                screenPosition = Input.mousePosition;
+                return true;
+            }
+
+            for (var i = 0; i < Input.touchCount; i++)
+            {
+                var touch = Input.GetTouch(i);
+                if (touch.phase == TouchPhase.Began)
+                {
+                    screenPosition = touch.position;
+                    return true;
+                }
+            }
+
+            screenPosition = default;
+            return false;
+        }
+
+        private static bool IsPointerOverOccupiedCell(Vector2 screenPosition)
+        {
+            var camera = Camera.main;
+            if (camera == null)
+            {
+                return false;
+            }
+
+            var worldPosition = camera.ScreenToWorldPoint(screenPosition);
+            var hit = Physics2D.OverlapPoint(worldPosition);
+            if (hit == null)
+            {
+                return false;
+            }
+
+            var cell = hit.GetComponent<MapCell>();
+            return cell != null && cell.Animal != null;
         }
 
         private void OnDestroy()
