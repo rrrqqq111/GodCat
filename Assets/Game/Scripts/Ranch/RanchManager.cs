@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NekogamiRanch.Abilities;
 using NekogamiRanch.Animals;
+using NekogamiRanch.Items;
 using UnityEngine;
 
 namespace NekogamiRanch.Ranch
@@ -20,12 +21,14 @@ namespace NekogamiRanch.Ranch
         [SerializeField] private AnimalView animalViewPrefab;
         [SerializeField] private Sprite fallbackAnimalSprite;
         [SerializeField, Min(0)] private int randomStartingAnimalCount = 3;
+        [SerializeField] private List<ItemData> startingItems = new List<ItemData>();
 
         private RanchGameState state;
         private RanchEconomyService economyService;
         private RanchAnimalService animalService;
         private RanchOfferService offerService;
         private RanchSettlementService settlementService;
+        private RanchItemService itemService;
         private MapCell selectedCell;
         private bool initialized;
 
@@ -41,6 +44,8 @@ namespace NekogamiRanch.Ranch
         public bool IsTestMode => state != null && state.IsTestMode;
         public bool RandomizeAnimalPositionsInTestMode => state == null || state.RandomizeAnimalPositionsInTestMode;
         public IReadOnlyList<AnimalData> CurrentOffers => offerService != null ? offerService.CurrentOffers : Array.Empty<AnimalData>();
+        public IReadOnlyList<ItemRuntimeState> CurrentItems => itemService != null ? itemService.Items : Array.Empty<ItemRuntimeState>();
+        public IReadOnlyList<string> CurrentItemIds => itemService != null ? itemService.ItemIds : Array.Empty<string>();
         public string LastSettlementReport => settlementService != null ? settlementService.LastReport : "暂无结算";
 
         private void Start()
@@ -165,6 +170,33 @@ namespace NekogamiRanch.Ranch
             var spent = amount <= 0 || (economyService != null && economyService.TrySpendCans(amount));
             NotifyStateChanged();
             return spent;
+        }
+
+        public bool AddItem(ItemData itemData, int count = 1)
+        {
+            var added = itemService != null && itemService.AddItem(itemData, count);
+            if (added)
+            {
+                NotifyStateChanged();
+            }
+
+            return added;
+        }
+
+        public bool TryGetItemById(string itemId, out ItemRuntimeState item)
+        {
+            item = null;
+            return itemService != null && itemService.TryGetItemById(itemId, out item);
+        }
+
+        public Sprite GetItemIconById(string itemId)
+        {
+            return TryGetItemById(itemId, out var item) && item.Data != null ? item.Data.Icon : null;
+        }
+
+        public string GetItemDescriptionById(string itemId)
+        {
+            return TryGetItemById(itemId, out var item) && item.Data != null ? item.Data.Description : string.Empty;
         }
 
         public void AddExtraMoney(Animal source, int amount)
@@ -325,6 +357,7 @@ namespace NekogamiRanch.Ranch
             animalService = new RanchAnimalService(ranchMap, ResolveMovedAbility);
             offerService = new RanchOfferService(offerRoller, offerPool);
             settlementService = new RanchSettlementService(this, animalService, economyService);
+            itemService = new RanchItemService(this, economyService, startingItems);
         }
 
         private void SeedAnimals(IReadOnlyList<AnimalData> startingAnimals)
@@ -379,6 +412,7 @@ namespace NekogamiRanch.Ranch
 
             state?.AddDay();
             state?.SetPhase(IsTestMode ? RanchPhase.TestMode : RanchPhase.Playing);
+            itemService?.Trigger(ItemTriggerType.DayStart, Day);
             NotifyStateChanged();
         }
 
