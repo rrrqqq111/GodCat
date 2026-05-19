@@ -4,6 +4,7 @@ using System.Linq;
 using NekogamiRanch.Abilities;
 using NekogamiRanch.Animals;
 using NekogamiRanch.Items;
+using NekogamiRanch.Toys;
 using UnityEngine;
 
 namespace NekogamiRanch.Ranch
@@ -22,6 +23,7 @@ namespace NekogamiRanch.Ranch
         [SerializeField] private Sprite fallbackAnimalSprite;
         [SerializeField, Min(0)] private int randomStartingAnimalCount = 3;
         [SerializeField] private List<ItemData> startingItems = new List<ItemData>();
+        [SerializeField] private List<ToyData> equippedToys = new List<ToyData>();
 
         private RanchGameState state;
         private RanchEconomyService economyService;
@@ -29,6 +31,7 @@ namespace NekogamiRanch.Ranch
         private RanchOfferService offerService;
         private RanchSettlementService settlementService;
         private RanchItemService itemService;
+        private RanchToyService toyService;
         private MapCell selectedCell;
         private bool initialized;
 
@@ -46,6 +49,8 @@ namespace NekogamiRanch.Ranch
         public IReadOnlyList<AnimalData> CurrentOffers => offerService != null ? offerService.CurrentOffers : Array.Empty<AnimalData>();
         public IReadOnlyList<ItemRuntimeState> CurrentItems => itemService != null ? itemService.Items : Array.Empty<ItemRuntimeState>();
         public IReadOnlyList<string> CurrentItemIds => itemService != null ? itemService.ItemIds : Array.Empty<string>();
+        public IReadOnlyList<ToyData> CurrentToys => toyService != null ? toyService.EquippedToys : Array.Empty<ToyData>();
+        public IReadOnlyList<string> CurrentToyIds => toyService != null ? toyService.EquippedToyIds : Array.Empty<string>();
         public string LastSettlementReport => settlementService != null ? settlementService.LastReport : "暂无结算";
 
         private void Start()
@@ -93,6 +98,7 @@ namespace NekogamiRanch.Ranch
 
             ranchMap.Initialize(this, mapWidth, mapHeight, tileSprite, animalSprite != null ? animalSprite : GetFallbackAnimalSprite(), sceneTiles ?? RanchSceneBinder.FindSceneTileRenderers(), animalViewPrefab);
             CreateServices();
+            TriggerToys(ToyTriggerType.RunStart);
             SeedAnimals(startingAnimals);
             SelectCell(null);
             initialized = true;
@@ -197,6 +203,38 @@ namespace NekogamiRanch.Ranch
         public string GetItemDescriptionById(string itemId)
         {
             return TryGetItemById(itemId, out var item) && item.Data != null ? item.Data.Description : string.Empty;
+        }
+
+        public bool TryGetToyById(string toyId, out ToyData toy)
+        {
+            toy = null;
+            return toyService != null && toyService.TryGetToyById(toyId, out toy);
+        }
+
+        public Sprite GetToyIconById(string toyId)
+        {
+            return TryGetToyById(toyId, out var toy) ? toy.Icon : null;
+        }
+
+        public string GetToyDescriptionById(string toyId)
+        {
+            return TryGetToyById(toyId, out var toy) ? toy.Description : string.Empty;
+        }
+
+        public void TriggerToys(ToyTriggerType triggerType)
+        {
+            toyService?.Trigger(triggerType, Day);
+        }
+
+        public bool RegisterToy(ToyData toyData)
+        {
+            var registered = toyService != null && toyService.Register(toyData);
+            if (registered)
+            {
+                NotifyStateChanged();
+            }
+
+            return registered;
         }
 
         public void AddExtraMoney(Animal source, int amount)
@@ -358,6 +396,7 @@ namespace NekogamiRanch.Ranch
             offerService = new RanchOfferService(offerRoller, offerPool);
             settlementService = new RanchSettlementService(this, animalService, economyService);
             itemService = new RanchItemService(this, economyService, startingItems);
+            toyService = new RanchToyService(this, economyService, equippedToys);
         }
 
         private void SeedAnimals(IReadOnlyList<AnimalData> startingAnimals)
@@ -412,6 +451,7 @@ namespace NekogamiRanch.Ranch
 
             state?.AddDay();
             state?.SetPhase(IsTestMode ? RanchPhase.TestMode : RanchPhase.Playing);
+            toyService?.Trigger(ToyTriggerType.DayStart, Day);
             itemService?.Trigger(ItemTriggerType.DayStart, Day);
             NotifyStateChanged();
         }

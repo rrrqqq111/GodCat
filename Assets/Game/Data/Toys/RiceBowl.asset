@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ccf160912854b569cbf58d4c448b850, type: 3}
+  m_Name: RiceBowl
+  m_EditorClassIdentifier: 
+  id: rice_bowl
+  toyName: "\u5927\u996D\u76C6"
+  description: "\u5F00\u5C40+5\u7F50\u5934\u3002"
+  icon: {fileID: 0}
+  rarity: 0
+  enabledInDemo: 1
+  slotType: 0
+  equipCost: 0
+  unique: 1
+  canEquipBeforeRun: 1
+  canUnequipDuringRun: 0
+  unlockType: 0
+  unlockGameExp: 0
+  unlockFlag: 
+  effectScriptId: add_cans_on_run_start
+  triggerType: 1
+  priority: 0
+  effectParams:
+    money: 0
+    cans: 5
+    count: 1
+    tickCount: 0
+    stage: 0
+    animalOfferDelta: 0
+    freeAnimalRefreshCount: 0
+    freeShopRefreshCount: 0
+    interestStep: 0
+    interestMoney: 0
+    rarity: 0
+    multiplier: 1
+    probability: 1
+    animalId: 
+    animalFamily: 
+    animalRarity: 
+    itemId: 
+    itemRarity: 
+    blockedAnimalRarity: 
+    blockedItemRarity: 
+  targetTags: []
+  tags: []
