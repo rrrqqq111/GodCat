@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NekogamiRanch.Abilities;
 using NekogamiRanch.Animals;
 using UnityEngine;
@@ -22,35 +21,27 @@ namespace NekogamiRanch.Ranch
         [SerializeField] private Sprite fallbackAnimalSprite;
         [SerializeField, Min(0)] private int randomStartingAnimalCount = 3;
 
-        private readonly List<Animal> animals = new List<Animal>();
-        private readonly List<AnimalData> currentOffers = new List<AnimalData>();
-        private readonly StringBuilder settlementReportBuilder = new StringBuilder();
-        private readonly List<SettlementAnimalReport> settlementAnimalReports = new List<SettlementAnimalReport>();
-        private readonly Dictionary<Animal, SettlementAnimalReport> settlementReportByAnimal = new Dictionary<Animal, SettlementAnimalReport>();
+        private RanchGameState state;
+        private RanchEconomyService economyService;
+        private RanchAnimalService animalService;
+        private RanchOfferService offerService;
+        private RanchSettlementService settlementService;
         private MapCell selectedCell;
-        private bool waitingForOfferSelection;
-        private bool waitingToEnterNextDay;
-        private bool testMode;
-        private bool randomizeAnimalPositionsInTestMode = true;
         private bool initialized;
-        private string lastSettlementReport = "\u6682\u65e0\u7ed3\u7b97";
-        private Animal activeExtraMoneyOwner;
-        private int externalAbilityTriggerDepth;
-        private const int MaxExternalAbilityTriggerDepth = 8;
 
         public event Action StateChanged;
 
-        public int Day => day;
-        public int Money => money;
-        public int Cans => cans;
+        public int Day => state != null ? state.Day : day;
+        public int Money => state != null ? state.Money : money;
+        public int Cans => state != null ? state.Cans : cans;
         public RanchMap Map => ranchMap;
         public MapCell SelectedCell => selectedCell;
-        public bool IsWaitingForOfferSelection => waitingForOfferSelection;
-        public bool IsWaitingToEnterNextDay => waitingToEnterNextDay;
-        public bool IsTestMode => testMode;
-        public bool RandomizeAnimalPositionsInTestMode => randomizeAnimalPositionsInTestMode;
-        public IReadOnlyList<AnimalData> CurrentOffers => currentOffers;
-        public string LastSettlementReport => lastSettlementReport;
+        public bool IsWaitingForOfferSelection => state != null && state.IsWaitingForOfferSelection;
+        public bool IsWaitingToEnterNextDay => state != null && state.IsWaitingToEnterNextDay;
+        public bool IsTestMode => state != null && state.IsTestMode;
+        public bool RandomizeAnimalPositionsInTestMode => state == null || state.RandomizeAnimalPositionsInTestMode;
+        public IReadOnlyList<AnimalData> CurrentOffers => offerService != null ? offerService.CurrentOffers : Array.Empty<AnimalData>();
+        public string LastSettlementReport => settlementService != null ? settlementService.LastReport : "暂无结算";
 
         private void Start()
         {
@@ -64,10 +55,7 @@ namespace NekogamiRanch.Ranch
                 return;
             }
 
-            if (ranchMap == null)
-            {
-                ranchMap = FindObjectOfType<RanchMap>();
-            }
+            ranchMap = RanchSceneBinder.ResolveMap(ranchMap);
 
             if (ranchMap == null)
             {
@@ -76,7 +64,7 @@ namespace NekogamiRanch.Ranch
             }
 
             var startingAnimals = RollRandomStartingAnimals(randomStartingAnimalCount);
-            Initialize(ranchMap, startingAnimals, null, GetFallbackAnimalSprite(), FindSceneTileRenderers());
+            Initialize(ranchMap, startingAnimals, null, GetFallbackAnimalSprite(), RanchSceneBinder.FindSceneTileRenderers());
         }
 
         public void Initialize(RanchMap map, IReadOnlyList<AnimalData> startingAnimals, Sprite tileSprite, Sprite animalSprite, IReadOnlyList<SpriteRenderer> sceneTiles = null)
@@ -98,7 +86,8 @@ namespace NekogamiRanch.Ranch
                 offerRoller = GetComponent<AnimalOfferRoller>();
             }
 
-            ranchMap.Initialize(this, mapWidth, mapHeight, tileSprite, animalSprite != null ? animalSprite : GetFallbackAnimalSprite(), sceneTiles ?? FindSceneTileRenderers(), animalViewPrefab);
+            ranchMap.Initialize(this, mapWidth, mapHeight, tileSprite, animalSprite != null ? animalSprite : GetFallbackAnimalSprite(), sceneTiles ?? RanchSceneBinder.FindSceneTileRenderers(), animalViewPrefab);
+            CreateServices();
             SeedAnimals(startingAnimals);
             SelectCell(null);
             initialized = true;
@@ -123,188 +112,121 @@ namespace NekogamiRanch.Ranch
 
         public void NextDay()
         {
-            if (waitingToEnterNextDay)
+            if (state != null && state.Phase == RanchPhase.DayTransition)
             {
                 EnterNextDay();
                 return;
             }
 
-            if (waitingForOfferSelection)
+            if (state != null && state.Phase == RanchPhase.OfferSelection)
             {
                 return;
             }
 
             ResolveDailySettlement();
-            if (testMode)
+            if (IsTestMode)
             {
-                waitingToEnterNextDay = true;
+                state?.SetPhase(RanchPhase.DayTransition);
                 NotifyStateChanged();
                 return;
             }
 
             RollOffers(3);
-            if (currentOffers.Count > 0)
-            {
-                waitingForOfferSelection = true;
-            }
-            else
-            {
-                waitingToEnterNextDay = true;
-            }
-
+            state?.SetPhase(CurrentOffers.Count > 0 ? RanchPhase.OfferSelection : RanchPhase.DayTransition);
             NotifyStateChanged();
         }
 
         public void AddMoney(int amount)
         {
-            AddExtraMoney(activeExtraMoneyOwner, amount);
+            if (settlementService != null)
+            {
+                settlementService.AddMoney(amount);
+                return;
+            }
+
+            if (economyService != null)
+            {
+                economyService.AddMoney(amount);
+            }
+            else
+            {
+                money += amount;
+            }
         }
 
         public void AddCans(int amount)
         {
-            if (amount <= 0)
-            {
-                return;
-            }
-
-            cans += amount;
+            economyService?.AddCans(amount);
             NotifyStateChanged();
         }
 
         public bool TrySpendCans(int amount)
         {
-            if (amount <= 0)
-            {
-                return true;
-            }
-
-            if (cans < amount)
-            {
-                return false;
-            }
-
-            cans -= amount;
+            var spent = amount <= 0 || (economyService != null && economyService.TrySpendCans(amount));
             NotifyStateChanged();
-            return true;
+            return spent;
         }
 
         public void AddExtraMoney(Animal source, int amount)
         {
-            if (source != null)
-            {
-                amount = source.ResolveExtraMoney(amount);
-            }
-
-            money += amount;
+            economyService?.AddExtraMoney(source, amount);
         }
 
         public bool TryMoveAnimal(Animal animal, Vector2Int targetCoords)
         {
-            if (animal == null)
-            {
-                return false;
-            }
-
-            var startCoords = animal.Coords;
-            if (!ranchMap.TryMoveAnimal(animal, targetCoords))
-            {
-                return false;
-            }
-
-            if (animal.Coords != startCoords)
-            {
-                ResolveMovedAbility(animal);
-            }
-
-            return true;
+            return animalService != null && animalService.TryMoveAnimal(animal, targetCoords);
         }
 
         public bool TrySwapAnimals(Animal first, Animal second)
         {
-            if (first == null || second == null)
-            {
-                return false;
-            }
-
-            var firstStartCoords = first.Coords;
-            var secondStartCoords = second.Coords;
-            if (!ranchMap.TrySwapAnimals(first, second))
-            {
-                return false;
-            }
-
-            if (first.Coords != firstStartCoords)
-            {
-                ResolveMovedAbility(first);
-            }
-
-            if (second.Coords != secondStartCoords)
-            {
-                ResolveMovedAbility(second);
-            }
-
-            return true;
+            return animalService != null && animalService.TrySwapAnimals(first, second);
         }
 
         public bool RemoveAnimal(Animal animal)
         {
-            if (animal == null)
+            if (animalService == null)
             {
                 return false;
             }
 
-            var removedFromMap = ranchMap.TryRemoveAnimal(animal);
-            var removedFromList = animals.Remove(animal);
+            var removed = animalService.RemoveAnimal(animal);
             if (selectedCell != null && selectedCell.Animal == null)
             {
                 SelectCell(null);
             }
 
-            return removedFromMap || removedFromList;
+            return removed;
         }
 
         public bool ReplaceAnimal(Animal oldAnimal, AnimalData newAnimalData)
         {
-            if (oldAnimal == null || newAnimalData == null)
+            if (animalService == null)
             {
                 return false;
             }
 
-            var coords = oldAnimal.Coords;
-            if (!RemoveAnimal(oldAnimal))
+            var wasSelectedAnimal = selectedCell != null && selectedCell.Animal == oldAnimal;
+            var replaced = animalService.ReplaceAnimal(oldAnimal, newAnimalData);
+            if (replaced && wasSelectedAnimal)
             {
-                return false;
+                SelectCell(null);
             }
 
-            var newAnimal = new Animal(newAnimalData, coords);
-            if (!ranchMap.TryPlaceAnimal(newAnimal, coords))
-            {
-                return false;
-            }
-
-            animals.Add(newAnimal);
-            return true;
+            return replaced;
         }
 
         public bool TrySetAnimalAt(Vector2Int coords, AnimalData animalData)
         {
-            if (ranchMap == null || animalData == null || !ranchMap.TryGetCell(coords, out var cell))
+            if (animalService == null || ranchMap == null || !ranchMap.TryGetCell(coords, out var cell))
             {
                 return false;
             }
 
-            if (cell.Animal != null)
-            {
-                RemoveAnimal(cell.Animal);
-            }
-
-            var animal = new Animal(animalData, coords);
-            if (!ranchMap.TryPlaceAnimal(animal, coords))
+            if (!animalService.TrySetAnimalAt(coords, animalData))
             {
                 return false;
             }
 
-            animals.Add(animal);
             SelectCell(cell);
             NotifyStateChanged();
             return true;
@@ -312,184 +234,108 @@ namespace NekogamiRanch.Ranch
 
         public bool TryClearAnimalAt(Vector2Int coords)
         {
-            if (ranchMap == null || !ranchMap.TryGetCell(coords, out var cell) || cell.Animal == null)
+            if (animalService == null || ranchMap == null || !ranchMap.TryGetCell(coords, out var cell))
             {
                 return false;
             }
 
-            var removed = RemoveAnimal(cell.Animal);
+            var removed = animalService.TryClearAnimalAt(coords);
+            if (!removed)
+            {
+                return false;
+            }
+
             SelectCell(cell);
             NotifyStateChanged();
-            return removed;
+            return true;
         }
 
         public void ClearAllAnimals()
         {
-            if (ranchMap != null)
-            {
-                foreach (var cell in ranchMap.GetCells())
-                {
-                    cell.RemoveAnimal();
-                }
-            }
-
-            animals.Clear();
+            animalService?.ClearAllAnimals();
             SelectCell(null);
             NotifyStateChanged();
         }
 
         public void EnterTestMode()
         {
-            testMode = true;
-            waitingForOfferSelection = false;
-            waitingToEnterNextDay = false;
-            currentOffers.Clear();
-            lastSettlementReport = "\u6d4b\u8bd5\u6a21\u5f0f\uff1a\u8bf7\u70b9\u51fb\u5730\u5757\u5e76\u6dfb\u52a0\u52a8\u7269";
+            state?.EnterTestMode();
+            offerService?.Clear();
+            settlementService?.SetLastReport("测试模式：请点击地块并添加动物");
             ClearAllAnimals();
         }
 
         public void ExitTestMode()
         {
-            testMode = false;
-            waitingForOfferSelection = false;
-            waitingToEnterNextDay = false;
-            currentOffers.Clear();
+            state?.ExitTestMode();
+            offerService?.Clear();
             NotifyStateChanged();
         }
 
         public void SetRandomizeAnimalPositionsInTestMode(bool enabled)
         {
-            randomizeAnimalPositionsInTestMode = enabled;
+            state?.SetRandomizeAnimalPositionsInTestMode(enabled);
             NotifyStateChanged();
         }
 
         public bool SelectOffer(int index)
         {
-            if (!waitingForOfferSelection || index < 0 || index >= currentOffers.Count)
+            if (!IsWaitingForOfferSelection || offerService == null || animalService == null)
             {
                 return false;
             }
 
-            var selectedAnimal = currentOffers[index];
-            var added = TryAddAnimalToRandomEmptyCell(selectedAnimal);
-
-            waitingForOfferSelection = false;
-            waitingToEnterNextDay = true;
-            currentOffers.Clear();
+            var added = offerService.SelectOffer(index, animalService);
+            state?.SetPhase(RanchPhase.DayTransition);
             NotifyStateChanged();
             return added;
         }
 
         public int CountAnimalsById(string animalId)
         {
-            if (string.IsNullOrWhiteSpace(animalId))
-            {
-                return 0;
-            }
-
-            return animals.Count(animal => animal.Data != null && string.Equals(animal.Data.Id, animalId, StringComparison.OrdinalIgnoreCase));
+            return animalService != null ? animalService.CountAnimalsById(animalId) : 0;
         }
 
         public bool HasAnimalById(string animalId)
         {
-            return CountAnimalsById(animalId) > 0;
+            return animalService != null && animalService.HasAnimalById(animalId);
         }
 
         public bool TryTriggerAnimalAbility(Animal animal)
         {
-            var abilityData = animal?.Data?.Ability;
-            if (animal == null || animal.Ability == null || abilityData == null || string.IsNullOrWhiteSpace(abilityData.TriggerType))
-            {
-                return false;
-            }
+            return TryTriggerAnimalAbilityWithResult(animal).Success;
+        }
 
-            if (externalAbilityTriggerDepth >= MaxExternalAbilityTriggerDepth)
-            {
-                return false;
-            }
-
-            externalAbilityTriggerDepth++;
-            try
-            {
-                GetSettlementAnimalReport(animal);
-                ExecuteAbilityWithReport(animal, abilityData.TriggerType);
-                return true;
-            }
-            finally
-            {
-                externalAbilityTriggerDepth--;
-            }
+        public AbilityExecutionResult TryTriggerAnimalAbilityWithResult(Animal animal)
+        {
+            return settlementService != null
+                ? settlementService.TryTriggerAnimalAbility(animal)
+                : AbilityExecutionResult.Failed();
         }
 
         public string GetSelectedCellText()
         {
-            if (selectedCell == null)
-            {
-                return "\u672a\u9009\u62e9\u5730\u5757";
-            }
-
-            if (selectedCell.Animal == null)
-            {
-                return $"\u5730\u5757 ({selectedCell.Coords.x},{selectedCell.Coords.y})\uff1a\u7a7a";
-            }
-
-            var animal = selectedCell.Animal;
-            return $"{animal.DisplayName}\n" +
-                $"\u57fa\u7840\u6536\u76ca\uff1a{animal.BaseMoney:+#;-#;0}\n" +
-                $"\u5e74\u9f84\uff1a{animal.AgeDays}\n" +
-                $"\u6280\u80fd\uff1a{GetAnimalAbilityText(animal)}";
+            return RanchTextFormatter.GetSelectedCellText(selectedCell);
         }
 
-        private static string GetAnimalAbilityText(Animal animal)
+        private void CreateServices()
         {
-            var ability = animal?.Data?.Ability;
-            if (ability == null)
-            {
-                return "\u65e0";
-            }
-
-            var descriptions = new List<string>();
-            if (!string.IsNullOrWhiteSpace(ability.Desc))
-            {
-                descriptions.Add(ability.Desc);
-            }
-
-            if (ability.SubAbilities != null)
-            {
-                foreach (var subAbility in ability.SubAbilities)
-                {
-                    if (subAbility != null && !string.IsNullOrWhiteSpace(subAbility.Desc))
-                    {
-                        descriptions.Add(subAbility.Desc);
-                    }
-                }
-            }
-
-            if (descriptions.Count > 0)
-            {
-                return string.Join("\n", descriptions);
-            }
-
-            return !string.IsNullOrWhiteSpace(animal.Data.Description) ? animal.Data.Description : "\u65e0";
+            state = new RanchGameState(day, money, cans);
+            economyService = new RanchEconomyService(state);
+            animalService = new RanchAnimalService(ranchMap, ResolveMovedAbility);
+            offerService = new RanchOfferService(offerRoller, offerPool);
+            settlementService = new RanchSettlementService(this, animalService, economyService);
         }
 
         private void SeedAnimals(IReadOnlyList<AnimalData> startingAnimals)
         {
-            animals.Clear();
-            if (startingAnimals == null || startingAnimals.Count == 0)
-            {
-                return;
-            }
-
-            if (offerPool.Count == 0)
+            if (startingAnimals != null && startingAnimals.Count > 0 && offerPool.Count == 0)
             {
                 offerPool = startingAnimals.Where(data => data != null).Distinct().ToList();
+                offerService = new RanchOfferService(offerRoller, offerPool);
             }
 
-            for (var i = 0; i < startingAnimals.Count; i++)
-            {
-                TryAddAnimalToRandomEmptyCell(startingAnimals[i]);
-            }
+            animalService?.SeedAnimals(startingAnimals);
         }
 
         private IReadOnlyList<AnimalData> RollRandomStartingAnimals(int count)
@@ -514,55 +360,25 @@ namespace NekogamiRanch.Ranch
             return results;
         }
 
-        private static IReadOnlyList<SpriteRenderer> FindSceneTileRenderers()
-        {
-            return FindObjectsOfType<SceneGridCellMarker>()
-                .Select(marker => marker.GetComponent<SpriteRenderer>())
-                .Where(renderer => renderer != null)
-                .OrderByDescending(renderer => renderer.transform.position.y)
-                .ThenBy(renderer => renderer.transform.position.x)
-                .ToList();
-        }
-
         private Sprite GetFallbackAnimalSprite()
         {
             if (fallbackAnimalSprite == null)
             {
-                fallbackAnimalSprite = CreateCircleSprite("Fallback Animal Sprite", new Color(0.95f, 0.69f, 0.35f), 64);
+                fallbackAnimalSprite = RanchSceneBinder.GetFallbackAnimalSprite(null);
             }
 
             return fallbackAnimalSprite;
         }
 
-        private static Sprite CreateCircleSprite(string spriteName, Color color, int size)
-        {
-            var texture = new Texture2D(size, size, TextureFormat.RGBA32, false);
-            var center = new Vector2((size - 1) * 0.5f, (size - 1) * 0.5f);
-            var radius = size * 0.42f;
-
-            for (var y = 0; y < size; y++)
-            {
-                for (var x = 0; x < size; x++)
-                {
-                    var distance = Vector2.Distance(new Vector2(x, y), center);
-                    texture.SetPixel(x, y, distance <= radius ? color : Color.clear);
-                }
-            }
-
-            texture.Apply();
-            texture.name = spriteName;
-            return Sprite.Create(texture, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), size);
-        }
-
         private void EnterNextDay()
         {
-            if (!testMode || randomizeAnimalPositionsInTestMode)
+            if (!IsTestMode || RandomizeAnimalPositionsInTestMode)
             {
-                RandomizeAnimalPositions();
+                animalService?.RandomizeAnimalPositions();
             }
 
-            day++;
-            waitingToEnterNextDay = false;
+            state?.AddDay();
+            state?.SetPhase(IsTestMode ? RanchPhase.TestMode : RanchPhase.Playing);
             NotifyStateChanged();
         }
 
@@ -573,229 +389,17 @@ namespace NekogamiRanch.Ranch
 
         private void ResolveDailySettlement()
         {
-            BeginSettlementReport();
-
-            ResolveAbilitiesByMapScan("SettlementPrepare");
-            ResolveAbilitiesByMapScan("DayStart");
-            ResolveAbilitiesByMapScan("DayEnd");
-
-            var income = 0;
-            foreach (var cell in ranchMap.GetCellsInScanOrder())
-            {
-                var animal = cell.Animal;
-                if (animal == null)
-                {
-                    continue;
-                }
-
-                var resolvedMoney = animal.ResolveBaseMoney(ranchMap);
-                income += resolvedMoney;
-                var report = GetSettlementAnimalReport(animal);
-                report.BaseMoney += resolvedMoney;
-            }
-
-            money += income;
-            BuildCompactSettlementReport();
-            lastSettlementReport = settlementReportBuilder.ToString();
-        }
-
-        private void ResolveAbilitiesByMapScan(string triggerType)
-        {
-            var executedAnimals = new HashSet<Animal>();
-            foreach (var cell in ranchMap.GetCellsInScanOrder())
-            {
-                var animal = cell.Animal;
-                if (animal == null || executedAnimals.Contains(animal))
-                {
-                    continue;
-                }
-
-                executedAnimals.Add(animal);
-                GetSettlementAnimalReport(animal);
-                ExecuteAbilityWithReport(animal, triggerType);
-            }
+            settlementService?.ResolveDailySettlement(ranchMap);
         }
 
         private void ResolveMovedAbility(Animal animal)
         {
-            ExecuteAbilityWithReport(animal, "Moved");
-        }
-
-        private void ExecuteAbilityWithReport(Animal animal, string triggerType)
-        {
-            if (animal == null || animal.Ability == null)
-            {
-                return;
-            }
-
-            var beforeMoney = money;
-            var previousExtraMoneyOwner = activeExtraMoneyOwner;
-            activeExtraMoneyOwner = animal;
-            try
-            {
-                animal.Ability.TryExecute(new AnimalAbilityContext(this, animal), triggerType);
-            }
-            finally
-            {
-                activeExtraMoneyOwner = previousExtraMoneyOwner;
-            }
-
-            var moneyDelta = money - beforeMoney;
-            if (moneyDelta == 0)
-            {
-                return;
-            }
-
-            if (moneyDelta != 0)
-            {
-                var report = GetSettlementAnimalReport(animal);
-                report.AbilityMoney += moneyDelta;
-            }
-        }
-
-        private void BeginSettlementReport()
-        {
-            settlementReportBuilder.Clear();
-            settlementAnimalReports.Clear();
-            settlementReportByAnimal.Clear();
-            foreach (var animal in animals)
-            {
-                animal.ResetSettlementModifiers();
-            }
-        }
-
-        private void AppendSettlementLine(string line)
-        {
-            if (settlementReportBuilder.Length > 0)
-            {
-                settlementReportBuilder.AppendLine();
-            }
-
-            settlementReportBuilder.Append(line);
-        }
-
-        private SettlementAnimalReport GetSettlementAnimalReport(Animal animal)
-        {
-            if (settlementReportByAnimal.TryGetValue(animal, out var report))
-            {
-                return report;
-            }
-
-            report = new SettlementAnimalReport
-            {
-                Name = animal != null ? animal.DisplayName : "\u672a\u77e5"
-            };
-            settlementReportByAnimal.Add(animal, report);
-            settlementAnimalReports.Add(report);
-            return report;
-        }
-
-        private void BuildCompactSettlementReport()
-        {
-            settlementReportBuilder.Clear();
-            var total = 0;
-            for (var i = 0; i < settlementAnimalReports.Count; i++)
-            {
-                var report = settlementAnimalReports[i];
-                total += report.AbilityMoney + report.BaseMoney;
-                AppendSettlementLine($"{i + 1}\u3001{report.Name}\uff1a\u80fd\u529b{report.AbilityMoney}\uff0c\u57fa\u7840{report.BaseMoney}");
-            }
-
-            AppendSettlementLine($"\u5171\uff1a{total}");
-        }
-
-        private class SettlementAnimalReport
-        {
-            public string Name;
-            public int AbilityMoney;
-            public int BaseMoney;
+            settlementService?.ResolveMovedAbility(animal);
         }
 
         private void RollOffers(int count)
         {
-            currentOffers.Clear();
-            if (offerRoller != null)
-            {
-                currentOffers.AddRange(offerRoller.Roll(day, count, offerPool));
-                return;
-            }
-
-            RollOffersWithoutRoller(count);
-        }
-
-        private void RollOffersWithoutRoller(int count)
-        {
-            if (offerPool == null || offerPool.Count == 0)
-            {
-                return;
-            }
-
-            var validPool = offerPool.Where(data => data != null).ToList();
-            if (validPool.Count == 0)
-            {
-                return;
-            }
-
-            var shuffledPool = validPool.OrderBy(_ => UnityEngine.Random.value).ToList();
-            for (var i = 0; i < count && i < shuffledPool.Count; i++)
-            {
-                currentOffers.Add(shuffledPool[i]);
-            }
-        }
-
-        private bool TryAddAnimalToRandomEmptyCell(AnimalData data)
-        {
-            if (data == null)
-            {
-                return false;
-            }
-
-            var emptyCells = ranchMap.GetCells()
-                .Where(cell => cell != null && cell.IsEmpty)
-                .ToList();
-            if (emptyCells.Count == 0)
-            {
-                return false;
-            }
-
-            var cell = emptyCells[UnityEngine.Random.Range(0, emptyCells.Count)];
-            var animal = new Animal(data, cell.Coords);
-            if (!cell.TryPlaceAnimal(animal))
-            {
-                return false;
-            }
-
-            animals.Add(animal);
-            return true;
-        }
-
-        private void RandomizeAnimalPositions()
-        {
-            if (animals.Count == 0)
-            {
-                return;
-            }
-
-            var allCells = ranchMap.GetCells().Where(cell => cell != null).ToList();
-            if (allCells.Count <= 1)
-            {
-                return;
-            }
-
-            foreach (var cell in allCells)
-            {
-                if (!cell.IsEmpty)
-                {
-                    cell.RemoveAnimal();
-                }
-            }
-
-            var shuffledCells = allCells.OrderBy(_ => UnityEngine.Random.value).ToList();
-            var maxPlaceCount = Mathf.Min(animals.Count, shuffledCells.Count);
-            for (var i = 0; i < maxPlaceCount; i++)
-            {
-                shuffledCells[i].TryPlaceAnimal(animals[i]);
-            }
+            offerService?.Roll(Day, count);
         }
     }
 }

@@ -4,6 +4,6 @@ namespace NekogamiRanch.Abilities
     {
         string Name { get; }
         int Priority { get; }
-        void TryExecute(AnimalAbilityContext context, string triggerType);
+        AbilityExecutionResult TryExecute(AnimalAbilityContext context, string triggerType);
     }
 }

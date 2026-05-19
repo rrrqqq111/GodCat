@@ -103,14 +103,14 @@ namespace NekogamiRanch.Animals
             baseMoneyBonus += bonus;
         }
 
-        public void ResolveDayStartAbility(AnimalAbilityContext context)
+        public AbilityExecutionResult ResolveDayStartAbility(AnimalAbilityContext context)
         {
-            Ability?.TryExecute(context, "DayStart");
+            return Ability != null ? Ability.TryExecute(context, "DayStart") : AbilityExecutionResult.Failed(triggerType: "DayStart");
         }
 
-        public void ResolveDayEndAbility(AnimalAbilityContext context)
+        public AbilityExecutionResult ResolveDayEndAbility(AnimalAbilityContext context)
         {
-            Ability?.TryExecute(context, "DayEnd");
+            return Ability != null ? Ability.TryExecute(context, "DayEnd") : AbilityExecutionResult.Failed(triggerType: "DayEnd");
         }
 
         private struct TemporaryIncomeMultiplier
