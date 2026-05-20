@@ -1,4 +1,5 @@
 using System;
+using NekogamiRanch.Ranch;
 using UnityEngine;
 
 namespace NekogamiRanch.Abilities
@@ -7,6 +8,7 @@ namespace NekogamiRanch.Abilities
     {
         private readonly AbilityData config;
         private int triggerCount;
+        private int remainingCooldown = -1;
 
         public ConfiguredAnimalAbility(AbilityData abilityData)
         {
@@ -33,8 +35,7 @@ namespace NekogamiRanch.Abilities
                 return AbilityExecutionResult.Failed(config.Id, triggerType);
             }
 
-            var delayDays = config.EffectParams != null ? config.EffectParams.delayDays : 0;
-            if (delayDays > 0 && context.Owner.AgeDays < delayDays)
+            if (IsCoolingDown(context))
             {
                 return AbilityExecutionResult.Failed(config.Id, triggerType);
             }
@@ -60,6 +61,7 @@ namespace NekogamiRanch.Abilities
             if (effect.Execute(context, config, targets))
             {
                 triggerCount++;
+                ResetCooldownAfterSuccess(context);
 #if UNITY_EDITOR
                 Debug.Log($"[Ability] {config.Id} executed. owner={context.Owner.DisplayName} targets={targets.Count} triggerCount={triggerCount}");
 #endif
@@ -72,6 +74,107 @@ namespace NekogamiRanch.Abilities
             }
 #endif
             return AbilityExecutionResult.Failed(config.Id, triggerType, targets.Count);
+        }
+
+        private bool IsCoolingDown(AnimalAbilityContext context)
+        {
+            var cooldownDays = GetCooldownDays();
+            var initialCooldownDays = GetInitialCooldownDays(cooldownDays);
+            if (cooldownDays <= 0 && initialCooldownDays <= 0)
+            {
+                return false;
+            }
+
+            if (remainingCooldown < 0)
+            {
+                remainingCooldown = initialCooldownDays;
+            }
+
+            if (remainingCooldown <= 0)
+            {
+                return false;
+            }
+
+            ReduceCooldown(context, 1, "NaturalDailyCooldownReduction");
+            ReduceCooldown(context, GetTileCooldownReductionAmount(context), "TileCooldownBonusReduction");
+            return remainingCooldown > 0;
+        }
+
+        private void ResetCooldownAfterSuccess(AnimalAbilityContext context)
+        {
+            var cooldownDays = GetCooldownDays();
+            if (cooldownDays <= 0)
+            {
+                remainingCooldown = 0;
+                return;
+            }
+
+            remainingCooldown = cooldownDays;
+            ReduceCooldown(context, GetTileCooldownReductionAmount(context), "TileCooldownBonusReduction");
+        }
+
+        private int GetInitialCooldownDays(int cooldownDays)
+        {
+            if (config.EffectParams == null)
+            {
+                return 0;
+            }
+
+            return Mathf.Max(0, config.EffectParams.initialCooldownDays > 0
+                ? config.EffectParams.initialCooldownDays
+                : cooldownDays);
+        }
+
+        private int GetCooldownDays()
+        {
+            return config.EffectParams != null ? Mathf.Max(0, config.EffectParams.cooldownDays) : 0;
+        }
+
+        private int GetTileCooldownReductionAmount(AnimalAbilityContext context)
+        {
+            var effectParams = config.EffectParams;
+            if (effectParams == null ||
+                effectParams.cooldownReductionAmount <= 0 ||
+                string.IsNullOrWhiteSpace(effectParams.cooldownReductionTileType) ||
+                string.Equals(effectParams.cooldownReductionTileType, "None", StringComparison.OrdinalIgnoreCase) ||
+                context.RanchManager.Map == null)
+            {
+                return 0;
+            }
+
+            if (!Enum.TryParse<RanchTileType>(effectParams.cooldownReductionTileType, true, out var tileType))
+            {
+                return 0;
+            }
+
+            foreach (var neighbor in context.RanchManager.Map.GetNeighbors(context.Owner.Coords))
+            {
+                if (context.RanchManager.Map.IsTileType(neighbor.Coords, tileType))
+                {
+                    return effectParams.cooldownReductionAmount;
+                }
+            }
+
+            return 0;
+        }
+
+        private void ReduceCooldown(AnimalAbilityContext context, int amount, string reason)
+        {
+            if (amount <= 0 || remainingCooldown <= 0)
+            {
+                return;
+            }
+
+            var previousCooldown = remainingCooldown;
+            remainingCooldown = Mathf.Max(0, remainingCooldown - amount);
+            context.RanchManager.NotifyAnimalCooldownReduced(new AnimalCooldownReductionContext(
+                context.Owner,
+                previousCooldown - remainingCooldown,
+                previousCooldown,
+                remainingCooldown,
+                context.Owner,
+                config.Id,
+                reason));
         }
     }
 }
