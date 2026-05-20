@@ -1,4 +1,5 @@
 using System;
+using NekogamiRanch.Animals;
 using UnityEngine.Serialization;
 
 namespace NekogamiRanch.Abilities
@@ -17,5 +18,12 @@ namespace NekogamiRanch.Abilities
         public string type = "Flat";
         public string target = "Self";
         public string targetFamily = "None";
+        public AnimalData animalData;
+        public AnimalData growUpAnimalDataA;
+        public int growUpWeightA;
+        public AnimalData growUpAnimalDataB;
+        public int growUpWeightB;
+        public AnimalData growUpAnimalDataC;
+        public int growUpWeightC;
     }
 }

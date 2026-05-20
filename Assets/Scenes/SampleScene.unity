@@ -17159,18 +17159,28 @@ MonoBehaviour:
   money: 0
   cans: 5
   ranchMap: {fileID: 171749783}
+  autoPopulateOfferPoolByFamily: 1
+  offerPoolFamilies:
+  - Hoofed
+  - Carnivora
   offerPool:
   - {fileID: 11400000, guid: 25d793ff86165054892067cef9116882, type: 2}
+  - {fileID: 11400000, guid: 2023d34f933e0f04eaeaedf879b9ea07, type: 2}
   - {fileID: 11400000, guid: 6360dc7e5909a64449ade1e379b6617d, type: 2}
   - {fileID: 11400000, guid: 207be03b86da84446b210fb0d9ec352e, type: 2}
   - {fileID: 11400000, guid: 693376dde7ae634408132ceec7698382, type: 2}
+  - {fileID: 11400000, guid: 7dd66f554cea9884b98c6155c38e3637, type: 2}
   - {fileID: 11400000, guid: fcdf96998902b0a449dd60e3e29e5b85, type: 2}
   - {fileID: 11400000, guid: c9dca31873c433043baf7eedafb3eb8d, type: 2}
+  - {fileID: 11400000, guid: 0f86d4ee44552ec43aebd86db379d67a, type: 2}
   - {fileID: 11400000, guid: 44a22eda009bf0b4c9e086d442d2bca5, type: 2}
   - {fileID: 11400000, guid: 66ddb2d60b3d4fffb6b76febbd4e98a2, type: 2}
   - {fileID: 11400000, guid: b2e6ed90219c4d7da7d05565cf5554e8, type: 2}
   - {fileID: 11400000, guid: ac7366b6752d484281d04faa3d0ddb8f, type: 2}
   - {fileID: 11400000, guid: 423df876159346e18bf4917a91cb595f, type: 2}
+  - {fileID: 11400000, guid: 169b2ac70be60a245b6ff31673e43d8a, type: 2}
+  - {fileID: 11400000, guid: a7d0e848f28d4ec6b7de6e0f39c5f0dd, type: 2}
+  - {fileID: 11400000, guid: b86508b62265426a80f4986c4f5b10c0, type: 2}
   offerRoller: {fileID: 2032885278}
   animalViewPrefab: {fileID: 1147956489028073971, guid: 70dfe621d5fa7ba4096e561457e636fe, type: 3}
   fallbackAnimalSprite: {fileID: 0}

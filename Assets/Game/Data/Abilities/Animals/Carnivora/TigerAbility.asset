@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5cc8b67d2bd64e1498ad642244aa2e36, type: 3}
-  m_Name: GoatAbility
+  m_Name: TigerAbility
   m_EditorClassIdentifier: 
-  id: GoatAbility
+  id: TigerAbility
   abilityType: Normal
   priority: 0
-  impactType: Self
+  impactType: Adjacent
   stackable: 0
-  desc: "\u88ab\u79fb\u9664\u65f6\uff0c\u5728\u539f\u4f4d\u6dfb\u52a0\u4e00\u53ea\u7f8a\u7f94"
-  triggerType: AnimalRemoved
+  desc: "\u6355\u98DF\u6240\u6709\u76F8\u90BB\u7684\u6709\u8E44\u52A8\u7269\uFF0C\u6BCF\u6210\u529F\u6355\u98DF\u4E00\u53EA\uFF0C\u81EA\u8EAB\u57FA\u7840\u6536\u76CA\u5C5E\u6027+3"
+  triggerType: DayEnd
   triggerChancePercent: 100
   triggerLimit: 0
-  effectType: Spawn
-  effectScriptId: GoatAbilityEffect
+  effectType: Prey
+  effectScriptId: TigerAbilityEffect
   effectParams:
-    money: 0
+    money: 3
     initialCooldownDays: 0
     cooldownDays: 0
     cooldownReductionAmount: 0
@@ -32,7 +32,7 @@ MonoBehaviour:
     durationDays: 1
     transformChancePercent: 100
     type: Flat
-    target: Self
-    targetFamily: None
-    animalData: {fileID: 11400000, guid: 7dd66f554cea9884b98c6155c38e3637, type: 2}
+    target: Other
+    targetFamily: Hoofed
+    animalData: {fileID: 0}
   subAbilities: []

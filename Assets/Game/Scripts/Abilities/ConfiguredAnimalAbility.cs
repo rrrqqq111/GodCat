@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NekogamiRanch.Abilities
 {
-    public class ConfiguredAnimalAbility : IAnimalAbility
+    public class ConfiguredAnimalAbility : IAnimalAbility, IAnimalCooldownStatus
     {
         private readonly AbilityData config;
         private int triggerCount;
@@ -17,6 +17,8 @@ namespace NekogamiRanch.Abilities
 
         public string Name => config != null ? config.Id : string.Empty;
         public int Priority => config != null ? config.Priority : 0;
+        public bool HasCooldown => GetCooldownDays() > 0 || GetInitialCooldownDays(GetCooldownDays()) > 0;
+        public int RemainingCooldown => HasCooldown ? Mathf.Max(0, remainingCooldown < 0 ? GetInitialCooldownDays(GetCooldownDays()) : remainingCooldown) : 0;
 
         public AbilityExecutionResult TryExecute(AnimalAbilityContext context, string triggerType)
         {

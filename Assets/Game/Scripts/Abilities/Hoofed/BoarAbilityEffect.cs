@@ -36,7 +36,7 @@ namespace NekogamiRanch.Abilities
             if (transformPassed && pigTargets.Count > 0)
             {
                 var selectedPig = pigTargets[UnityEngine.Random.Range(0, pigTargets.Count)];
-                if (context.RanchManager.ReplaceAnimal(selectedPig, context.Owner.Data))
+                if (context.RanchManager.TransformAnimal(selectedPig, context.Owner.Data))
                 {
                     applied = true;
                 }

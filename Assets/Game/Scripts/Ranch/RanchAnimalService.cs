@@ -113,7 +113,7 @@ namespace NekogamiRanch.Ranch
             return true;
         }
 
-        public bool RemoveAnimal(Animal animal)
+        public bool AnimalRemoved(Animal animal)
         {
             if (animal == null)
             {
@@ -125,14 +125,24 @@ namespace NekogamiRanch.Ranch
             return removedFromMap || removedFromList;
         }
 
-        public bool TryRemoveAnimalByPrey(Animal predator, Animal target)
+        public bool AnimalRemovedAt(Vector2Int coords)
         {
-            if (predator == null || target == null)
+            if (ranchMap == null || !ranchMap.TryGetCell(coords, out var cell) || cell.Animal == null)
             {
                 return false;
             }
 
-            return RemoveAnimal(target);
+            return AnimalRemoved(cell.Animal);
+        }
+
+        public bool AnimalRemovedFromCell(MapCell cell)
+        {
+            if (cell == null || cell.Animal == null)
+            {
+                return false;
+            }
+
+            return AnimalRemoved(cell.Animal);
         }
 
         public bool ReplaceAnimal(Animal oldAnimal, AnimalData newAnimalData)
@@ -143,7 +153,7 @@ namespace NekogamiRanch.Ranch
             }
 
             var coords = oldAnimal.Coords;
-            if (!RemoveAnimal(oldAnimal))
+            if (!AnimalRemoved(oldAnimal))
             {
                 return false;
             }
@@ -167,7 +177,7 @@ namespace NekogamiRanch.Ranch
 
             if (cell.Animal != null)
             {
-                RemoveAnimal(cell.Animal);
+                AnimalRemoved(cell.Animal);
             }
 
             var animal = new Animal(animalData, coords);
@@ -178,16 +188,6 @@ namespace NekogamiRanch.Ranch
 
             animals.Add(animal);
             return true;
-        }
-
-        public bool TryClearAnimalAt(Vector2Int coords)
-        {
-            if (ranchMap == null || !ranchMap.TryGetCell(coords, out var cell) || cell.Animal == null)
-            {
-                return false;
-            }
-
-            return RemoveAnimal(cell.Animal);
         }
 
         public void ClearAllAnimals()

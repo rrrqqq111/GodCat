@@ -19,7 +19,7 @@ namespace NekogamiRanch.Abilities
             }
 
             var sellMoney = abilityData.EffectParams != null ? abilityData.EffectParams.money : 0;
-            if (!context.RanchManager.RemoveAnimal(context.Owner))
+            if (!context.RanchManager.SellAnimal(context.Owner))
             {
                 return false;
             }

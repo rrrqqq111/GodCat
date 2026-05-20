@@ -15,9 +15,9 @@ MonoBehaviour:
   id: CalfAbility
   abilityType: Normal
   priority: 0
-  impactType: Adjacent
+  impactType: Self
   stackable: 0
-  desc: "\u6bcf\u65e5\u7ed3\u675f\u65f6\u6210\u957f\u4e3a\u5976\u725b"
+  desc: "\u4e94\u5929\u540e\u6210\u957f\u4e3a\u6c34\u725b\u3001\u5976\u725b\u6216\u8005\u9e9d\u725b\uff080.4/0.4/0.2\uff09"
   triggerType: DayEnd
   triggerChancePercent: 100
   triggerLimit: 1
@@ -25,7 +25,20 @@ MonoBehaviour:
   effectScriptId: CalfAbilityEffect
   effectParams:
     money: 0
-    type: Multiplier
-    target: Other
+    initialCooldownDays: 5
+    cooldownDays: 0
+    cooldownReductionAmount: 0
+    cooldownReductionTileType: None
+    durationDays: 1
+    transformChancePercent: 100
+    type: Flat
+    target: Self
     targetFamily: None
+    animalData: {fileID: 0}
+    growUpAnimalDataA: {fileID: 11400000, guid: ac7366b6752d484281d04faa3d0ddb8f, type: 2}
+    growUpWeightA: 40
+    growUpAnimalDataB: {fileID: 11400000, guid: 169b2ac70be60a245b6ff31673e43d8a, type: 2}
+    growUpWeightB: 40
+    growUpAnimalDataC: {fileID: 11400000, guid: b2e6ed90219c4d7da7d05565cf5554e8, type: 2}
+    growUpWeightC: 20
   subAbilities: []

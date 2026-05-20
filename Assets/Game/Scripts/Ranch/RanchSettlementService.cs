@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using NekogamiRanch.Abilities;
 using NekogamiRanch.Animals;
@@ -76,6 +77,11 @@ namespace NekogamiRanch.Ranch
             return ExecuteAbilityWithReport(animal, "Moved");
         }
 
+        public AbilityExecutionResult ResolveAnimalRemovedAbility(Animal animal)
+        {
+            return ExecuteAbilityWithReport(animal, "AnimalRemoved");
+        }
+
         public AbilityExecutionResult TryTriggerAnimalAbility(Animal animal)
         {
             var abilityData = animal?.Data?.Ability;
@@ -94,6 +100,38 @@ namespace NekogamiRanch.Ranch
             {
                 GetSettlementAnimalReport(animal);
                 return ExecuteAbilityWithReport(animal, abilityData.TriggerType);
+            }
+            finally
+            {
+                externalAbilityTriggerDepth--;
+            }
+        }
+
+        public void ResolveAnimalPreyedAbilities(Animal predator, Animal preyedAnimal, RanchMap ranchMap)
+        {
+            if (predator == null || preyedAnimal == null || ranchMap == null)
+            {
+                return;
+            }
+
+            if (externalAbilityTriggerDepth >= MaxExternalAbilityTriggerDepth)
+            {
+                return;
+            }
+
+            var candidates = ranchMap.GetNeighbors(preyedAnimal.Coords)
+                .Select(cell => cell.Animal)
+                .Where(animal => animal != null && animal != predator && animal != preyedAnimal)
+                .ToList();
+
+            externalAbilityTriggerDepth++;
+            try
+            {
+                foreach (var animal in candidates)
+                {
+                    GetSettlementAnimalReport(animal);
+                    ExecuteAbilityWithReport(animal, "AnimalPreyed", predator, preyedAnimal);
+                }
             }
             finally
             {
@@ -132,6 +170,36 @@ namespace NekogamiRanch.Ranch
             try
             {
                 result = animal.Ability.TryExecute(new AnimalAbilityContext(manager, animal), triggerType);
+            }
+            finally
+            {
+                activeExtraMoneyOwner = previousExtraMoneyOwner;
+            }
+
+            var moneyDelta = economyService.Money - beforeMoney;
+            if (moneyDelta != 0)
+            {
+                var report = GetSettlementAnimalReport(animal);
+                report.AbilityMoney += moneyDelta;
+            }
+
+            return result.WithMoneyDelta(moneyDelta);
+        }
+
+        private AbilityExecutionResult ExecuteAbilityWithReport(Animal animal, string triggerType, Animal predator, Animal preyedAnimal)
+        {
+            if (animal == null || animal.Ability == null)
+            {
+                return AbilityExecutionResult.Failed(triggerType: triggerType);
+            }
+
+            var beforeMoney = economyService.Money;
+            var previousExtraMoneyOwner = activeExtraMoneyOwner;
+            activeExtraMoneyOwner = animal;
+            var result = AbilityExecutionResult.Failed(animal.Ability.Name, triggerType);
+            try
+            {
+                result = animal.Ability.TryExecute(new AnimalAbilityContext(manager, animal, predator, preyedAnimal), triggerType);
             }
             finally
             {

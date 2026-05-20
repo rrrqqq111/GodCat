@@ -27,6 +27,7 @@ namespace NekogamiRanch.Testing
 
         private static TMP_FontAsset uiFont;
         private readonly List<AnimalData> dropdownAnimals = new List<AnimalData>();
+        private MapCell cachedSelectedCell;
 
         private void Start()
         {
@@ -158,21 +159,27 @@ namespace NekogamiRanch.Testing
         private void Refresh()
         {
             var selectedCell = manager != null ? manager.SelectedCell : null;
+            if (selectedCell != null)
+            {
+                cachedSelectedCell = selectedCell;
+            }
+
+            var actionCell = selectedCell ?? cachedSelectedCell;
             if (selectedCellText != null)
             {
-                if (selectedCell == null)
+                if (actionCell == null)
                 {
                     selectedCellText.text = "\u5f53\u524d\u5730\u5757\uff1a\u672a\u9009\u62e9";
                 }
                 else
                 {
-                    var animalName = selectedCell.Animal != null ? selectedCell.Animal.DisplayName : "\u7a7a";
-                    selectedCellText.text = $"\u5f53\u524d\u5730\u5757\uff1a({selectedCell.Coords.x},{selectedCell.Coords.y})  {animalName}";
+                    var animalName = actionCell.Animal != null ? actionCell.Animal.DisplayName : "\u7a7a";
+                    selectedCellText.text = $"\u5f53\u524d\u5730\u5757\uff1a({actionCell.Coords.x},{actionCell.Coords.y})  {animalName}";
                 }
             }
 
-            var hasCell = selectedCell != null;
-            var hasAnimal = selectedCell != null && selectedCell.Animal != null;
+            var hasCell = actionCell != null;
+            var hasAnimal = actionCell != null && actionCell.Animal != null;
             if (setAnimalButton != null)
             {
                 setAnimalButton.interactable = manager != null && manager.IsTestMode && hasCell && dropdownAnimals.Count > 0;
@@ -203,7 +210,8 @@ namespace NekogamiRanch.Testing
 
         private void SetSelectedAnimal()
         {
-            if (manager == null || manager.SelectedCell == null || animalDropdown == null)
+            var targetCell = manager != null ? manager.SelectedCell ?? cachedSelectedCell : null;
+            if (manager == null || targetCell == null || animalDropdown == null)
             {
                 return;
             }
@@ -214,17 +222,18 @@ namespace NekogamiRanch.Testing
                 return;
             }
 
-            manager.TrySetAnimalAt(manager.SelectedCell.Coords, dropdownAnimals[index]);
+            manager.TrySetAnimalAt(targetCell.Coords, dropdownAnimals[index]);
         }
 
         private void DeleteSelectedAnimal()
         {
-            if (manager == null || manager.SelectedCell == null)
+            var targetCell = manager != null ? manager.SelectedCell ?? cachedSelectedCell : null;
+            if (manager == null || targetCell == null)
             {
                 return;
             }
 
-            manager.TryClearAnimalAt(manager.SelectedCell.Coords);
+            manager.DeleteAnimalAtForTest(targetCell.Coords);
         }
 
         private void ResetTestMode()

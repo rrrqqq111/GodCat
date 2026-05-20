@@ -7,18 +7,25 @@ using NekogamiRanch.Animals;
 using NekogamiRanch.Items;
 using NekogamiRanch.Toys;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace NekogamiRanch.Ranch
 {
     public class RanchManager : MonoBehaviour
     {
+        private const string AnimalDataRoot = "Assets/Game/Data/Animals";
+
         [SerializeField] private int mapWidth = 4;
         [SerializeField] private int mapHeight = 5;
         [SerializeField] private int day = 1;
         [SerializeField] private int money;
         [SerializeField, Min(0)] private int cans = 5;
         [SerializeField] private RanchMap ranchMap;
-        [SerializeField] private List<AnimalData> offerPool = new List<AnimalData>();
+        [SerializeField] private bool autoPopulateOfferPoolByFamily = true;
+        [SerializeField] private List<string> offerPoolFamilies = new List<string> { "Hoofed", "Carnivora" };
+        [SerializeField, HideInInspector] private List<AnimalData> offerPool = new List<AnimalData>();
         [SerializeField] private AnimalOfferRoller offerRoller;
         [SerializeField] private AnimalView animalViewPrefab;
         [SerializeField] private Sprite fallbackAnimalSprite;
@@ -43,6 +50,9 @@ namespace NekogamiRanch.Ranch
         public event Action<PreyResult> OnPreyFailed;
         public event Action<Animal, Animal> OnAnimalPreyed;
         public event Action<Animal> OnAnimalRemoved;
+        public event Action<Animal> OnAnimalSold;
+        public event Action<Animal, AnimalData> OnAnimalGrown;
+        public event Action<Animal, AnimalData> OnAnimalTransformed;
         public event Action<AnimalCooldownReductionContext> OnAnimalCooldownReduced;
 
         public int Day => state != null ? state.Day : day;
@@ -66,6 +76,18 @@ namespace NekogamiRanch.Ranch
             InitializeFromScene();
         }
 
+#if UNITY_EDITOR
+        private void Reset()
+        {
+            RefreshOfferPoolFromConfiguredFamilies();
+        }
+
+        private void OnValidate()
+        {
+            RefreshOfferPoolFromConfiguredFamilies();
+        }
+#endif
+
         private void InitializeFromScene()
         {
             if (initialized)
@@ -73,6 +95,7 @@ namespace NekogamiRanch.Ranch
                 return;
             }
 
+            RefreshOfferPoolFromConfiguredFamilies();
             ranchMap = RanchSceneBinder.ResolveMap(ranchMap);
 
             if (ranchMap == null)
@@ -92,6 +115,7 @@ namespace NekogamiRanch.Ranch
                 return;
             }
 
+            RefreshOfferPoolFromConfiguredFamilies();
             ranchMap = map;
             if (ranchMap == null)
             {
@@ -294,14 +318,14 @@ namespace NekogamiRanch.Ranch
                     continue;
                 }
 
-                if (!animalService.TryRemoveAnimalByPrey(context.Predator, target))
+                OnAnimalPreyed?.Invoke(context.Predator, target);
+                settlementService?.ResolveAnimalPreyedAbilities(context.Predator, target, ranchMap);
+                if (!animalService.AnimalRemoved(target))
                 {
                     continue;
                 }
 
                 removedTargets.Add(target);
-                OnAnimalPreyed?.Invoke(context.Predator, target);
-                OnAnimalRemoved?.Invoke(target);
             }
 
             if (removedTargets.Count > 0)
@@ -328,16 +352,14 @@ namespace NekogamiRanch.Ranch
 
         public bool RemoveAnimal(Animal animal)
         {
-            if (animalService == null)
+            if (animalService == null || animal == null)
             {
                 return false;
             }
 
-            var removed = animalService.RemoveAnimal(animal);
-            if (removed)
-            {
-                OnAnimalRemoved?.Invoke(animal);
-            }
+            settlementService?.ResolveAnimalRemovedAbility(animal);
+            OnAnimalRemoved?.Invoke(animal);
+            var removed = animalService.AnimalRemoved(animal);
 
             if (selectedCell != null && selectedCell.Animal == null)
             {
@@ -347,14 +369,40 @@ namespace NekogamiRanch.Ranch
             return removed;
         }
 
-        public bool ReplaceAnimal(Animal oldAnimal, AnimalData newAnimalData)
+        public bool SellAnimal(Animal animal)
         {
-            if (animalService == null)
+            if (animalService == null || animal == null)
+            {
+                return false;
+            }
+
+            OnAnimalSold?.Invoke(animal);
+            if (!animalService.AnimalRemoved(animal))
+            {
+                return false;
+            }
+
+            if (selectedCell != null && selectedCell.Animal == null)
+            {
+                SelectCell(null);
+            }
+            else
+            {
+                NotifyStateChanged();
+            }
+
+            return true;
+        }
+
+        public bool TransformAnimal(Animal oldAnimal, AnimalData newAnimalData)
+        {
+            if (animalService == null || oldAnimal == null || newAnimalData == null)
             {
                 return false;
             }
 
             var wasSelectedAnimal = selectedCell != null && selectedCell.Animal == oldAnimal;
+            OnAnimalTransformed?.Invoke(oldAnimal, newAnimalData);
             var replaced = animalService.ReplaceAnimal(oldAnimal, newAnimalData);
             if (replaced && wasSelectedAnimal)
             {
@@ -364,11 +412,48 @@ namespace NekogamiRanch.Ranch
             return replaced;
         }
 
+        public bool GrowAnimal(Animal youngAnimal, AnimalData grownAnimalData)
+        {
+            if (animalService == null || youngAnimal == null || grownAnimalData == null)
+            {
+                return false;
+            }
+
+            OnAnimalGrown?.Invoke(youngAnimal, grownAnimalData);
+            var grown = animalService.ReplaceAnimal(youngAnimal, grownAnimalData);
+            if (!grown)
+            {
+                return false;
+            }
+
+            if (selectedCell != null && selectedCell.Animal == youngAnimal)
+            {
+                SelectCell(null);
+            }
+            else
+            {
+                NotifyStateChanged();
+            }
+
+            return true;
+        }
+
         public bool TrySetAnimalAt(Vector2Int coords, AnimalData animalData)
         {
             if (animalService == null || ranchMap == null || !ranchMap.TryGetCell(coords, out var cell))
             {
                 return false;
+            }
+
+            var removedAnimal = cell.Animal;
+            if (removedAnimal != null)
+            {
+                settlementService?.ResolveAnimalRemovedAbility(removedAnimal);
+                OnAnimalRemoved?.Invoke(removedAnimal);
+                if (!animalService.AnimalRemoved(removedAnimal))
+                {
+                    return false;
+                }
             }
 
             if (!animalService.TrySetAnimalAt(coords, animalData))
@@ -381,6 +466,22 @@ namespace NekogamiRanch.Ranch
             return true;
         }
 
+        public bool TryAddAnimalToRandomEmptyCell(AnimalData animalData)
+        {
+            if (animalService == null || animalData == null)
+            {
+                return false;
+            }
+
+            var added = animalService.TryAddAnimalToRandomEmptyCell(animalData);
+            if (added)
+            {
+                NotifyStateChanged();
+            }
+
+            return added;
+        }
+
         public bool TryClearAnimalAt(Vector2Int coords)
         {
             if (animalService == null || ranchMap == null || !ranchMap.TryGetCell(coords, out var cell))
@@ -389,13 +490,36 @@ namespace NekogamiRanch.Ranch
             }
 
             var removedAnimal = cell.Animal;
-            var removed = animalService.TryClearAnimalAt(coords);
+            if (removedAnimal == null)
+            {
+                return false;
+            }
+
+            settlementService?.ResolveAnimalRemovedAbility(removedAnimal);
+            OnAnimalRemoved?.Invoke(removedAnimal);
+            var removed = animalService.AnimalRemovedAt(coords);
             if (!removed)
             {
                 return false;
             }
 
-            OnAnimalRemoved?.Invoke(removedAnimal);
+            SelectCell(cell);
+            NotifyStateChanged();
+            return true;
+        }
+
+        public bool DeleteAnimalAtForTest(Vector2Int coords)
+        {
+            if (animalService == null || ranchMap == null || !ranchMap.TryGetCell(coords, out var cell))
+            {
+                return false;
+            }
+
+            if (!animalService.AnimalRemovedFromCell(cell))
+            {
+                return false;
+            }
+
             SelectCell(cell);
             NotifyStateChanged();
             return true;
@@ -489,6 +613,57 @@ namespace NekogamiRanch.Ranch
             itemService = new RanchItemService(this, economyService, startingItems);
             toyService = new RanchToyService(this, economyService, equippedToys);
         }
+
+        private void RefreshOfferPoolFromConfiguredFamilies()
+        {
+#if UNITY_EDITOR
+            if (!autoPopulateOfferPoolByFamily)
+            {
+                return;
+            }
+
+            offerPool = LoadAnimalsFromConfiguredFamilies();
+#endif
+        }
+
+#if UNITY_EDITOR
+        private List<AnimalData> LoadAnimalsFromConfiguredFamilies()
+        {
+            var familyFilters = (offerPoolFamilies ?? new List<string>())
+                .Where(family => !string.IsNullOrWhiteSpace(family))
+                .Select(family => family.Trim())
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+            if (familyFilters.Count == 0)
+            {
+                return new List<AnimalData>();
+            }
+
+            var familySet = new HashSet<string>(familyFilters, StringComparer.OrdinalIgnoreCase);
+            return AssetDatabase.FindAssets("t:AnimalData", new[] { AnimalDataRoot })
+                .Select(AssetDatabase.GUIDToAssetPath)
+                .Select(AssetDatabase.LoadAssetAtPath<AnimalData>)
+                .Where(data => data != null && familySet.Contains(data.Family))
+                .OrderBy(data => GetFamilySortIndex(familyFilters, data.Family))
+                .ThenBy(data => data.Rarity)
+                .ThenBy(data => data.DisplayName)
+                .ThenBy(data => data.Id)
+                .ToList();
+        }
+
+        private static int GetFamilySortIndex(IReadOnlyList<string> familyFilters, string family)
+        {
+            for (var i = 0; i < familyFilters.Count; i++)
+            {
+                if (string.Equals(familyFilters[i], family, StringComparison.OrdinalIgnoreCase))
+                {
+                    return i;
+                }
+            }
+
+            return int.MaxValue;
+        }
+#endif
 
         private void SeedAnimals(IReadOnlyList<AnimalData> startingAnimals)
         {
