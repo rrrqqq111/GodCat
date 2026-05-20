@@ -1,5 +1,6 @@
 using NekogamiRanch.Ranch;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace NekogamiRanch.UI
 {
@@ -8,6 +9,7 @@ namespace NekogamiRanch.UI
         [SerializeField] private RanchHUD hud;
         [SerializeField] private AnimalOfferPanel offerPanel;
         [SerializeField] private AnimalDetailPanel animalDetailPanel;
+        [SerializeField] private AnimalRemoveButtonPanel animalRemoveButtonPanel;
         [SerializeField] private RanchManager manager;
 
         private bool initialized;
@@ -34,7 +36,7 @@ namespace NekogamiRanch.UI
                 return;
             }
 
-            if (TryGetPrimaryPointerDownPosition(out var screenPosition) && !IsPointerOverOccupiedCell(screenPosition))
+            if (TryGetPrimaryPointerDownPosition(out var screenPosition) && !IsPointerOverUi() && !IsPointerOverOccupiedCell(screenPosition))
             {
                 manager.SelectCell(null);
             }
@@ -70,6 +72,11 @@ namespace NekogamiRanch.UI
                 offerPanel.Initialize(OnOfferSelected);
             }
 
+            if (animalRemoveButtonPanel != null)
+            {
+                animalRemoveButtonPanel.Initialize(manager);
+            }
+
             manager.StateChanged += Refresh;
             initialized = true;
             Refresh();
@@ -90,6 +97,11 @@ namespace NekogamiRanch.UI
             if (animalDetailPanel == null)
             {
                 animalDetailPanel = GetComponentInChildren<AnimalDetailPanel>(true);
+            }
+
+            if (animalRemoveButtonPanel == null)
+            {
+                animalRemoveButtonPanel = GetComponentInChildren<AnimalRemoveButtonPanel>(true);
             }
         }
 
@@ -120,6 +132,11 @@ namespace NekogamiRanch.UI
             if (animalDetailPanel != null)
             {
                 animalDetailPanel.Refresh(manager.SelectedCell != null ? manager.SelectedCell.Animal : null);
+            }
+
+            if (animalRemoveButtonPanel != null)
+            {
+                animalRemoveButtonPanel.Refresh(manager.SelectedCell);
             }
         }
 
@@ -152,6 +169,29 @@ namespace NekogamiRanch.UI
             }
 
             screenPosition = default;
+            return false;
+        }
+
+        private static bool IsPointerOverUi()
+        {
+            if (EventSystem.current == null)
+            {
+                return false;
+            }
+
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return true;
+            }
+
+            for (var i = 0; i < Input.touchCount; i++)
+            {
+                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(i).fingerId))
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
 

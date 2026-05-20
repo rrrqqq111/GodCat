@@ -22,6 +22,7 @@ namespace NekogamiRanch.Ranch
         [SerializeField] private int day = 1;
         [SerializeField] private int money;
         [SerializeField, Min(0)] private int cans = 5;
+        [SerializeField, Min(0)] private int removeAnimalCansCost = 1;
         [SerializeField] private RanchMap ranchMap;
         [SerializeField] private bool autoPopulateOfferPoolByFamily = true;
         [SerializeField] private List<string> offerPoolFamilies = new List<string> { "Hoofed", "Carnivora" };
@@ -58,6 +59,7 @@ namespace NekogamiRanch.Ranch
         public int Day => state != null ? state.Day : day;
         public int Money => state != null ? state.Money : money;
         public int Cans => state != null ? state.Cans : cans;
+        public int RemoveAnimalCansCost => removeAnimalCansCost;
         public RanchMap Map => ranchMap;
         public MapCell SelectedCell => selectedCell;
         public bool IsWaitingForOfferSelection => state != null && state.IsWaitingForOfferSelection;
@@ -367,6 +369,21 @@ namespace NekogamiRanch.Ranch
             }
 
             return removed;
+        }
+
+        public bool TryRemoveAnimalWithCans(Animal animal)
+        {
+            if (animalService == null || animal == null || !IsAnimalOnMap(animal))
+            {
+                return false;
+            }
+
+            if (!TrySpendCans(removeAnimalCansCost))
+            {
+                return false;
+            }
+
+            return RemoveAnimal(animal);
         }
 
         public bool SellAnimal(Animal animal)
