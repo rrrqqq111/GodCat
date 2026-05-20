@@ -16,7 +16,8 @@ namespace NekogamiRanch.Abilities
             { "AlpacaAbilityEffect", new AlpacaAbilityEffect() },
             { "MuskOxAbilityEffect", new MuskOxAbilityEffect() },
             { "WaterBuffaloAbilityEffect", new WaterBuffaloAbilityEffect() },
-            { "CamelAbilityEffect", new CamelAbilityEffect() }
+            { "CamelAbilityEffect", new CamelAbilityEffect() },
+            { "RaccoonAbilityEffect", new RaccoonAbilityEffect() }
         };
 
         public static bool TryGet(string effectScriptId, out IAbilityEffect effect)

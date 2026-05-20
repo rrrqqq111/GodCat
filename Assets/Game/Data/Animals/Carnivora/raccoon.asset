@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: raccoon
+  m_EditorClassIdentifier: 
+  id: Raccoon
+  animalName: "\u6D63\u718A"
+  family: Carnivora
+  rarity: 0
+  baseMoney: -1
+  ability: {fileID: 11400000, guid: 5f0ccabbfe7142f789fcea90e1d1406c, type: 2}
+  description: "\u6BCF3\u56DE\u5408\u83B7\u5F978\u91D1\u5E01\uFF1B\u4E0E\u6C34\u6D3C\u76F8\u90BB\u65F6CD\u989D\u5916-1"
+  icon: {fileID: 0}
+  familyIcon: {fileID: 0}
+  iconScale: 0.8

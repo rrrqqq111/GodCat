@@ -125,6 +125,16 @@ namespace NekogamiRanch.Ranch
             return removedFromMap || removedFromList;
         }
 
+        public bool TryRemoveAnimalByPrey(Animal predator, Animal target)
+        {
+            if (predator == null || target == null)
+            {
+                return false;
+            }
+
+            return RemoveAnimal(target);
+        }
+
         public bool ReplaceAnimal(Animal oldAnimal, AnimalData newAnimalData)
         {
             if (oldAnimal == null || newAnimalData == null || ranchMap == null)

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NekogamiRanch.Abilities;
+using NekogamiRanch.Abilities.Prey;
 using NekogamiRanch.Animals;
 using NekogamiRanch.Items;
 using NekogamiRanch.Toys;
@@ -36,6 +37,13 @@ namespace NekogamiRanch.Ranch
         private bool initialized;
 
         public event Action StateChanged;
+        public event Action<PreyContext> OnPreyAttempt;
+        public event Action<ProtectionResult> OnPreyProtected;
+        public event Action<PreyResult> OnPreySuccess;
+        public event Action<PreyResult> OnPreyFailed;
+        public event Action<Animal, Animal> OnAnimalPreyed;
+        public event Action<Animal> OnAnimalRemoved;
+        public event Action<AnimalCooldownReductionContext> OnAnimalCooldownReduced;
 
         public int Day => state != null ? state.Day : day;
         public int Money => state != null ? state.Money : money;
@@ -252,6 +260,72 @@ namespace NekogamiRanch.Ranch
             return animalService != null && animalService.TrySwapAnimals(first, second);
         }
 
+        public PreyResult TryPrey(PreyContext context)
+        {
+            if (context?.Predator == null || context.TargetRule == null || animalService == null || ranchMap == null)
+            {
+                return CompletePreyResult(PreyResult.Failed(
+                    context != null ? context.Predator : null,
+                    Array.Empty<Animal>(),
+                    Array.Empty<ProtectionResult>(),
+                    "InvalidPreyContext"));
+            }
+
+            OnPreyAttempt?.Invoke(context);
+            var candidateTargets = PreyTargetResolver.Resolve(context, ranchMap);
+            var protectionResults = new List<ProtectionResult>();
+            if (candidateTargets.Count == 0)
+            {
+                return CompletePreyResult(PreyResult.Failed(
+                    context.Predator,
+                    candidateTargets,
+                    protectionResults,
+                    "NoCandidateTargets"));
+            }
+
+            var removedTargets = new List<Animal>();
+            foreach (var target in candidateTargets)
+            {
+                var protectionResult = ResolveProtection(context, target);
+                if (protectionResult.Success)
+                {
+                    protectionResults.Add(protectionResult);
+                    OnPreyProtected?.Invoke(protectionResult);
+                    continue;
+                }
+
+                if (!animalService.TryRemoveAnimalByPrey(context.Predator, target))
+                {
+                    continue;
+                }
+
+                removedTargets.Add(target);
+                OnAnimalPreyed?.Invoke(context.Predator, target);
+                OnAnimalRemoved?.Invoke(target);
+            }
+
+            if (removedTargets.Count > 0)
+            {
+                if (!RefreshSelectionAfterAnimalRemoval())
+                {
+                    NotifyStateChanged();
+                }
+
+                return CompletePreyResult(PreyResult.Succeeded(
+                    context.Predator,
+                    candidateTargets,
+                    protectionResults,
+                    removedTargets));
+            }
+
+            var failureReason = protectionResults.Count == candidateTargets.Count ? "AllTargetsProtected" : "NoTargetRemoved";
+            return CompletePreyResult(PreyResult.Failed(
+                context.Predator,
+                candidateTargets,
+                protectionResults,
+                failureReason));
+        }
+
         public bool RemoveAnimal(Animal animal)
         {
             if (animalService == null)
@@ -260,6 +334,11 @@ namespace NekogamiRanch.Ranch
             }
 
             var removed = animalService.RemoveAnimal(animal);
+            if (removed)
+            {
+                OnAnimalRemoved?.Invoke(animal);
+            }
+
             if (selectedCell != null && selectedCell.Animal == null)
             {
                 SelectCell(null);
@@ -309,12 +388,14 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
+            var removedAnimal = cell.Animal;
             var removed = animalService.TryClearAnimalAt(coords);
             if (!removed)
             {
                 return false;
             }
 
+            OnAnimalRemoved?.Invoke(removedAnimal);
             SelectCell(cell);
             NotifyStateChanged();
             return true;
@@ -381,6 +462,16 @@ namespace NekogamiRanch.Ranch
             return settlementService != null
                 ? settlementService.TryTriggerAnimalAbility(animal)
                 : AbilityExecutionResult.Failed();
+        }
+
+        public void NotifyAnimalCooldownReduced(AnimalCooldownReductionContext context)
+        {
+            if (context.Target == null || context.Amount <= 0)
+            {
+                return;
+            }
+
+            OnAnimalCooldownReduced?.Invoke(context);
         }
 
         public string GetSelectedCellText()
@@ -474,6 +565,141 @@ namespace NekogamiRanch.Ranch
         private void RollOffers(int count)
         {
             offerService?.Roll(Day, count);
+        }
+
+        private PreyResult CompletePreyResult(PreyResult result)
+        {
+            if (result.Success)
+            {
+                OnPreySuccess?.Invoke(result);
+            }
+            else
+            {
+                OnPreyFailed?.Invoke(result);
+            }
+
+            return result;
+        }
+
+        private ProtectionResult ResolveProtection(PreyContext context, Animal target)
+        {
+            if (context == null || target == null || context.ProtectionRules == null || context.ProtectionRules.Count == 0)
+            {
+                return ProtectionResult.Unprotected(target);
+            }
+
+            foreach (var rule in context.ProtectionRules)
+            {
+                var candidateProtectors = ResolveCandidateProtectors(rule, target);
+                var protectionContext = new ProtectionContext(context.Predator, target, candidateProtectors, context.SourceAbilityId);
+                foreach (var protector in protectionContext.CandidateProtectors)
+                {
+                    if (!rule.CanProtect(protector, context.Predator, target))
+                    {
+                        continue;
+                    }
+
+                    var reason = string.IsNullOrWhiteSpace(rule.Reason) ? "Protected" : rule.Reason;
+                    return ProtectionResult.Protected(protector, target, rule, reason);
+                }
+            }
+
+            return ProtectionResult.Unprotected(target);
+        }
+
+        private IReadOnlyList<Animal> ResolveCandidateProtectors(ProtectionRule rule, Animal target)
+        {
+            var protectors = new List<Animal>();
+            if (rule == null || target == null || ranchMap == null)
+            {
+                return protectors;
+            }
+
+            if (rule.Protector != null)
+            {
+                if (IsAnimalOnMap(rule.Protector) && ProtectionScopeContainsTarget(rule.Scope, rule.Protector, target))
+                {
+                    protectors.Add(rule.Protector);
+                }
+
+                return protectors;
+            }
+
+            foreach (var cell in ranchMap.GetCellsInScanOrder())
+            {
+                var protector = cell.Animal;
+                if (protector == null || !rule.MatchesProtector(protector))
+                {
+                    continue;
+                }
+
+                if (ProtectionScopeContainsTarget(rule.Scope, protector, target))
+                {
+                    protectors.Add(protector);
+                }
+            }
+
+            return protectors;
+        }
+
+        private bool ProtectionScopeContainsTarget(string scope, Animal protector, Animal target)
+        {
+            if (protector == null || target == null || ranchMap == null)
+            {
+                return false;
+            }
+
+            switch (NormalizeRuleText(scope))
+            {
+                case "self":
+                    return protector == target;
+                case "adjacent":
+                    return ranchMap.GetNeighbors(protector.Coords).Any(cell => cell.Animal == target);
+                case "left":
+                    return target.Coords == protector.Coords + Vector2Int.left;
+                case "right":
+                    return target.Coords == protector.Coords + Vector2Int.right;
+                case "up":
+                case "upper":
+                case "upperadjacent":
+                    return ranchMap.GetUpperNeighbors(protector.Coords).Any(cell => cell.Animal == target);
+                case "down":
+                case "lower":
+                case "loweradjacent":
+                    return ranchMap.GetLowerNeighbors(protector.Coords).Any(cell => cell.Animal == target);
+                case "row":
+                    return protector.Coords.y == target.Coords.y;
+                case "all":
+                case "global":
+                case "field":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        private bool IsAnimalOnMap(Animal animal)
+        {
+            return animal != null &&
+                ranchMap != null &&
+                ranchMap.TryGetCell(animal.Coords, out var cell) &&
+                cell.Animal == animal;
+        }
+
+        private bool RefreshSelectionAfterAnimalRemoval()
+        {
+            if (selectedCell != null && selectedCell.Animal == null)
+            {
+                SelectCell(null);
+                return true;
+            }
+
+            return false;
+        }
+
+        private static string NormalizeRuleText(string value)
+        {
+            return string.IsNullOrWhiteSpace(value) ? string.Empty : value.Trim().ToLowerInvariant();
         }
     }
 }
