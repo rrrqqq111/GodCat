@@ -17,6 +17,7 @@ namespace NekogamiRanch.UI
 
         private readonly List<string> slotToyIds = new List<string>(10);
         private Sprite generatedDefaultIcon;
+        private bool subscribed;
 
         private void Awake()
         {
@@ -33,6 +34,7 @@ namespace NekogamiRanch.UI
                 manager = FindObjectOfType<RanchManager>();
             }
 
+            Subscribe();
             Refresh();
             StartCoroutine(RefreshNextFrame());
         }
@@ -41,6 +43,7 @@ namespace NekogamiRanch.UI
         {
             if (manager != null)
             {
+                Subscribe();
                 Refresh();
             }
         }
@@ -141,6 +144,25 @@ namespace NekogamiRanch.UI
             texture.Apply();
             texture.name = "Generated Default Toy Icon";
             return Sprite.Create(texture, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), size);
+        }
+
+        private void Subscribe()
+        {
+            if (manager == null || subscribed)
+            {
+                return;
+            }
+
+            manager.StateChanged += Refresh;
+            subscribed = true;
+        }
+
+        private void OnDestroy()
+        {
+            if (manager != null && subscribed)
+            {
+                manager.StateChanged -= Refresh;
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ MonoBehaviour:
   priority: 0
   impactType: Self
   stackable: 1
-  desc: "\u5728\u6c34\u6d3c\u4e0a\u65f6\uff0c\u81ea\u8eab\u57fa\u7840\u6536\u76ca+1\uff0c\u53ef\u53e0\u52a0"
+  desc: "\u5728\u6c34\u6d3c\u4e0a\u89e6\u53d1\u65f6\uff0c\u81ea\u8eab\u57fa\u7840\u6536\u76ca\u6c38\u4e45+1\uff0c\u53ef\u53e0\u52a0"
   triggerType: SettlementPrepare
   triggerChancePercent: 100
   triggerLimit: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   effectParams:
     money: 1
     delayDays: 0
-    durationDays: 1
+    durationDays: 0
     transformChancePercent: 100
     type: Flat
     target: Self

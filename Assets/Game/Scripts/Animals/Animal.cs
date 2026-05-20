@@ -98,7 +98,7 @@ namespace NekogamiRanch.Animals
             extraMoneyMultiplier = 1;
         }
 
-        public void AddBaseMoneyBonus(int bonus)
+        public void AddPermanentBaseMoneyBonus(int bonus)
         {
             baseMoneyBonus += bonus;
         }
