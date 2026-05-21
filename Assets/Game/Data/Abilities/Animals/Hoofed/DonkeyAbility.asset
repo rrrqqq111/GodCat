@@ -18,7 +18,7 @@ MonoBehaviour:
   impactType: Field
   stackable: 0
   desc: "\u573a\u4e0a\u6709\u9a6c\u6216\u6591\u9a6c\u65f6\u83b7\u5f971\u91d1\u5e01"
-  triggerType: DayStart
+  triggerType: SettlementPrepare
   triggerChancePercent: 100
   triggerLimit: 0
   effectType: AddMoney

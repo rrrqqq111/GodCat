@@ -77,9 +77,9 @@ namespace NekogamiRanch.Ranch
             return ExecuteAbilityWithReport(animal, "Moved");
         }
 
-        public AbilityExecutionResult ResolveAnimalRemovedAbility(Animal animal)
+        public AbilityExecutionResult ResolveAnimalRemovedAbility(Animal animal, UnityEngine.Vector2Int removedCoords)
         {
-            return ExecuteAbilityWithReport(animal, "AnimalRemoved");
+            return ExecuteAbilityWithReport(animal, "AnimalRemoved", removedCoords);
         }
 
         public AbilityExecutionResult TryTriggerAnimalAbility(Animal animal)
@@ -170,6 +170,36 @@ namespace NekogamiRanch.Ranch
             try
             {
                 result = animal.Ability.TryExecute(new AnimalAbilityContext(manager, animal), triggerType);
+            }
+            finally
+            {
+                activeExtraMoneyOwner = previousExtraMoneyOwner;
+            }
+
+            var moneyDelta = economyService.Money - beforeMoney;
+            if (moneyDelta != 0)
+            {
+                var report = GetSettlementAnimalReport(animal);
+                report.AbilityMoney += moneyDelta;
+            }
+
+            return result.WithMoneyDelta(moneyDelta);
+        }
+
+        private AbilityExecutionResult ExecuteAbilityWithReport(Animal animal, string triggerType, UnityEngine.Vector2Int removedCoords)
+        {
+            if (animal == null || animal.Ability == null)
+            {
+                return AbilityExecutionResult.Failed(triggerType: triggerType);
+            }
+
+            var beforeMoney = economyService.Money;
+            var previousExtraMoneyOwner = activeExtraMoneyOwner;
+            activeExtraMoneyOwner = animal;
+            var result = AbilityExecutionResult.Failed(animal.Ability.Name, triggerType);
+            try
+            {
+                result = animal.Ability.TryExecute(new AnimalAbilityContext(manager, animal, removedCoords: removedCoords), triggerType);
             }
             finally
             {

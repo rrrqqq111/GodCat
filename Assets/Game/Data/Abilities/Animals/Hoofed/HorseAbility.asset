@@ -18,7 +18,7 @@ MonoBehaviour:
   impactType: Row
   stackable: 0
   desc: "\u79fb\u52a8\u5230\u672c\u884c\u6700\u53f3\u4fa7\uff0c\u6bcf\u79fb\u52a8\u4e00\u683c\u83b7\u5f972\u91d1\u5e01"
-  triggerType: DayStart
+  triggerType: SettlementPrepare
   triggerChancePercent: 100
   triggerLimit: 0
   effectType: MoveAndAddMoney

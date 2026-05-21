@@ -18,7 +18,7 @@ MonoBehaviour:
   impactType: Adjacent
   stackable: 0
   desc: "50%\u6982\u7387\u5c06\u4e00\u53ea\u76f8\u90bb\u5bb6\u732a\u53d8\u6210\u91ce\u732a\uff0c\u5f53\u573a\u4e0a\u91ce\u732a\u5927\u4e8e\u7b49\u4e8e2\u53ea\u65f6\u7acb\u5373\u83b7\u5f972\u91d1\u5e01"
-  triggerType: DayStart
+  triggerType: SettlementPrepare
   triggerChancePercent: 100
   triggerLimit: 0
   effectType: AddMoney

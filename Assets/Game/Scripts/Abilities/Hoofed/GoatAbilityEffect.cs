@@ -29,7 +29,8 @@ namespace NekogamiRanch.Abilities
         private static bool TrySpawnLamb(AnimalAbilityContext context, AnimalData lambData)
         {
             var map = context.RanchManager.Map;
-            if (TryPlaceLambAt(context, lambData, map, context.Owner.Coords))
+            var removedCoords = context.RemovedCoords ?? context.Owner.Coords;
+            if (TryPlaceLambAt(context, lambData, map, removedCoords))
             {
                 return true;
             }

@@ -18,7 +18,7 @@ MonoBehaviour:
   impactType: Adjacent
   stackable: 0
   desc: "\u6355\u98DF\u6240\u6709\u76F8\u90BB\u7684\u6709\u8E44\u52A8\u7269\uFF0C\u6BCF\u6210\u529F\u6355\u98DF\u4E00\u53EA\uFF0C\u81EA\u8EAB\u57FA\u7840\u6536\u76CA\u5C5E\u6027+3"
-  triggerType: DayEnd
+  triggerType: SettlementPrepare
   triggerChancePercent: 100
   triggerLimit: 0
   effectType: Prey

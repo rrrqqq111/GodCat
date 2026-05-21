@@ -15,17 +15,30 @@ MonoBehaviour:
   id: LambAbility
   abilityType: Normal
   priority: 0
-  impactType: Adjacent
+  impactType: Self
   stackable: 0
-  desc: "5\u5929\u540e\u6210\u957f\u4e3a\u7ef5\u7f8a"
-  triggerType: DayEnd
+  desc: "5\u5929\u540e\u6210\u957f\u4e3a\u5c71\u7f8a\u3001\u7ef5\u7f8a\u6216\u7f8a\u9a7c\uff080.5/0.3/0.2\uff09"
+  triggerType: SettlementPrepare
   triggerChancePercent: 100
   triggerLimit: 1
   effectType: GrowUp
   effectScriptId: LambAbilityEffect
   effectParams:
     money: 0
-    type: Multiplier
-    target: Other
+    initialCooldownDays: 5
+    cooldownDays: 0
+    cooldownReductionAmount: 0
+    cooldownReductionTileType: None
+    durationDays: 1
+    transformChancePercent: 100
+    type: Flat
+    target: Self
     targetFamily: None
+    animalData: {fileID: 0}
+    growUpAnimalDataA: {fileID: 11400000, guid: 0f86d4ee44552ec43aebd86db379d67a, type: 2}
+    growUpWeightA: 50
+    growUpAnimalDataB: {fileID: 11400000, guid: 693376dde7ae634408132ceec7698382, type: 2}
+    growUpWeightB: 30
+    growUpAnimalDataC: {fileID: 11400000, guid: 66ddb2d60b3d4fffb6b76febbd4e98a2, type: 2}
+    growUpWeightC: 20
   subAbilities: []

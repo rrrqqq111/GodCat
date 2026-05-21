@@ -18,7 +18,7 @@ MonoBehaviour:
   impactType: Self
   stackable: 0
   desc: "3\u5929\u540e\u81ea\u52a8\u5356\u51fa\uff0c\u83b7\u5f977\u91d1\u5e01"
-  triggerType: DayEnd
+  triggerType: SettlementPrepare
   triggerChancePercent: 100
   triggerLimit: 1
   effectType: SellSelf

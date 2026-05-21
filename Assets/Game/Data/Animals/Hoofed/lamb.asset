@@ -18,7 +18,7 @@ MonoBehaviour:
   rarity: 0
   baseMoney: 0
   ability: {fileID: 11400000, guid: f0c6f9a145a64f87b1e6f0be9162c004, type: 2}
-  description: "5\u5929\u540E\u6210\u957F\u4E3A\u7EF5\u7F8A"
+  description: "5\u5929\u540E\u6210\u957F\u4E3A\u5C71\u7F8A\u3001\u7EF5\u7F8A\u6216\u7F8A\u9A7C"
   icon: {fileID: 21300000, guid: 540bd70e88af0624b8530c5c6f027fa3, type: 3}
   familyIcon: {fileID: 21300000, guid: be11099430914c942a52a28df7c3c808, type: 3}
   iconScale: 1

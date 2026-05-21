@@ -359,9 +359,13 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
-            settlementService?.ResolveAnimalRemovedAbility(animal);
-            OnAnimalRemoved?.Invoke(animal);
+            var removedCoords = animal.Coords;
             var removed = animalService.AnimalRemoved(animal);
+            if (removed)
+            {
+                settlementService?.ResolveAnimalRemovedAbility(animal, removedCoords);
+                OnAnimalRemoved?.Invoke(animal);
+            }
 
             if (selectedCell != null && selectedCell.Animal == null)
             {
@@ -462,17 +466,6 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
-            var removedAnimal = cell.Animal;
-            if (removedAnimal != null)
-            {
-                settlementService?.ResolveAnimalRemovedAbility(removedAnimal);
-                OnAnimalRemoved?.Invoke(removedAnimal);
-                if (!animalService.AnimalRemoved(removedAnimal))
-                {
-                    return false;
-                }
-            }
-
             if (!animalService.TrySetAnimalAt(coords, animalData))
             {
                 return false;
@@ -512,14 +505,14 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
-            settlementService?.ResolveAnimalRemovedAbility(removedAnimal);
-            OnAnimalRemoved?.Invoke(removedAnimal);
             var removed = animalService.AnimalRemovedAt(coords);
             if (!removed)
             {
                 return false;
             }
 
+            settlementService?.ResolveAnimalRemovedAbility(removedAnimal, coords);
+            OnAnimalRemoved?.Invoke(removedAnimal);
             SelectCell(cell);
             NotifyStateChanged();
             return true;
@@ -532,7 +525,8 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
-            if (!animalService.AnimalRemovedFromCell(cell))
+            var removedAnimal = cell.Animal;
+            if (removedAnimal == null || !animalService.AnimalRemovedFromCell(cell))
             {
                 return false;
             }

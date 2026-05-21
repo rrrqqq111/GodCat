@@ -14,6 +14,7 @@ namespace NekogamiRanch.Abilities
             { "GazelleAbilityEffect", new GazelleAbilityEffect() },
             { "DonkeyAbilityEffect", new DonkeyAbilityEffect() },
             { "GoatAbilityEffect", new GoatAbilityEffect() },
+            { "LambAbilityEffect", new LambAbilityEffect() },
             { "AlpacaAbilityEffect", new AlpacaAbilityEffect() },
             { "CalfAbilityEffect", new CalfAbilityEffect() },
             { "CowAbilityEffect", new CowAbilityEffect() },

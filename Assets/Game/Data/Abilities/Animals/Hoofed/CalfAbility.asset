@@ -18,7 +18,7 @@ MonoBehaviour:
   impactType: Self
   stackable: 0
   desc: "\u4e94\u5929\u540e\u6210\u957f\u4e3a\u6c34\u725b\u3001\u5976\u725b\u6216\u8005\u9e9d\u725b\uff080.4/0.4/0.2\uff09"
-  triggerType: DayEnd
+  triggerType: SettlementPrepare
   triggerChancePercent: 100
   triggerLimit: 1
   effectType: GrowUp

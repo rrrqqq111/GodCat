@@ -18,7 +18,7 @@ MonoBehaviour:
   impactType: Self
   stackable: 0
   desc: "\u6BCF3\u56DE\u5408\u83B7\u5F978\u91D1\u5E01\uFF1B\u4E0E\u6C34\u6D3C\u76F8\u90BB\u65F6CD\u989D\u5916-1"
-  triggerType: DayEnd
+  triggerType: SettlementPrepare
   triggerChancePercent: 100
   triggerLimit: 0
   effectType: CooldownMoney
