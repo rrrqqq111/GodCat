@@ -37,6 +37,8 @@ namespace NekogamiRanch.Ranch
             {
                 TryAddAnimalToRandomEmptyCell(startingAnimals[i]);
             }
+
+            RandomizeAnimalPositions();
         }
 
         public bool TryAddAnimalToRandomEmptyCell(AnimalData data)
@@ -46,22 +48,24 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
+            var animal = new Animal(data, Vector2Int.zero);
+            animals.Add(animal);
+
             var emptyCells = ranchMap.GetCells()
                 .Where(cell => cell != null && cell.IsEmpty)
                 .ToList();
             if (emptyCells.Count == 0)
             {
-                return false;
+                return true;
             }
 
             var cell = emptyCells[UnityEngine.Random.Range(0, emptyCells.Count)];
-            var animal = new Animal(data, cell.Coords);
             if (!cell.TryPlaceAnimal(animal))
             {
+                animals.Remove(animal);
                 return false;
             }
 
-            animals.Add(animal);
             return true;
         }
 
@@ -210,7 +214,10 @@ namespace NekogamiRanch.Ranch
                 return 0;
             }
 
-            return animals.Count(animal => animal.Data != null && string.Equals(animal.Data.Id, animalId, StringComparison.OrdinalIgnoreCase));
+            return animals.Count(animal =>
+                IsAnimalOnMap(animal) &&
+                animal.Data != null &&
+                string.Equals(animal.Data.Id, animalId, StringComparison.OrdinalIgnoreCase));
         }
 
         public bool HasAnimalById(string animalId)
@@ -220,13 +227,13 @@ namespace NekogamiRanch.Ranch
 
         public void RandomizeAnimalPositions()
         {
-            if (ranchMap == null || animals.Count == 0)
+            if (ranchMap == null)
             {
                 return;
             }
 
             var allCells = ranchMap.GetCells().Where(cell => cell != null).ToList();
-            if (allCells.Count <= 1)
+            if (allCells.Count == 0)
             {
                 return;
             }
@@ -239,12 +246,29 @@ namespace NekogamiRanch.Ranch
                 }
             }
 
+            if (animals.Count == 0)
+            {
+                return;
+            }
+
             var shuffledCells = allCells.OrderBy(_ => UnityEngine.Random.value).ToList();
-            var maxPlaceCount = Mathf.Min(animals.Count, shuffledCells.Count);
+            var selectedAnimals = animals
+                .OrderBy(_ => UnityEngine.Random.value)
+                .Take(shuffledCells.Count)
+                .ToList();
+            var maxPlaceCount = Mathf.Min(selectedAnimals.Count, shuffledCells.Count);
             for (var i = 0; i < maxPlaceCount; i++)
             {
-                shuffledCells[i].TryPlaceAnimal(animals[i]);
+                shuffledCells[i].TryPlaceAnimal(selectedAnimals[i]);
             }
+        }
+
+        private bool IsAnimalOnMap(Animal animal)
+        {
+            return animal != null &&
+                ranchMap != null &&
+                ranchMap.TryGetCell(animal.Coords, out var cell) &&
+                cell.Animal == animal;
         }
     }
 }

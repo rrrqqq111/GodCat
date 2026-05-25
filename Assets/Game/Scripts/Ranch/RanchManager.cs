@@ -363,6 +363,7 @@ namespace NekogamiRanch.Ranch
             var removed = animalService.AnimalRemoved(animal);
             if (removed)
             {
+                settlementService?.ResolveAdjacentAnimalRemovedAbilities(animal, removedCoords, ranchMap);
                 settlementService?.ResolveAnimalRemovedAbility(animal, removedCoords);
                 OnAnimalRemoved?.Invoke(animal);
             }
@@ -511,6 +512,7 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
+            settlementService?.ResolveAdjacentAnimalRemovedAbilities(removedAnimal, coords, ranchMap);
             settlementService?.ResolveAnimalRemovedAbility(removedAnimal, coords);
             OnAnimalRemoved?.Invoke(removedAnimal);
             SelectCell(cell);

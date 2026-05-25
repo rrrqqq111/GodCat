@@ -79,7 +79,34 @@ namespace NekogamiRanch.Ranch
 
         public AbilityExecutionResult ResolveAnimalRemovedAbility(Animal animal, UnityEngine.Vector2Int removedCoords)
         {
-            return ExecuteAbilityWithReport(animal, "AnimalRemoved", removedCoords);
+            return ExecuteAbilityWithReport(animal, "AnimalRemoved", animal, removedCoords);
+        }
+
+        public void ResolveAdjacentAnimalRemovedAbilities(Animal removedAnimal, UnityEngine.Vector2Int removedCoords, RanchMap ranchMap)
+        {
+            if (removedAnimal == null || ranchMap == null || externalAbilityTriggerDepth >= MaxExternalAbilityTriggerDepth)
+            {
+                return;
+            }
+
+            var candidates = ranchMap.GetNeighbors(removedCoords)
+                .Select(cell => cell.Animal)
+                .Where(animal => animal != null && animal != removedAnimal)
+                .ToList();
+
+            externalAbilityTriggerDepth++;
+            try
+            {
+                foreach (var animal in candidates)
+                {
+                    GetSettlementAnimalReport(animal);
+                    ExecuteAbilityWithReport(animal, "AdjacentAnimalRemoved", removedAnimal, removedCoords);
+                }
+            }
+            finally
+            {
+                externalAbilityTriggerDepth--;
+            }
         }
 
         public AbilityExecutionResult TryTriggerAnimalAbility(Animal animal)
@@ -186,7 +213,11 @@ namespace NekogamiRanch.Ranch
             return result.WithMoneyDelta(moneyDelta);
         }
 
-        private AbilityExecutionResult ExecuteAbilityWithReport(Animal animal, string triggerType, UnityEngine.Vector2Int removedCoords)
+        private AbilityExecutionResult ExecuteAbilityWithReport(
+            Animal animal,
+            string triggerType,
+            Animal removedAnimal,
+            UnityEngine.Vector2Int removedCoords)
         {
             if (animal == null || animal.Ability == null)
             {
@@ -199,7 +230,9 @@ namespace NekogamiRanch.Ranch
             var result = AbilityExecutionResult.Failed(animal.Ability.Name, triggerType);
             try
             {
-                result = animal.Ability.TryExecute(new AnimalAbilityContext(manager, animal, removedCoords: removedCoords), triggerType);
+                result = animal.Ability.TryExecute(
+                    new AnimalAbilityContext(manager, animal, removedCoords: removedCoords, removedAnimal: removedAnimal),
+                    triggerType);
             }
             finally
             {
