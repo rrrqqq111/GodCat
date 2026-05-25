@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc8b67d2bd64e1498ad642244aa2e36, type: 3}
+  m_Name: ReindeerAbility
+  m_EditorClassIdentifier: 
+  id: ReindeerAbility
+  abilityType: Normal
+  priority: 0
+  impactType: Adjacent
+  stackable: 1
+  desc: "\u5468\u56F4X\u4E2A\u968F\u673A\u5730\u5757\u4E0A\u7684\u52A8\u7269\u57FA\u7840\u6536\u76CA\u6C38\u4E45+1\uFF08X\u4E3A\u8FDE\u7EED\u51FA\u573A\u5929\u6570\uFF0C\u6700\u9AD83\uFF09"
+  triggerType: SettlementPrepare
+  triggerChancePercent: 100
+  triggerLimit: 0
+  effectType: AddBaseMoneyToRandomAdjacentByAppearanceDays
+  effectScriptId: ReindeerAbilityEffect
+  effectParams:
+    money: 1
+    maxCount: 3
+    initialCooldownDays: 0
+    cooldownDays: 0
+    cooldownReductionAmount: 0
+    cooldownReductionTileType: None
+    durationDays: 0
+    transformChancePercent: 100
+    type: Flat
+    target: Other
+    targetFamily: None
+    animalData: {fileID: 0}
+  subAbilities: []
