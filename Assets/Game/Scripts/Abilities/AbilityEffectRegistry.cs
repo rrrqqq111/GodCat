@@ -22,6 +22,7 @@ namespace NekogamiRanch.Abilities
             { "WaterBuffaloAbilityEffect", new WaterBuffaloAbilityEffect() },
             { "CamelAbilityEffect", new CamelAbilityEffect() },
             { "RaccoonAbilityEffect", new RaccoonAbilityEffect() },
+            { "GrayWolfAbilityEffect", new GrayWolfAbilityEffect() },
             { "TigerAbilityEffect", new TigerAbilityEffect() }
         };
 
