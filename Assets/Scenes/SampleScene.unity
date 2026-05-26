@@ -17464,6 +17464,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 228676f4f6374278bc7841455f250c6a, type: 2}
   - {fileID: 11400000, guid: 82f4e08651e64ad190b5ce876665c57e, type: 2}
   - {fileID: 11400000, guid: e3b2ce91471744449583145502f2c957, type: 2}
+  - {fileID: 11400000, guid: b47cdb7b48c541b78e4e7e03fc60be7e, type: 2}
+  - {fileID: 11400000, guid: edb4edc405c146f3ad973b0976828b84, type: 2}
+  - {fileID: 11400000, guid: ce6be6a83c31443488426113f69be655, type: 2}
+  - {fileID: 11400000, guid: b2973c61c9224e518f67dc652d3aef0f, type: 2}
+  - {fileID: 11400000, guid: 0a9a6f411d0c4148a22780176f038116, type: 2}
+  - {fileID: 11400000, guid: b0363cbdd8334403b0124873d2ea4ce1, type: 2}
+  - {fileID: 11400000, guid: 7a0f6f8f0d1f45a6bde5a70b39ea20b8, type: 2}
+  - {fileID: 11400000, guid: 490d9662f54c421ea744c010b75a7bb0, type: 2}
   abilitySpawnPool:
   - {fileID: 11400000, guid: 2023d34f933e0f04eaeaedf879b9ea07, type: 2}
   - {fileID: 11400000, guid: 44a22eda009bf0b4c9e086d442d2bca5, type: 2}
@@ -17490,6 +17498,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 228676f4f6374278bc7841455f250c6a, type: 2}
   - {fileID: 11400000, guid: 82f4e08651e64ad190b5ce876665c57e, type: 2}
   - {fileID: 11400000, guid: e3b2ce91471744449583145502f2c957, type: 2}
+  - {fileID: 11400000, guid: b47cdb7b48c541b78e4e7e03fc60be7e, type: 2}
+  - {fileID: 11400000, guid: edb4edc405c146f3ad973b0976828b84, type: 2}
+  - {fileID: 11400000, guid: ce6be6a83c31443488426113f69be655, type: 2}
+  - {fileID: 11400000, guid: b2973c61c9224e518f67dc652d3aef0f, type: 2}
+  - {fileID: 11400000, guid: 0a9a6f411d0c4148a22780176f038116, type: 2}
+  - {fileID: 11400000, guid: b0363cbdd8334403b0124873d2ea4ce1, type: 2}
+  - {fileID: 11400000, guid: 7a0f6f8f0d1f45a6bde5a70b39ea20b8, type: 2}
+  - {fileID: 11400000, guid: 490d9662f54c421ea744c010b75a7bb0, type: 2}
   offerRoller: {fileID: 2032885278}
   animalViewPrefab: {fileID: 1147956489028073971, guid: 70dfe621d5fa7ba4096e561457e636fe, type: 3}
   fallbackAnimalSprite: {fileID: 0}

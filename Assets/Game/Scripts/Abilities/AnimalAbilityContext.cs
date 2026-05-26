@@ -12,7 +12,9 @@ namespace NekogamiRanch.Abilities
             Animal predator = null,
             Animal preyedAnimal = null,
             Vector2Int? removedCoords = null,
-            Animal removedAnimal = null)
+            Animal removedAnimal = null,
+            Vector2Int? movedFromCoords = null,
+            Animal movedAnimal = null)
         {
             RanchManager = ranchManager;
             Owner = owner;
@@ -20,6 +22,8 @@ namespace NekogamiRanch.Abilities
             PreyedAnimal = preyedAnimal;
             RemovedCoords = removedCoords;
             RemovedAnimal = removedAnimal;
+            MovedFromCoords = movedFromCoords;
+            MovedAnimal = movedAnimal;
         }
 
         public RanchManager RanchManager { get; }
@@ -28,5 +32,7 @@ namespace NekogamiRanch.Abilities
         public Animal PreyedAnimal { get; }
         public Vector2Int? RemovedCoords { get; }
         public Animal RemovedAnimal { get; }
+        public Vector2Int? MovedFromCoords { get; }
+        public Animal MovedAnimal { get; }
     }
 }

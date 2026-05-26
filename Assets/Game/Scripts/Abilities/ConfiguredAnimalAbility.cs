@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using NekogamiRanch.Ranch;
 using UnityEngine;
 
@@ -7,8 +8,7 @@ namespace NekogamiRanch.Abilities
     public class ConfiguredAnimalAbility : IAnimalAbility, IAnimalCooldownStatus
     {
         private readonly AbilityData config;
-        private int triggerCount;
-        private int remainingCooldown = -1;
+        private readonly Dictionary<AbilityData, AbilityRuntimeState> runtimeStates = new Dictionary<AbilityData, AbilityRuntimeState>();
 
         public ConfiguredAnimalAbility(AbilityData abilityData)
         {
@@ -17,8 +17,23 @@ namespace NekogamiRanch.Abilities
 
         public string Name => config != null ? config.Id : string.Empty;
         public int Priority => config != null ? config.Priority : 0;
-        public bool HasCooldown => GetCooldownDays() > 0 || GetInitialCooldownDays(GetCooldownDays()) > 0;
-        public int RemainingCooldown => HasCooldown ? Mathf.Max(0, remainingCooldown < 0 ? GetInitialCooldownDays(GetCooldownDays()) : remainingCooldown) : 0;
+        public bool HasCooldown => HasCooldownConfigured(config);
+        public int RemainingCooldown
+        {
+            get
+            {
+                if (!HasCooldown || config == null)
+                {
+                    return 0;
+                }
+
+                var state = GetState(config);
+                var cooldownDays = GetCooldownDays(config);
+                return Mathf.Max(0, state.RemainingCooldown < 0
+                    ? GetInitialCooldownDays(config, cooldownDays)
+                    : state.RemainingCooldown);
+            }
+        }
 
         public AbilityExecutionResult TryExecute(AnimalAbilityContext context, string triggerType)
         {
@@ -27,114 +42,137 @@ namespace NekogamiRanch.Abilities
                 return AbilityExecutionResult.Failed(config != null ? config.Id : string.Empty, triggerType);
             }
 
-            if (!string.Equals(config.TriggerType, triggerType, StringComparison.OrdinalIgnoreCase))
+            var succeeded = false;
+            var totalTargetCount = 0;
+            foreach (var abilityConfig in EnumerateConfigs(config))
             {
-                return AbilityExecutionResult.Failed(config.Id, triggerType);
+                if (!string.Equals(abilityConfig.TriggerType, triggerType, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                var result = TryExecuteConfiguredAbility(abilityConfig, context, triggerType);
+                succeeded |= result.Success;
+                totalTargetCount += result.TargetCount;
             }
 
-            if (config.TriggerLimit > 0 && triggerCount >= config.TriggerLimit)
+            return succeeded
+                ? AbilityExecutionResult.Succeeded(config.Id, triggerType, totalTargetCount)
+                : AbilityExecutionResult.Failed(config.Id, triggerType, totalTargetCount);
+        }
+
+        private AbilityExecutionResult TryExecuteConfiguredAbility(AbilityData abilityConfig, AnimalAbilityContext context, string triggerType)
+        {
+            var state = GetState(abilityConfig);
+            if (abilityConfig.TriggerLimit > 0 && state.TriggerCount >= abilityConfig.TriggerLimit)
             {
-                return AbilityExecutionResult.Failed(config.Id, triggerType);
+                return AbilityExecutionResult.Failed(abilityConfig.Id, triggerType);
             }
 
-            if (IsCoolingDown(context))
+            if (IsCoolingDown(abilityConfig, state, context))
             {
-                return AbilityExecutionResult.Failed(config.Id, triggerType);
+                return AbilityExecutionResult.Failed(abilityConfig.Id, triggerType);
             }
 
-            var chancePercent = Mathf.Clamp(config.TriggerChancePercent, 0, 100);
+            var chancePercent = Mathf.Clamp(abilityConfig.TriggerChancePercent, 0, 100);
             if (chancePercent < 100 && UnityEngine.Random.Range(0, 100) >= chancePercent)
             {
 #if UNITY_EDITOR
-                Debug.Log($"[Ability] {config.Id} missed by chance ({chancePercent}%). owner={context.Owner.DisplayName}");
+                Debug.Log($"[Ability] {abilityConfig.Id} missed by chance ({chancePercent}%). owner={context.Owner.DisplayName}");
 #endif
-                return AbilityExecutionResult.Failed(config.Id, triggerType);
+                return AbilityExecutionResult.Failed(abilityConfig.Id, triggerType);
             }
 
-            if (!AbilityEffectRegistry.TryGet(config.EffectScriptId, out var effect))
+            if (!AbilityEffectRegistry.TryGet(abilityConfig.EffectScriptId, out var effect))
             {
 #if UNITY_EDITOR
-                Debug.LogWarning($"[Ability] effectScriptId '{config.EffectScriptId}' not registered. ability={config.Id}");
+                Debug.LogWarning($"[Ability] effectScriptId '{abilityConfig.EffectScriptId}' not registered. ability={abilityConfig.Id}");
 #endif
-                return AbilityExecutionResult.Failed(config.Id, triggerType);
+                return AbilityExecutionResult.Failed(abilityConfig.Id, triggerType);
             }
 
-            var targets = AbilityTargetResolver.Resolve(context, config);
-            if (effect.Execute(context, config, targets))
+            var targets = AbilityTargetResolver.Resolve(context, abilityConfig);
+            if (effect.Execute(context, abilityConfig, targets))
             {
-                triggerCount++;
-                ResetCooldownAfterSuccess(context);
+                state.TriggerCount++;
+                ResetCooldownAfterSuccess(abilityConfig, state, context);
 #if UNITY_EDITOR
-                Debug.Log($"[Ability] {config.Id} executed. owner={context.Owner.DisplayName} targets={targets.Count} triggerCount={triggerCount}");
+                Debug.Log($"[Ability] {abilityConfig.Id} executed. owner={context.Owner.DisplayName} targets={targets.Count} triggerCount={state.TriggerCount}");
 #endif
-                return AbilityExecutionResult.Succeeded(config.Id, triggerType, targets.Count);
+                return AbilityExecutionResult.Succeeded(abilityConfig.Id, triggerType, targets.Count);
             }
 #if UNITY_EDITOR
             else
             {
-                Debug.Log($"[Ability] {config.Id} attempted but no effect applied. owner={context.Owner.DisplayName} targets={targets.Count}");
+                Debug.Log($"[Ability] {abilityConfig.Id} attempted but no effect applied. owner={context.Owner.DisplayName} targets={targets.Count}");
             }
 #endif
-            return AbilityExecutionResult.Failed(config.Id, triggerType, targets.Count);
+            return AbilityExecutionResult.Failed(abilityConfig.Id, triggerType, targets.Count);
         }
 
-        private bool IsCoolingDown(AnimalAbilityContext context)
+        private bool IsCoolingDown(AbilityData abilityConfig, AbilityRuntimeState state, AnimalAbilityContext context)
         {
-            var cooldownDays = GetCooldownDays();
-            var initialCooldownDays = GetInitialCooldownDays(cooldownDays);
+            var cooldownDays = GetCooldownDays(abilityConfig);
+            var initialCooldownDays = GetInitialCooldownDays(abilityConfig, cooldownDays);
             if (cooldownDays <= 0 && initialCooldownDays <= 0)
             {
                 return false;
             }
 
-            if (remainingCooldown < 0)
+            if (state.RemainingCooldown < 0)
             {
-                remainingCooldown = initialCooldownDays;
+                state.RemainingCooldown = initialCooldownDays;
             }
 
-            if (remainingCooldown <= 0)
+            if (state.RemainingCooldown <= 0)
             {
                 return false;
             }
 
-            ReduceCooldown(context, 1, "NaturalDailyCooldownReduction");
-            ReduceCooldown(context, GetTileCooldownReductionAmount(context), "TileCooldownBonusReduction");
-            return remainingCooldown > 0;
+            ReduceCooldown(abilityConfig, state, context, 1, "NaturalDailyCooldownReduction");
+            ReduceCooldown(abilityConfig, state, context, GetTileCooldownReductionAmount(abilityConfig, context), "TileCooldownBonusReduction");
+            return state.RemainingCooldown > 0;
         }
 
-        private void ResetCooldownAfterSuccess(AnimalAbilityContext context)
+        private void ResetCooldownAfterSuccess(AbilityData abilityConfig, AbilityRuntimeState state, AnimalAbilityContext context)
         {
-            var cooldownDays = GetCooldownDays();
+            var cooldownDays = GetCooldownDays(abilityConfig);
             if (cooldownDays <= 0)
             {
-                remainingCooldown = 0;
+                state.RemainingCooldown = 0;
                 return;
             }
 
-            remainingCooldown = cooldownDays;
-            ReduceCooldown(context, GetTileCooldownReductionAmount(context), "TileCooldownBonusReduction");
+            state.RemainingCooldown = cooldownDays;
+            ReduceCooldown(abilityConfig, state, context, GetTileCooldownReductionAmount(abilityConfig, context), "TileCooldownBonusReduction");
         }
 
-        private int GetInitialCooldownDays(int cooldownDays)
+        private static int GetInitialCooldownDays(AbilityData abilityConfig, int cooldownDays)
         {
-            if (config.EffectParams == null)
+            if (abilityConfig?.EffectParams == null)
             {
                 return 0;
             }
 
-            return Mathf.Max(0, config.EffectParams.initialCooldownDays > 0
-                ? config.EffectParams.initialCooldownDays
+            return Mathf.Max(0, abilityConfig.EffectParams.initialCooldownDays > 0
+                ? abilityConfig.EffectParams.initialCooldownDays
                 : cooldownDays);
         }
 
-        private int GetCooldownDays()
+        private static int GetCooldownDays(AbilityData abilityConfig)
         {
-            return config.EffectParams != null ? Mathf.Max(0, config.EffectParams.cooldownDays) : 0;
+            return abilityConfig?.EffectParams != null ? Mathf.Max(0, abilityConfig.EffectParams.cooldownDays) : 0;
         }
 
-        private int GetTileCooldownReductionAmount(AnimalAbilityContext context)
+        private static bool HasCooldownConfigured(AbilityData abilityConfig)
         {
-            var effectParams = config.EffectParams;
+            var cooldownDays = GetCooldownDays(abilityConfig);
+            return cooldownDays > 0 || GetInitialCooldownDays(abilityConfig, cooldownDays) > 0;
+        }
+
+        private int GetTileCooldownReductionAmount(AbilityData abilityConfig, AnimalAbilityContext context)
+        {
+            var effectParams = abilityConfig.EffectParams;
             if (effectParams == null ||
                 effectParams.cooldownReductionAmount <= 0 ||
                 string.IsNullOrWhiteSpace(effectParams.cooldownReductionTileType) ||
@@ -160,23 +198,57 @@ namespace NekogamiRanch.Abilities
             return 0;
         }
 
-        private void ReduceCooldown(AnimalAbilityContext context, int amount, string reason)
+        private void ReduceCooldown(AbilityData abilityConfig, AbilityRuntimeState state, AnimalAbilityContext context, int amount, string reason)
         {
-            if (amount <= 0 || remainingCooldown <= 0)
+            if (amount <= 0 || state.RemainingCooldown <= 0)
             {
                 return;
             }
 
-            var previousCooldown = remainingCooldown;
-            remainingCooldown = Mathf.Max(0, remainingCooldown - amount);
+            var previousCooldown = state.RemainingCooldown;
+            state.RemainingCooldown = Mathf.Max(0, state.RemainingCooldown - amount);
             context.RanchManager.NotifyAnimalCooldownReduced(new AnimalCooldownReductionContext(
                 context.Owner,
-                previousCooldown - remainingCooldown,
+                previousCooldown - state.RemainingCooldown,
                 previousCooldown,
-                remainingCooldown,
+                state.RemainingCooldown,
                 context.Owner,
-                config.Id,
+                abilityConfig.Id,
                 reason));
+        }
+
+        private AbilityRuntimeState GetState(AbilityData abilityConfig)
+        {
+            if (!runtimeStates.TryGetValue(abilityConfig, out var state))
+            {
+                state = new AbilityRuntimeState();
+                runtimeStates.Add(abilityConfig, state);
+            }
+
+            return state;
+        }
+
+        private static IEnumerable<AbilityData> EnumerateConfigs(AbilityData abilityConfig)
+        {
+            if (abilityConfig == null)
+            {
+                yield break;
+            }
+
+            yield return abilityConfig;
+            foreach (var subAbility in abilityConfig.SubAbilities)
+            {
+                foreach (var nestedAbility in EnumerateConfigs(subAbility))
+                {
+                    yield return nestedAbility;
+                }
+            }
+        }
+
+        private class AbilityRuntimeState
+        {
+            public int TriggerCount;
+            public int RemainingCooldown = -1;
         }
     }
 }

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: male_lion
+  m_EditorClassIdentifier: 
+  id: MaleLion
+  animalName: "\u96C4\u72EE"
+  family: Carnivora
+  rarity: 1
+  baseMoney: 2
+  ability: {fileID: 11400000, guid: 5648719756c348f1a92391b4cc2a38cc, type: 2}
+  description: "\u573A\u4E0A\u6709\u96CC\u72EE\u6355\u98DF\u65F6\uFF0C\u81EA\u8EAB\u57FA\u7840\u5C5E\u6027\u52A02"
+  icon: {fileID: 21300000, guid: 3e66d8eb57b586f4cb923dbc93ff15e5, type: 3}
+  familyIcon: {fileID: 21300000, guid: 3cb28a53ba33788439ee3d4a2d81ee30, type: 3}
+  iconScale: 0.8

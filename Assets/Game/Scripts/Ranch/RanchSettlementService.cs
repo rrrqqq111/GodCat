@@ -77,6 +77,34 @@ namespace NekogamiRanch.Ranch
             return ExecuteAbilityWithReport(animal, "Moved");
         }
 
+        public void ResolveAdjacentAnimalMovedAbilities(Animal movedAnimal, UnityEngine.Vector2Int movedFromCoords, RanchMap ranchMap)
+        {
+            if (movedAnimal == null || ranchMap == null || externalAbilityTriggerDepth >= MaxExternalAbilityTriggerDepth)
+            {
+                return;
+            }
+
+            var candidates = ranchMap.GetNeighbors(movedFromCoords)
+                .Select(cell => cell.Animal)
+                .Where(animal => animal != null && animal != movedAnimal)
+                .Distinct()
+                .ToList();
+
+            externalAbilityTriggerDepth++;
+            try
+            {
+                foreach (var animal in candidates)
+                {
+                    GetSettlementAnimalReport(animal);
+                    ExecuteAdjacentAnimalMovedAbilityWithReport(animal, movedAnimal, movedFromCoords);
+                }
+            }
+            finally
+            {
+                externalAbilityTriggerDepth--;
+            }
+        }
+
         public AbilityExecutionResult ResolveAnimalRemovedAbility(Animal animal, UnityEngine.Vector2Int removedCoords)
         {
             return ExecuteAbilityWithReport(animal, "AnimalRemoved", animal, removedCoords);
@@ -166,6 +194,35 @@ namespace NekogamiRanch.Ranch
             }
         }
 
+        public void ResolveGlobalAnimalPreyedAbilities(Animal predator, Animal preyedAnimal, RanchMap ranchMap)
+        {
+            if (predator == null || preyedAnimal == null || ranchMap == null ||
+                externalAbilityTriggerDepth >= MaxExternalAbilityTriggerDepth)
+            {
+                return;
+            }
+
+            var candidates = ranchMap.GetCellsInScanOrder()
+                .Select(cell => cell.Animal)
+                .Where(animal => animal != null && animal != preyedAnimal)
+                .Distinct()
+                .ToList();
+
+            externalAbilityTriggerDepth++;
+            try
+            {
+                foreach (var animal in candidates)
+                {
+                    GetSettlementAnimalReport(animal);
+                    ExecuteAbilityWithReport(animal, "GlobalAnimalPreyed", predator, preyedAnimal);
+                }
+            }
+            finally
+            {
+                externalAbilityTriggerDepth--;
+            }
+        }
+
         private void ResolveAbilitiesByMapScan(RanchMap ranchMap, string triggerType)
         {
             var animalsAtPhaseStart = ranchMap.GetCellsInScanOrder()
@@ -234,6 +291,42 @@ namespace NekogamiRanch.Ranch
             {
                 result = animal.Ability.TryExecute(
                     new AnimalAbilityContext(manager, animal, removedCoords: removedCoords, removedAnimal: removedAnimal),
+                    triggerType);
+            }
+            finally
+            {
+                activeExtraMoneyOwner = previousExtraMoneyOwner;
+            }
+
+            var moneyDelta = economyService.Money - beforeMoney;
+            if (moneyDelta != 0)
+            {
+                var report = GetSettlementAnimalReport(animal);
+                report.AbilityMoney += moneyDelta;
+            }
+
+            return result.WithMoneyDelta(moneyDelta);
+        }
+
+        private AbilityExecutionResult ExecuteAdjacentAnimalMovedAbilityWithReport(
+            Animal animal,
+            Animal movedAnimal,
+            UnityEngine.Vector2Int movedFromCoords)
+        {
+            const string triggerType = "AdjacentAnimalMoved";
+            if (animal == null || animal.Ability == null)
+            {
+                return AbilityExecutionResult.Failed(triggerType: triggerType);
+            }
+
+            var beforeMoney = economyService.Money;
+            var previousExtraMoneyOwner = activeExtraMoneyOwner;
+            activeExtraMoneyOwner = animal;
+            var result = AbilityExecutionResult.Failed(animal.Ability.Name, triggerType);
+            try
+            {
+                result = animal.Ability.TryExecute(
+                    new AnimalAbilityContext(manager, animal, movedFromCoords: movedFromCoords, movedAnimal: movedAnimal),
                     triggerType);
             }
             finally

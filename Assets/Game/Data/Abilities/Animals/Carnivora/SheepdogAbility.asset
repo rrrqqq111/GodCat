@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc8b67d2bd64e1498ad642244aa2e36, type: 3}
+  m_Name: SheepdogAbility
+  m_EditorClassIdentifier: 
+  id: SheepdogAbility
+  abilityType: Normal
+  priority: 0
+  impactType: Adjacent
+  stackable: 1
+  desc: "\u4FDD\u62A4\u76F8\u90BB\u7684\u7F94\u7F8A\u3001\u7EF5\u7F8A\u3001\u5C71\u7F8A\u548C\u7F8A\u9A7C\u907F\u514D\u88AB\u5403\u6389\uFF0C\u6BCF\u4FDD\u62A4\u4E00\u53EA\u83B7\u5F974\u91D1\u5E01"
+  triggerType: Passive
+  triggerChancePercent: 100
+  triggerLimit: 0
+  effectType: ProtectAdjacentSheep
+  effectScriptId: SheepdogAbilityEffect
+  effectParams:
+    money: 4
+    count: 0
+    maxCount: 0
+    minMultiplier: 0
+    maxMultiplier: 0
+    maxRarity: 0
+    itemCount: 0
+    initialCooldownDays: 0
+    cooldownDays: 0
+    cooldownReductionAmount: 0
+    cooldownReductionTileType: None
+    durationDays: 0
+    transformChancePercent: 100
+    type: Flat
+    target: Other
+    targetFamily: None
+    animalData: {fileID: 0}
+  subAbilities: []

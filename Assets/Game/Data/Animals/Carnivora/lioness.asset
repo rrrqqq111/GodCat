@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: lioness
+  m_EditorClassIdentifier: 
+  id: Lioness
+  animalName: "\u96CC\u72EE"
+  family: Carnivora
+  rarity: 1
+  baseMoney: 2
+  ability: {fileID: 11400000, guid: 14564b15e69f4a3e82cc56ddf8624652, type: 2}
+  description: "\u6355\u98DF\u4E00\u53EA\u76F8\u90BB\u7684\u6709\u8E44\u5BB6\u65CF\u52A8\u7269\uFF0C\u6210\u529F\u540E\u83B7\u5F975\u91D1\u5E01"
+  icon: {fileID: 21300000, guid: ede4b5b4bddbbc14c9aba659d2fb298b, type: 3}
+  familyIcon: {fileID: 21300000, guid: 3cb28a53ba33788439ee3d4a2d81ee30, type: 3}
+  iconScale: 0.8

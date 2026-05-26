@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: hyena
+  m_EditorClassIdentifier: 
+  id: Hyena
+  animalName: "\u9B23\u72D7"
+  family: Carnivora
+  rarity: 1
+  baseMoney: 1
+  ability: {fileID: 11400000, guid: 94c0bb6bb54646e6968ace37240d7ff8, type: 2}
+  description: "\u76F8\u90BB\u52A8\u7269\u88AB\u5403\u6389\u65F6\u83B7\u5F973\u91D1\u5E01\uFF1B\u82E5\u6B63\u597D\u5728\u98DF\u8089\u52A8\u7269\u7684\u5DE6\u8FB9\u4E00\u683C\uFF0C\u5219\u670930%\u6982\u7387\u5403\u6389\u5BF9\u65B9\u5E76\u83B7\u5F9720\u91D1\u5E01"
+  icon: {fileID: 21300000, guid: abc1d70e0017e7c4487774c63d51e86b, type: 3}
+  familyIcon: {fileID: 21300000, guid: 3cb28a53ba33788439ee3d4a2d81ee30, type: 3}
+  iconScale: 0.8

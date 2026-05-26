@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NekogamiRanch.Abilities.Prey;
 using NekogamiRanch.Animals;
@@ -18,7 +19,7 @@ namespace NekogamiRanch.Abilities
                 : new ProtectionRule("Global", protector: protector, reason: abilityData != null ? abilityData.Id : "GiraffeProtection");
         }
 
-        public void OnProtected(Animal protector, Animal protectedAnimal, AbilityData abilityData)
+        public void OnProtected(Animal protector, Animal protectedAnimal, AbilityData abilityData, Action<int> addMoney)
         {
             if (protector == null || protectedAnimal == null)
             {

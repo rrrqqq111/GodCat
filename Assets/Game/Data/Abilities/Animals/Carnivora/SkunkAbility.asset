@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc8b67d2bd64e1498ad642244aa2e36, type: 3}
+  m_Name: SkunkAbility
+  m_EditorClassIdentifier: 
+  id: SkunkAbility
+  abilityType: Normal
+  priority: 0
+  impactType: Adjacent
+  stackable: 0
+  desc: "\u76F8\u90BB\u6709\u7A7A\u5730\u65F6\u83B7\u5F972\u91D1\u5E01\uFF0C\u5426\u5219\u5931\u53BB1\u91D1\u5E01"
+  triggerType: SettlementPrepare
+  triggerChancePercent: 100
+  triggerLimit: 0
+  effectType: MoneyByAdjacentEmptyCell
+  effectScriptId: SkunkAbilityEffect
+  effectParams:
+    money: 2
+    count: 1
+    maxCount: 0
+    minMultiplier: 0
+    maxMultiplier: 0
+    maxRarity: 0
+    itemCount: 0
+    initialCooldownDays: 0
+    cooldownDays: 0
+    cooldownReductionAmount: 0
+    cooldownReductionTileType: None
+    durationDays: 0
+    transformChancePercent: 100
+    type: Flat
+    target: Self
+    targetFamily: None
+    animalData: {fileID: 0}
+  subAbilities: []

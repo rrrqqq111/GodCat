@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: badger
+  m_EditorClassIdentifier: 
+  id: Badger
+  animalName: "\u737E"
+  family: Carnivora
+  rarity: 1
+  baseMoney: 2
+  ability: {fileID: 11400000, guid: bfb0b692129f40e3ac807208c214cb98, type: 2}
+  description: "\u573A\u4E0A\u6CA1\u6709\u5176\u4ED6\u737E\u65F6\u83B7\u5F974\u91D1\u5E01\uFF0C\u5426\u5219\u5931\u53BB2\u91D1\u5E01"
+  icon: {fileID: 21300000, guid: b0346151c2888bd49b1e38bf0032eba5, type: 3}
+  familyIcon: {fileID: 21300000, guid: 3cb28a53ba33788439ee3d4a2d81ee30, type: 3}
+  iconScale: 0.8

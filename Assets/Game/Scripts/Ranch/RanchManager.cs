@@ -7,9 +7,6 @@ using NekogamiRanch.Animals;
 using NekogamiRanch.Items;
 using NekogamiRanch.Toys;
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace NekogamiRanch.Ranch
 {
@@ -37,11 +34,15 @@ namespace NekogamiRanch.Ranch
         [SerializeField, HideInInspector] private List<ItemData> itemRewardPool = new List<ItemData>();
         [SerializeField] private List<ToyData> equippedToys = new List<ToyData>();
 
+        private readonly RanchEventHub eventHub = new RanchEventHub();
         private RanchGameState state;
         private RanchEconomyService economyService;
         private RanchAnimalService animalService;
         private RanchAnimalLifecycleService animalLifecycleService;
         private RanchAnimalSpawnService animalSpawnService;
+        private RanchProtectionService protectionService;
+        private RanchPreyService preyService;
+        private RanchTurnService turnService;
         private RanchOfferService offerService;
         private RanchSettlementService settlementService;
         private RanchItemService itemService;
@@ -50,17 +51,71 @@ namespace NekogamiRanch.Ranch
         private MapCell selectedCell;
         private bool initialized;
 
-        public event Action StateChanged;
-        public event Action<PreyContext> OnPreyAttempt;
-        public event Action<ProtectionResult> OnPreyProtected;
-        public event Action<PreyResult> OnPreySuccess;
-        public event Action<PreyResult> OnPreyFailed;
-        public event Action<Animal, Animal> OnAnimalPreyed;
-        public event Action<Animal> OnAnimalRemoved;
-        public event Action<Animal> OnAnimalSold;
-        public event Action<Animal, AnimalData> OnAnimalGrown;
-        public event Action<Animal, AnimalData> OnAnimalTransformed;
-        public event Action<AnimalCooldownReductionContext> OnAnimalCooldownReduced;
+        public event Action StateChanged
+        {
+            add => eventHub.StateChanged += value;
+            remove => eventHub.StateChanged -= value;
+        }
+
+        public event Action<PreyContext> OnPreyAttempt
+        {
+            add => eventHub.PreyAttempted += value;
+            remove => eventHub.PreyAttempted -= value;
+        }
+
+        public event Action<ProtectionResult> OnPreyProtected
+        {
+            add => eventHub.PreyProtected += value;
+            remove => eventHub.PreyProtected -= value;
+        }
+
+        public event Action<PreyResult> OnPreySuccess
+        {
+            add => eventHub.PreySucceeded += value;
+            remove => eventHub.PreySucceeded -= value;
+        }
+
+        public event Action<PreyResult> OnPreyFailed
+        {
+            add => eventHub.PreyFailed += value;
+            remove => eventHub.PreyFailed -= value;
+        }
+
+        public event Action<Animal, Animal> OnAnimalPreyed
+        {
+            add => eventHub.AnimalPreyed += value;
+            remove => eventHub.AnimalPreyed -= value;
+        }
+
+        public event Action<Animal> OnAnimalRemoved
+        {
+            add => eventHub.AnimalRemoved += value;
+            remove => eventHub.AnimalRemoved -= value;
+        }
+
+        public event Action<Animal> OnAnimalSold
+        {
+            add => eventHub.AnimalSold += value;
+            remove => eventHub.AnimalSold -= value;
+        }
+
+        public event Action<Animal, AnimalData> OnAnimalGrown
+        {
+            add => eventHub.AnimalGrown += value;
+            remove => eventHub.AnimalGrown -= value;
+        }
+
+        public event Action<Animal, AnimalData> OnAnimalTransformed
+        {
+            add => eventHub.AnimalTransformed += value;
+            remove => eventHub.AnimalTransformed -= value;
+        }
+
+        public event Action<AnimalCooldownReductionContext> OnAnimalCooldownReduced
+        {
+            add => eventHub.AnimalCooldownReduced += value;
+            remove => eventHub.AnimalCooldownReduced -= value;
+        }
 
         public int Day => state != null ? state.Day : day;
         public int Money => state != null ? state.Money : money;
@@ -148,6 +203,7 @@ namespace NekogamiRanch.Ranch
             CreateServices();
             TriggerToys(ToyTriggerType.RunStart);
             SeedAnimals(startingAnimals);
+            CreateTurnService();
             SelectCell(null);
             initialized = true;
             NotifyStateChanged();
@@ -171,28 +227,7 @@ namespace NekogamiRanch.Ranch
 
         public void NextDay()
         {
-            if (state != null && state.Phase == RanchPhase.DayTransition)
-            {
-                EnterNextDay();
-                return;
-            }
-
-            if (state != null && state.Phase == RanchPhase.OfferSelection)
-            {
-                return;
-            }
-
-            ResolveDailySettlement();
-            if (IsTestMode)
-            {
-                state?.SetPhase(RanchPhase.DayTransition);
-                NotifyStateChanged();
-                return;
-            }
-
-            RollOffers(3);
-            state?.SetPhase(CurrentOffers.Count > 0 ? RanchPhase.OfferSelection : RanchPhase.DayTransition);
-            NotifyStateChanged();
+            turnService?.NextDay();
         }
 
         public void AddMoney(int amount)
@@ -313,67 +348,34 @@ namespace NekogamiRanch.Ranch
 
         public PreyResult TryPrey(PreyContext context)
         {
-            if (context?.Predator == null || context.TargetRule == null || animalService == null || ranchMap == null)
+            PreyResult result;
+            if (preyService != null)
             {
-                return CompletePreyResult(PreyResult.Failed(
+                result = preyService.TryPrey(context);
+            }
+            else
+            {
+                result = PreyResult.Failed(
                     context != null ? context.Predator : null,
                     Array.Empty<Animal>(),
                     Array.Empty<ProtectionResult>(),
-                    "InvalidPreyContext"));
+                    "PreyServiceUnavailable");
+                eventHub.NotifyPreyCompleted(result);
             }
 
-            OnPreyAttempt?.Invoke(context);
-            var candidateTargets = PreyTargetResolver.Resolve(context, ranchMap);
-            var protectionResults = new List<ProtectionResult>();
-            if (candidateTargets.Count == 0)
-            {
-                return CompletePreyResult(PreyResult.Failed(
-                    context.Predator,
-                    candidateTargets,
-                    protectionResults,
-                    "NoCandidateTargets"));
-            }
-
-            var removedTargets = new List<Animal>();
-            foreach (var target in candidateTargets)
-            {
-                var protectionResult = ResolveProtection(context, target);
-                if (protectionResult.Success)
-                {
-                    protectionResults.Add(protectionResult);
-                    OnPreyProtected?.Invoke(protectionResult);
-                    continue;
-                }
-
-                if (animalLifecycleService == null ||
-                    !animalLifecycleService.TryRemove(target, AnimalRemovalReason.Preyed, context.Predator))
-                {
-                    continue;
-                }
-
-                removedTargets.Add(target);
-            }
-
-            if (removedTargets.Count > 0)
+            if (result.Success)
             {
                 if (!RefreshSelectionAfterAnimalRemoval())
                 {
                     NotifyStateChanged();
                 }
-
-                return CompletePreyResult(PreyResult.Succeeded(
-                    context.Predator,
-                    candidateTargets,
-                    protectionResults,
-                    removedTargets));
+            }
+            else if (result.ProtectedTargets.Count > 0)
+            {
+                NotifyStateChanged();
             }
 
-            var failureReason = protectionResults.Count == candidateTargets.Count ? "AllTargetsProtected" : "NoTargetRemoved";
-            return CompletePreyResult(PreyResult.Failed(
-                context.Predator,
-                candidateTargets,
-                protectionResults,
-                failureReason));
+            return result;
         }
 
         public bool RemoveAnimal(Animal animal)
@@ -449,7 +451,7 @@ namespace NekogamiRanch.Ranch
             }
 
             var wasSelectedAnimal = selectedCell != null && selectedCell.Animal == oldAnimal;
-            OnAnimalTransformed?.Invoke(oldAnimal, newAnimalData);
+            eventHub.NotifyAnimalTransformed(oldAnimal, newAnimalData);
             var replaced = animalService.ReplaceAnimal(oldAnimal, newAnimalData);
             if (replaced && wasSelectedAnimal)
             {
@@ -466,7 +468,7 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
-            OnAnimalGrown?.Invoke(youngAnimal, grownAnimalData);
+            eventHub.NotifyAnimalGrown(youngAnimal, grownAnimalData);
             var grown = animalService.ReplaceAnimal(youngAnimal, grownAnimalData);
             if (!grown)
             {
@@ -562,9 +564,7 @@ namespace NekogamiRanch.Ranch
             }
 
             var removedAnimal = cell.Animal;
-            if (removedAnimal == null ||
-                animalLifecycleService == null ||
-                !animalLifecycleService.TryRemove(removedAnimal))
+            if (removedAnimal == null || !animalService.AnimalRemovedFromCell(cell))
             {
                 return false;
             }
@@ -644,7 +644,7 @@ namespace NekogamiRanch.Ranch
                 return;
             }
 
-            OnAnimalCooldownReduced?.Invoke(context);
+            eventHub.NotifyAnimalCooldownReduced(context);
         }
 
         public string GetSelectedCellText()
@@ -664,9 +664,9 @@ namespace NekogamiRanch.Ranch
                 animalService,
                 settlementService,
                 ranchMap,
-                animal => OnAnimalRemoved?.Invoke(animal),
-                animal => OnAnimalSold?.Invoke(animal),
-                (predator, animal) => OnAnimalPreyed?.Invoke(predator, animal));
+                eventHub);
+            protectionService = new RanchProtectionService(ranchMap, economyService.AddMoney);
+            preyService = new RanchPreyService(ranchMap, animalLifecycleService, protectionService, eventHub);
             animalSpawnService = new RanchAnimalSpawnService(animalService, abilitySpawnPool);
             var configuredRewardPool = itemRewardPool != null && itemRewardPool.Count > 0 ? itemRewardPool : startingItems;
             rewardService = new RanchRewardService(itemService, configuredRewardPool);
@@ -681,75 +681,23 @@ namespace NekogamiRanch.Ranch
                 return;
             }
 
-            offerPool = LoadAnimalsFromConfiguredFamilies();
+            offerPool = RanchContentCatalog.LoadOfferAnimals(AnimalDataRoot, offerPoolFamilies);
 #endif
         }
 
         private void RefreshItemRewardPool()
         {
 #if UNITY_EDITOR
-            itemRewardPool = AssetDatabase.FindAssets("t:ItemData", new[] { ItemDataRoot })
-                .Select(AssetDatabase.GUIDToAssetPath)
-                .Select(AssetDatabase.LoadAssetAtPath<ItemData>)
-                .Where(item => item != null)
-                .OrderBy(item => item.Rarity)
-                .ThenBy(item => item.DisplayName)
-                .ToList();
+            itemRewardPool = RanchContentCatalog.LoadItems(ItemDataRoot);
 #endif
         }
 
         private void RefreshAbilitySpawnPool()
         {
 #if UNITY_EDITOR
-            abilitySpawnPool = AssetDatabase.FindAssets("t:AnimalData", new[] { AnimalDataRoot })
-                .Select(AssetDatabase.GUIDToAssetPath)
-                .Select(AssetDatabase.LoadAssetAtPath<AnimalData>)
-                .Where(data => data != null)
-                .OrderBy(data => data.Family)
-                .ThenBy(data => data.Rarity)
-                .ThenBy(data => data.DisplayName)
-                .ToList();
+            abilitySpawnPool = RanchContentCatalog.LoadAnimals(AnimalDataRoot);
 #endif
         }
-
-#if UNITY_EDITOR
-        private List<AnimalData> LoadAnimalsFromConfiguredFamilies()
-        {
-            var familyFilters = (offerPoolFamilies ?? new List<string>())
-                .Where(family => !string.IsNullOrWhiteSpace(family))
-                .Select(family => family.Trim())
-                .Distinct(StringComparer.OrdinalIgnoreCase)
-                .ToList();
-            if (familyFilters.Count == 0)
-            {
-                return new List<AnimalData>();
-            }
-
-            var familySet = new HashSet<string>(familyFilters, StringComparer.OrdinalIgnoreCase);
-            return AssetDatabase.FindAssets("t:AnimalData", new[] { AnimalDataRoot })
-                .Select(AssetDatabase.GUIDToAssetPath)
-                .Select(AssetDatabase.LoadAssetAtPath<AnimalData>)
-                .Where(data => data != null && familySet.Contains(data.Family))
-                .OrderBy(data => GetFamilySortIndex(familyFilters, data.Family))
-                .ThenBy(data => data.Rarity)
-                .ThenBy(data => data.DisplayName)
-                .ThenBy(data => data.Id)
-                .ToList();
-        }
-
-        private static int GetFamilySortIndex(IReadOnlyList<string> familyFilters, string family)
-        {
-            for (var i = 0; i < familyFilters.Count; i++)
-            {
-                if (string.Equals(familyFilters[i], family, StringComparison.OrdinalIgnoreCase))
-                {
-                    return i;
-                }
-            }
-
-            return int.MaxValue;
-        }
-#endif
 
         private void SeedAnimals(IReadOnlyList<AnimalData> startingAnimals)
         {
@@ -794,210 +742,33 @@ namespace NekogamiRanch.Ranch
             return fallbackAnimalSprite;
         }
 
-        private void EnterNextDay()
-        {
-            if (!IsTestMode || RandomizeAnimalPositionsInTestMode)
-            {
-                animalService?.RandomizeAnimalPositions();
-            }
-
-            state?.AddDay();
-            state?.SetPhase(IsTestMode ? RanchPhase.TestMode : RanchPhase.Playing);
-            toyService?.Trigger(ToyTriggerType.DayStart, Day);
-            itemService?.Trigger(ItemTriggerType.DayStart, Day);
-            NotifyStateChanged();
-        }
-
         private void NotifyStateChanged()
         {
-            StateChanged?.Invoke();
+            eventHub.NotifyStateChanged();
         }
 
-        private void ResolveDailySettlement()
-        {
-            settlementService?.ResolveDailySettlement(ranchMap);
-        }
-
-        private void ResolveMovedAbility(Animal animal)
+        private void ResolveMovedAbility(Animal animal, Vector2Int previousCoords)
         {
             settlementService?.ResolveMovedAbility(animal);
+            settlementService?.ResolveAdjacentAnimalMovedAbilities(animal, previousCoords, ranchMap);
         }
 
-        private void RollOffers(int count)
+        private void CreateTurnService()
         {
-            offerService?.Roll(Day, count);
-        }
-
-        private PreyResult CompletePreyResult(PreyResult result)
-        {
-            if (result.Success)
-            {
-                OnPreySuccess?.Invoke(result);
-            }
-            else
-            {
-                OnPreyFailed?.Invoke(result);
-            }
-
-            return result;
-        }
-
-        private ProtectionResult ResolveProtection(PreyContext context, Animal target)
-        {
-            if (context == null || target == null)
-            {
-                return ProtectionResult.Unprotected(target);
-            }
-
-            foreach (var rule in ResolveProtectionRules(context))
-            {
-                var candidateProtectors = ResolveCandidateProtectors(rule, target);
-                var protectionContext = new ProtectionContext(context.Predator, target, candidateProtectors, context.SourceAbilityId);
-                foreach (var protector in protectionContext.CandidateProtectors)
-                {
-                    if (!rule.CanProtect(protector, context.Predator, target))
-                    {
-                        continue;
-                    }
-
-                    var reason = string.IsNullOrWhiteSpace(rule.Reason) ? "Protected" : rule.Reason;
-                    var result = ProtectionResult.Protected(protector, target, rule, reason);
-                    ApplyPassiveProtectionReward(result);
-                    return result;
-                }
-            }
-
-            return ProtectionResult.Unprotected(target);
-        }
-
-        private IEnumerable<ProtectionRule> ResolveProtectionRules(PreyContext context)
-        {
-            if (context?.ProtectionRules != null)
-            {
-                foreach (var rule in context.ProtectionRules)
-                {
-                    if (rule != null)
-                    {
-                        yield return rule;
-                    }
-                }
-            }
-
-            if (ranchMap == null)
-            {
-                yield break;
-            }
-
-            foreach (var cell in ranchMap.GetCellsInScanOrder())
-            {
-                var protector = cell.Animal;
-                var abilityData = protector?.Data?.Ability;
-                if (abilityData == null ||
-                    !AbilityEffectRegistry.TryGet(abilityData.EffectScriptId, out var effect) ||
-                    !(effect is IPassiveProtectionEffect passiveProtection))
-                {
-                    continue;
-                }
-
-                var rule = passiveProtection.CreateProtectionRule(protector, abilityData);
-                if (rule != null)
-                {
-                    yield return rule;
-                }
-            }
-        }
-
-        private void ApplyPassiveProtectionReward(ProtectionResult result)
-        {
-            var abilityData = result.Protector?.Data?.Ability;
-            if (!result.Success ||
-                abilityData == null ||
-                !AbilityEffectRegistry.TryGet(abilityData.EffectScriptId, out var effect) ||
-                !(effect is IPassiveProtectionEffect passiveProtection))
-            {
-                return;
-            }
-
-            passiveProtection.OnProtected(result.Protector, result.Target, abilityData);
-        }
-
-        private IReadOnlyList<Animal> ResolveCandidateProtectors(ProtectionRule rule, Animal target)
-        {
-            var protectors = new List<Animal>();
-            if (rule == null || target == null || ranchMap == null)
-            {
-                return protectors;
-            }
-
-            if (rule.Protector != null)
-            {
-                if (IsAnimalOnMap(rule.Protector) && ProtectionScopeContainsTarget(rule.Scope, rule.Protector, target))
-                {
-                    protectors.Add(rule.Protector);
-                }
-
-                return protectors;
-            }
-
-            foreach (var cell in ranchMap.GetCellsInScanOrder())
-            {
-                var protector = cell.Animal;
-                if (protector == null || !rule.MatchesProtector(protector))
-                {
-                    continue;
-                }
-
-                if (ProtectionScopeContainsTarget(rule.Scope, protector, target))
-                {
-                    protectors.Add(protector);
-                }
-            }
-
-            return protectors;
-        }
-
-        private bool ProtectionScopeContainsTarget(string scope, Animal protector, Animal target)
-        {
-            if (protector == null || target == null || ranchMap == null)
-            {
-                return false;
-            }
-
-            switch (NormalizeRuleText(scope))
-            {
-                case "self":
-                    return protector == target;
-                case "adjacent":
-                    return ranchMap.GetNeighbors(protector.Coords).Any(cell => cell.Animal == target);
-                case "left":
-                    return target.Coords == protector.Coords + Vector2Int.left;
-                case "right":
-                    return target.Coords == protector.Coords + Vector2Int.right;
-                case "up":
-                case "upper":
-                case "upperadjacent":
-                    return ranchMap.GetUpperNeighbors(protector.Coords).Any(cell => cell.Animal == target);
-                case "down":
-                case "lower":
-                case "loweradjacent":
-                    return ranchMap.GetLowerNeighbors(protector.Coords).Any(cell => cell.Animal == target);
-                case "row":
-                    return protector.Coords.y == target.Coords.y;
-                case "all":
-                case "global":
-                case "field":
-                    return true;
-                default:
-                    return false;
-            }
+            turnService = new RanchTurnService(
+                state,
+                ranchMap,
+                animalService,
+                offerService,
+                settlementService,
+                itemService,
+                toyService,
+                NotifyStateChanged);
         }
 
         private bool IsAnimalOnMap(Animal animal)
         {
-            return animal != null &&
-                ranchMap != null &&
-                ranchMap.TryGetCell(animal.Coords, out var cell) &&
-                cell.Animal == animal;
+            return animalService != null && animalService.IsAnimalOnMap(animal);
         }
 
         private bool RefreshSelectionAfterAnimalRemoval()
@@ -1011,9 +782,5 @@ namespace NekogamiRanch.Ranch
             return false;
         }
 
-        private static string NormalizeRuleText(string value)
-        {
-            return string.IsNullOrWhiteSpace(value) ? string.Empty : value.Trim().ToLowerInvariant();
-        }
     }
 }

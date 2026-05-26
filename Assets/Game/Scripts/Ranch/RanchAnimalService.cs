@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using NekogamiRanch.Animals;
 using UnityEngine;
 
@@ -8,27 +7,20 @@ namespace NekogamiRanch.Ranch
 {
     public class RanchAnimalService
     {
-        private readonly List<Animal> animals = new List<Animal>();
-        private readonly Action<Animal> animalMoved;
-        private RanchMap ranchMap;
+        private readonly RanchRosterService rosterService = new RanchRosterService();
+        private readonly RanchBoardService boardService;
 
-        public RanchAnimalService(RanchMap ranchMap, Action<Animal> animalMoved)
+        public RanchAnimalService(RanchMap ranchMap, Action<Animal, Vector2Int> animalMoved)
         {
-            this.ranchMap = ranchMap;
-            this.animalMoved = animalMoved;
+            boardService = new RanchBoardService(ranchMap, animalMoved);
         }
 
-        public IReadOnlyList<Animal> Animals => animals;
-
-        public void SetMap(RanchMap map)
-        {
-            ranchMap = map;
-        }
+        public IReadOnlyList<Animal> Animals => rosterService.Animals;
 
         public void SeedAnimals(IReadOnlyList<AnimalData> startingAnimals)
         {
-            animals.Clear();
-            if (startingAnimals == null || startingAnimals.Count == 0)
+            ClearAllAnimals();
+            if (startingAnimals == null)
             {
                 return;
             }
@@ -49,77 +41,37 @@ namespace NekogamiRanch.Ranch
         public bool TryAddAnimalToRandomEmptyCell(AnimalData data, out Animal animal)
         {
             animal = null;
-            if (data == null || ranchMap == null)
-            {
-                return false;
-            }
-
-            var emptyCells = ranchMap.GetCells()
-                .Where(cell => cell != null && cell.IsEmpty)
-                .ToList();
-            if (emptyCells.Count == 0)
+            if (data == null)
             {
                 return false;
             }
 
             animal = new Animal(data, Vector2Int.zero);
-            var cell = emptyCells[UnityEngine.Random.Range(0, emptyCells.Count)];
-            if (!cell.TryPlaceAnimal(animal))
+            rosterService.Add(animal);
+
+            if (!boardService.HasEmptyCell())
             {
-                animal = null;
-                return false;
+                return true;
             }
 
-            animals.Add(animal);
-            return true;
+            if (boardService.TryPlaceInRandomEmptyCell(animal))
+            {
+                return true;
+            }
+
+            rosterService.Remove(animal);
+            animal = null;
+            return false;
         }
 
         public bool TryMoveAnimal(Animal animal, Vector2Int targetCoords)
         {
-            if (animal == null || ranchMap == null)
-            {
-                return false;
-            }
-
-            var startCoords = animal.Coords;
-            if (!ranchMap.TryMoveAnimal(animal, targetCoords))
-            {
-                return false;
-            }
-
-            if (animal.Coords != startCoords)
-            {
-                animalMoved?.Invoke(animal);
-            }
-
-            return true;
+            return boardService.TryMove(animal, targetCoords);
         }
 
         public bool TrySwapAnimals(Animal first, Animal second)
         {
-            if (first == null || second == null || ranchMap == null)
-            {
-                return false;
-            }
-
-            var firstStartCoords = first.Coords;
-            var secondStartCoords = second.Coords;
-            if (!ranchMap.TrySwapAnimals(first, second))
-            {
-                return false;
-            }
-
-            if (first.Coords != firstStartCoords)
-            {
-                animalMoved?.Invoke(first);
-            }
-
-            if (second.Coords != secondStartCoords)
-            {
-                animalMoved?.Invoke(second);
-            }
-
-            return true;
+            return boardService.TrySwap(first, second);
         }
 
         public bool AnimalRemoved(Animal animal)
@@ -129,34 +81,24 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
-            var removedFromMap = ranchMap != null && ranchMap.TryRemoveAnimal(animal);
-            var removedFromList = animals.Remove(animal);
-            return removedFromMap || removedFromList;
+            var removedFromBoard = boardService.Remove(animal);
+            var removedFromRoster = rosterService.Remove(animal);
+            return removedFromBoard || removedFromRoster;
         }
 
         public bool AnimalRemovedAt(Vector2Int coords)
         {
-            if (ranchMap == null || !ranchMap.TryGetCell(coords, out var cell) || cell.Animal == null)
-            {
-                return false;
-            }
-
-            return AnimalRemoved(cell.Animal);
+            return TryGetAnimalAt(coords, out var animal) && AnimalRemoved(animal);
         }
 
         public bool AnimalRemovedFromCell(MapCell cell)
         {
-            if (cell == null || cell.Animal == null)
-            {
-                return false;
-            }
-
-            return AnimalRemoved(cell.Animal);
+            return cell != null && cell.Animal != null && AnimalRemoved(cell.Animal);
         }
 
         public bool ReplaceAnimal(Animal oldAnimal, AnimalData newAnimalData)
         {
-            if (oldAnimal == null || newAnimalData == null || ranchMap == null)
+            if (oldAnimal == null || newAnimalData == null || !boardService.IsDeployed(oldAnimal))
             {
                 return false;
             }
@@ -168,61 +110,46 @@ namespace NekogamiRanch.Ranch
             }
 
             var newAnimal = new Animal(newAnimalData, coords);
-            if (!ranchMap.TryPlaceAnimal(newAnimal, coords))
+            if (!boardService.TryPlaceAt(newAnimal, coords))
             {
                 return false;
             }
 
-            animals.Add(newAnimal);
+            rosterService.Add(newAnimal);
             return true;
         }
 
         public bool TrySetAnimalAt(Vector2Int coords, AnimalData animalData)
         {
-            if (ranchMap == null || animalData == null || !ranchMap.TryGetCell(coords, out var cell))
+            if (animalData == null)
             {
                 return false;
             }
 
-            if (cell.Animal != null)
+            if (TryGetAnimalAt(coords, out var existingAnimal))
             {
-                AnimalRemoved(cell.Animal);
+                AnimalRemoved(existingAnimal);
             }
 
             var animal = new Animal(animalData, coords);
-            if (!ranchMap.TryPlaceAnimal(animal, coords))
+            if (!boardService.TryPlaceAt(animal, coords))
             {
                 return false;
             }
 
-            animals.Add(animal);
+            rosterService.Add(animal);
             return true;
         }
 
         public void ClearAllAnimals()
         {
-            if (ranchMap != null)
-            {
-                foreach (var cell in ranchMap.GetCells())
-                {
-                    cell.RemoveAnimal();
-                }
-            }
-
-            animals.Clear();
+            boardService.Clear();
+            rosterService.Clear();
         }
 
         public int CountAnimalsById(string animalId)
         {
-            if (string.IsNullOrWhiteSpace(animalId))
-            {
-                return 0;
-            }
-
-            return animals.Count(animal =>
-                IsAnimalOnMap(animal) &&
-                animal.Data != null &&
-                string.Equals(animal.Data.Id, animalId, StringComparison.OrdinalIgnoreCase));
+            return boardService.CountDeployedAnimalsById(animalId);
         }
 
         public bool HasAnimalById(string animalId)
@@ -232,48 +159,27 @@ namespace NekogamiRanch.Ranch
 
         public void RandomizeAnimalPositions()
         {
-            if (ranchMap == null)
-            {
-                return;
-            }
-
-            var allCells = ranchMap.GetCells().Where(cell => cell != null).ToList();
-            if (allCells.Count == 0)
-            {
-                return;
-            }
-
-            foreach (var cell in allCells)
-            {
-                if (!cell.IsEmpty)
-                {
-                    cell.RemoveAnimal();
-                }
-            }
-
-            if (animals.Count == 0)
-            {
-                return;
-            }
-
-            var shuffledCells = allCells.OrderBy(_ => UnityEngine.Random.value).ToList();
-            var selectedAnimals = animals
-                .OrderBy(_ => UnityEngine.Random.value)
-                .Take(shuffledCells.Count)
-                .ToList();
-            var maxPlaceCount = Mathf.Min(selectedAnimals.Count, shuffledCells.Count);
-            for (var i = 0; i < maxPlaceCount; i++)
-            {
-                shuffledCells[i].TryPlaceAnimal(selectedAnimals[i]);
-            }
+            boardService.DeployRandom(rosterService.Animals);
         }
 
         public bool IsAnimalOnMap(Animal animal)
         {
-            return animal != null &&
-                ranchMap != null &&
-                ranchMap.TryGetCell(animal.Coords, out var cell) &&
-                cell.Animal == animal;
+            return boardService.IsDeployed(animal);
+        }
+
+        private bool TryGetAnimalAt(Vector2Int coords, out Animal animal)
+        {
+            animal = null;
+            foreach (var candidate in rosterService.Animals)
+            {
+                if (candidate != null && boardService.IsDeployed(candidate) && candidate.Coords == coords)
+                {
+                    animal = candidate;
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: sheepdog
+  m_EditorClassIdentifier: 
+  id: Sheepdog
+  animalName: "\u7267\u7F8A\u72AC"
+  family: Carnivora
+  rarity: 0
+  baseMoney: 1
+  ability: {fileID: 11400000, guid: 5ee5c7fd3c374a00ab0757b935ce55b3, type: 2}
+  description: "\u4FDD\u62A4\u76F8\u90BB\u7684\u7F94\u7F8A\u3001\u7EF5\u7F8A\u3001\u5C71\u7F8A\u548C\u7F8A\u9A7C\u907F\u514D\u88AB\u5403\u6389\uFF0C\u6BCF\u4FDD\u62A4\u4E00\u53EA\u83B7\u5F974\u91D1\u5E01"
+  icon: {fileID: 21300000, guid: e64809d3b05b089479a25d0c38b29164, type: 3}
+  familyIcon: {fileID: 21300000, guid: 3cb28a53ba33788439ee3d4a2d81ee30, type: 3}
+  iconScale: 0.8

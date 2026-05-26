@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc8b67d2bd64e1498ad642244aa2e36, type: 3}
+  m_Name: HyenaAbility
+  m_EditorClassIdentifier: 
+  id: HyenaAbility
+  abilityType: Normal
+  priority: 0
+  impactType: Adjacent
+  stackable: 0
+  desc: "\u76F8\u90BB\u52A8\u7269\u88AB\u5403\u6389\u65F6\u83B7\u5F973\u91D1\u5E01"
+  triggerType: AnimalPreyed
+  triggerChancePercent: 100
+  triggerLimit: 0
+  effectType: GainMoneyOnAdjacentAnimalPreyed
+  effectScriptId: HyenaAbilityEffect
+  effectParams:
+    money: 3
+    count: 0
+    maxCount: 0
+    minMultiplier: 0
+    maxMultiplier: 0
+    maxRarity: 0
+    itemCount: 0
+    initialCooldownDays: 0
+    cooldownDays: 0
+    cooldownReductionAmount: 0
+    cooldownReductionTileType: None
+    durationDays: 0
+    transformChancePercent: 100
+    type: Flat
+    target: Self
+    targetFamily: None
+    animalData: {fileID: 0}
+  subAbilities:
+  - {fileID: 11400000, guid: da2f9b5fa12142ef8b8af85a9f1bff03, type: 2}

@@ -1,4 +1,3 @@
-using System;
 using NekogamiRanch.Animals;
 
 namespace NekogamiRanch.Ranch
@@ -8,24 +7,18 @@ namespace NekogamiRanch.Ranch
         private readonly RanchAnimalService animalService;
         private readonly RanchSettlementService settlementService;
         private readonly RanchMap ranchMap;
-        private readonly Action<Animal> animalRemoved;
-        private readonly Action<Animal> animalSold;
-        private readonly Action<Animal, Animal> animalPreyed;
+        private readonly RanchEventHub eventHub;
 
         public RanchAnimalLifecycleService(
             RanchAnimalService animalService,
             RanchSettlementService settlementService,
             RanchMap ranchMap,
-            Action<Animal> animalRemoved,
-            Action<Animal> animalSold,
-            Action<Animal, Animal> animalPreyed)
+            RanchEventHub eventHub)
         {
             this.animalService = animalService;
             this.settlementService = settlementService;
             this.ranchMap = ranchMap;
-            this.animalRemoved = animalRemoved;
-            this.animalSold = animalSold;
-            this.animalPreyed = animalPreyed;
+            this.eventHub = eventHub;
         }
 
         public bool TryRemove(Animal animal, AnimalRemovalReason reason = AnimalRemovalReason.Manual, Animal source = null)
@@ -43,12 +36,13 @@ namespace NekogamiRanch.Ranch
             var removedCoords = animal.Coords;
             if (reason == AnimalRemovalReason.Sold)
             {
-                animalSold?.Invoke(animal);
+                eventHub?.NotifyAnimalSold(animal);
             }
             else if (reason == AnimalRemovalReason.Preyed)
             {
-                animalPreyed?.Invoke(source, animal);
+                eventHub?.NotifyAnimalPreyed(source, animal);
                 settlementService?.ResolveAnimalPreyedAbilities(source, animal, ranchMap);
+                settlementService?.ResolveGlobalAnimalPreyedAbilities(source, animal, ranchMap);
             }
 
             if (!animalService.AnimalRemoved(animal))
@@ -56,9 +50,14 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
+            if (reason != AnimalRemovalReason.Manual)
+            {
+                return true;
+            }
+
             settlementService?.ResolveAdjacentAnimalRemovedAbilities(animal, removedCoords, ranchMap);
             settlementService?.ResolveAnimalRemovedAbility(animal, removedCoords);
-            animalRemoved?.Invoke(animal);
+            eventHub?.NotifyAnimalRemoved(animal);
             return true;
         }
     }
