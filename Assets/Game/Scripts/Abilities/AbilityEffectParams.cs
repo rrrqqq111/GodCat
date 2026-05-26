@@ -8,7 +8,12 @@ namespace NekogamiRanch.Abilities
     public class AbilityEffectParams
     {
         public int money;
+        public int count;
         public int maxCount;
+        public int minMultiplier;
+        public int maxMultiplier;
+        public int maxRarity;
+        public int itemCount;
         [FormerlySerializedAs("delayDays")]
         public int initialCooldownDays;
         public int cooldownDays;

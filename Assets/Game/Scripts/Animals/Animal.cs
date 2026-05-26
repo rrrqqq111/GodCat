@@ -8,6 +8,7 @@ namespace NekogamiRanch.Animals
     public class Animal
     {
         private readonly List<TemporaryIncomeMultiplier> temporaryIncomeMultipliers = new List<TemporaryIncomeMultiplier>();
+        private readonly Dictionary<string, int> runtimeCounters = new Dictionary<string, int>();
         private int baseMoneyBonus;
         private int extraMoneyMultiplier = 1;
 
@@ -101,6 +102,26 @@ namespace NekogamiRanch.Animals
         public void AddPermanentBaseMoneyBonus(int bonus)
         {
             baseMoneyBonus += bonus;
+        }
+
+        public int GetRuntimeCounter(string key)
+        {
+            return !string.IsNullOrWhiteSpace(key) && runtimeCounters.TryGetValue(key, out var value) ? value : 0;
+        }
+
+        public void SetRuntimeCounter(string key, int value)
+        {
+            if (!string.IsNullOrWhiteSpace(key))
+            {
+                runtimeCounters[key] = value;
+            }
+        }
+
+        public int AddRuntimeCounter(string key, int amount = 1)
+        {
+            var value = GetRuntimeCounter(key) + amount;
+            SetRuntimeCounter(key, value);
+            return value;
         }
 
         public AbilityExecutionResult ResolveDayStartAbility(AnimalAbilityContext context)

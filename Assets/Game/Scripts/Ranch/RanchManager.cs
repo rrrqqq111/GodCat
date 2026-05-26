@@ -16,6 +16,7 @@ namespace NekogamiRanch.Ranch
     public class RanchManager : MonoBehaviour
     {
         private const string AnimalDataRoot = "Assets/Game/Data/Animals";
+        private const string ItemDataRoot = "Assets/Game/Data/Items";
 
         [SerializeField] private int mapWidth = 4;
         [SerializeField] private int mapHeight = 5;
@@ -27,19 +28,24 @@ namespace NekogamiRanch.Ranch
         [SerializeField] private bool autoPopulateOfferPoolByFamily = true;
         [SerializeField] private List<string> offerPoolFamilies = new List<string> { "Hoofed", "Carnivora" };
         [SerializeField, HideInInspector] private List<AnimalData> offerPool = new List<AnimalData>();
+        [SerializeField, HideInInspector] private List<AnimalData> abilitySpawnPool = new List<AnimalData>();
         [SerializeField] private AnimalOfferRoller offerRoller;
         [SerializeField] private AnimalView animalViewPrefab;
         [SerializeField] private Sprite fallbackAnimalSprite;
         [SerializeField, Min(0)] private int randomStartingAnimalCount = 3;
         [SerializeField] private List<ItemData> startingItems = new List<ItemData>();
+        [SerializeField, HideInInspector] private List<ItemData> itemRewardPool = new List<ItemData>();
         [SerializeField] private List<ToyData> equippedToys = new List<ToyData>();
 
         private RanchGameState state;
         private RanchEconomyService economyService;
         private RanchAnimalService animalService;
+        private RanchAnimalLifecycleService animalLifecycleService;
+        private RanchAnimalSpawnService animalSpawnService;
         private RanchOfferService offerService;
         private RanchSettlementService settlementService;
         private RanchItemService itemService;
+        private RanchRewardService rewardService;
         private RanchToyService toyService;
         private MapCell selectedCell;
         private bool initialized;
@@ -82,11 +88,15 @@ namespace NekogamiRanch.Ranch
         private void Reset()
         {
             RefreshOfferPoolFromConfiguredFamilies();
+            RefreshAbilitySpawnPool();
+            RefreshItemRewardPool();
         }
 
         private void OnValidate()
         {
             RefreshOfferPoolFromConfiguredFamilies();
+            RefreshAbilitySpawnPool();
+            RefreshItemRewardPool();
         }
 #endif
 
@@ -98,6 +108,8 @@ namespace NekogamiRanch.Ranch
             }
 
             RefreshOfferPoolFromConfiguredFamilies();
+            RefreshAbilitySpawnPool();
+            RefreshItemRewardPool();
             ranchMap = RanchSceneBinder.ResolveMap(ranchMap);
 
             if (ranchMap == null)
@@ -118,6 +130,8 @@ namespace NekogamiRanch.Ranch
             }
 
             RefreshOfferPoolFromConfiguredFamilies();
+            RefreshAbilitySpawnPool();
+            RefreshItemRewardPool();
             ranchMap = map;
             if (ranchMap == null)
             {
@@ -223,6 +237,17 @@ namespace NekogamiRanch.Ranch
             return added;
         }
 
+        public bool TryAddRandomItem()
+        {
+            if (rewardService == null || !rewardService.TryGrantRandomItem(out _))
+            {
+                return false;
+            }
+
+            NotifyStateChanged();
+            return true;
+        }
+
         public bool TryGetItemById(string itemId, out ItemRuntimeState item)
         {
             item = null;
@@ -320,9 +345,8 @@ namespace NekogamiRanch.Ranch
                     continue;
                 }
 
-                OnAnimalPreyed?.Invoke(context.Predator, target);
-                settlementService?.ResolveAnimalPreyedAbilities(context.Predator, target, ranchMap);
-                if (!animalService.AnimalRemoved(target))
+                if (animalLifecycleService == null ||
+                    !animalLifecycleService.TryRemove(target, AnimalRemovalReason.Preyed, context.Predator))
                 {
                     continue;
                 }
@@ -359,21 +383,22 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
-            var removedCoords = animal.Coords;
-            var removed = animalService.AnimalRemoved(animal);
-            if (removed)
+            var removed = animalLifecycleService != null && animalLifecycleService.TryRemove(animal);
+            if (!removed)
             {
-                settlementService?.ResolveAdjacentAnimalRemovedAbilities(animal, removedCoords, ranchMap);
-                settlementService?.ResolveAnimalRemovedAbility(animal, removedCoords);
-                OnAnimalRemoved?.Invoke(animal);
+                return false;
             }
 
             if (selectedCell != null && selectedCell.Animal == null)
             {
                 SelectCell(null);
             }
+            else
+            {
+                NotifyStateChanged();
+            }
 
-            return removed;
+            return true;
         }
 
         public bool TryRemoveAnimalWithCans(Animal animal)
@@ -398,8 +423,8 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
-            OnAnimalSold?.Invoke(animal);
-            if (!animalService.AnimalRemoved(animal))
+            if (animalLifecycleService == null ||
+                !animalLifecycleService.TryRemove(animal, AnimalRemovalReason.Sold))
             {
                 return false;
             }
@@ -493,6 +518,19 @@ namespace NekogamiRanch.Ranch
             return added;
         }
 
+        public bool TryAddRandomAnimalFromFamily(string family, int baseMoneyBonus, out Animal addedAnimal)
+        {
+            addedAnimal = null;
+            if (animalSpawnService == null ||
+                !animalSpawnService.TrySpawnRandomFromFamily(family, baseMoneyBonus, out addedAnimal))
+            {
+                return false;
+            }
+
+            NotifyStateChanged();
+            return true;
+        }
+
         public bool TryClearAnimalAt(Vector2Int coords)
         {
             if (animalService == null || ranchMap == null || !ranchMap.TryGetCell(coords, out var cell))
@@ -506,15 +544,11 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
-            var removed = animalService.AnimalRemovedAt(coords);
-            if (!removed)
+            if (animalLifecycleService == null || !animalLifecycleService.TryRemove(removedAnimal))
             {
                 return false;
             }
 
-            settlementService?.ResolveAdjacentAnimalRemovedAbilities(removedAnimal, coords, ranchMap);
-            settlementService?.ResolveAnimalRemovedAbility(removedAnimal, coords);
-            OnAnimalRemoved?.Invoke(removedAnimal);
             SelectCell(cell);
             NotifyStateChanged();
             return true;
@@ -528,7 +562,9 @@ namespace NekogamiRanch.Ranch
             }
 
             var removedAnimal = cell.Animal;
-            if (removedAnimal == null || !animalService.AnimalRemovedFromCell(cell))
+            if (removedAnimal == null ||
+                animalLifecycleService == null ||
+                !animalLifecycleService.TryRemove(removedAnimal))
             {
                 return false;
             }
@@ -624,6 +660,16 @@ namespace NekogamiRanch.Ranch
             offerService = new RanchOfferService(offerRoller, offerPool);
             settlementService = new RanchSettlementService(this, animalService, economyService);
             itemService = new RanchItemService(this, economyService, startingItems);
+            animalLifecycleService = new RanchAnimalLifecycleService(
+                animalService,
+                settlementService,
+                ranchMap,
+                animal => OnAnimalRemoved?.Invoke(animal),
+                animal => OnAnimalSold?.Invoke(animal),
+                (predator, animal) => OnAnimalPreyed?.Invoke(predator, animal));
+            animalSpawnService = new RanchAnimalSpawnService(animalService, abilitySpawnPool);
+            var configuredRewardPool = itemRewardPool != null && itemRewardPool.Count > 0 ? itemRewardPool : startingItems;
+            rewardService = new RanchRewardService(itemService, configuredRewardPool);
             toyService = new RanchToyService(this, economyService, equippedToys);
         }
 
@@ -636,6 +682,33 @@ namespace NekogamiRanch.Ranch
             }
 
             offerPool = LoadAnimalsFromConfiguredFamilies();
+#endif
+        }
+
+        private void RefreshItemRewardPool()
+        {
+#if UNITY_EDITOR
+            itemRewardPool = AssetDatabase.FindAssets("t:ItemData", new[] { ItemDataRoot })
+                .Select(AssetDatabase.GUIDToAssetPath)
+                .Select(AssetDatabase.LoadAssetAtPath<ItemData>)
+                .Where(item => item != null)
+                .OrderBy(item => item.Rarity)
+                .ThenBy(item => item.DisplayName)
+                .ToList();
+#endif
+        }
+
+        private void RefreshAbilitySpawnPool()
+        {
+#if UNITY_EDITOR
+            abilitySpawnPool = AssetDatabase.FindAssets("t:AnimalData", new[] { AnimalDataRoot })
+                .Select(AssetDatabase.GUIDToAssetPath)
+                .Select(AssetDatabase.LoadAssetAtPath<AnimalData>)
+                .Where(data => data != null)
+                .OrderBy(data => data.Family)
+                .ThenBy(data => data.Rarity)
+                .ThenBy(data => data.DisplayName)
+                .ToList();
 #endif
         }
 
@@ -771,12 +844,12 @@ namespace NekogamiRanch.Ranch
 
         private ProtectionResult ResolveProtection(PreyContext context, Animal target)
         {
-            if (context == null || target == null || context.ProtectionRules == null || context.ProtectionRules.Count == 0)
+            if (context == null || target == null)
             {
                 return ProtectionResult.Unprotected(target);
             }
 
-            foreach (var rule in context.ProtectionRules)
+            foreach (var rule in ResolveProtectionRules(context))
             {
                 var candidateProtectors = ResolveCandidateProtectors(rule, target);
                 var protectionContext = new ProtectionContext(context.Predator, target, candidateProtectors, context.SourceAbilityId);
@@ -788,11 +861,64 @@ namespace NekogamiRanch.Ranch
                     }
 
                     var reason = string.IsNullOrWhiteSpace(rule.Reason) ? "Protected" : rule.Reason;
-                    return ProtectionResult.Protected(protector, target, rule, reason);
+                    var result = ProtectionResult.Protected(protector, target, rule, reason);
+                    ApplyPassiveProtectionReward(result);
+                    return result;
                 }
             }
 
             return ProtectionResult.Unprotected(target);
+        }
+
+        private IEnumerable<ProtectionRule> ResolveProtectionRules(PreyContext context)
+        {
+            if (context?.ProtectionRules != null)
+            {
+                foreach (var rule in context.ProtectionRules)
+                {
+                    if (rule != null)
+                    {
+                        yield return rule;
+                    }
+                }
+            }
+
+            if (ranchMap == null)
+            {
+                yield break;
+            }
+
+            foreach (var cell in ranchMap.GetCellsInScanOrder())
+            {
+                var protector = cell.Animal;
+                var abilityData = protector?.Data?.Ability;
+                if (abilityData == null ||
+                    !AbilityEffectRegistry.TryGet(abilityData.EffectScriptId, out var effect) ||
+                    !(effect is IPassiveProtectionEffect passiveProtection))
+                {
+                    continue;
+                }
+
+                var rule = passiveProtection.CreateProtectionRule(protector, abilityData);
+                if (rule != null)
+                {
+                    yield return rule;
+                }
+            }
+        }
+
+        private void ApplyPassiveProtectionReward(ProtectionResult result)
+        {
+            var abilityData = result.Protector?.Data?.Ability;
+            if (!result.Success ||
+                abilityData == null ||
+                !AbilityEffectRegistry.TryGet(abilityData.EffectScriptId, out var effect) ||
+                !(effect is IPassiveProtectionEffect passiveProtection))
+            {
+                return;
+            }
+
+            passiveProtection.OnProtected(result.Protector, result.Target, abilityData);
         }
 
         private IReadOnlyList<Animal> ResolveCandidateProtectors(ProtectionRule rule, Animal target)

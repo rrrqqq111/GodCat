@@ -168,16 +168,18 @@ namespace NekogamiRanch.Ranch
 
         private void ResolveAbilitiesByMapScan(RanchMap ranchMap, string triggerType)
         {
-            var executedAnimals = new HashSet<Animal>();
-            foreach (var cell in ranchMap.GetCellsInScanOrder())
+            var animalsAtPhaseStart = ranchMap.GetCellsInScanOrder()
+                .Select(cell => cell.Animal)
+                .Where(animal => animal != null)
+                .Distinct()
+                .ToList();
+            foreach (var animal in animalsAtPhaseStart)
             {
-                var animal = cell.Animal;
-                if (animal == null || executedAnimals.Contains(animal))
+                if (!ranchMap.TryGetCell(animal.Coords, out var cell) || cell.Animal != animal)
                 {
                     continue;
                 }
 
-                executedAnimals.Add(animal);
                 GetSettlementAnimalReport(animal);
                 ExecuteAbilityWithReport(animal, triggerType);
             }

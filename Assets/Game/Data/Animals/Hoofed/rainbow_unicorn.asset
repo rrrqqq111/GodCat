@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: rainbow_unicorn
+  m_EditorClassIdentifier: 
+  id: RainbowUnicorn
+  animalName: "\u5F69\u8679\u72EC\u89D2\u517D"
+  family: Hoofed
+  rarity: 4
+  baseMoney: 10
+  ability: {fileID: 11400000, guid: a5e84e44c9cd4611aa81794928f57557, type: 2}
+  description: "\u6BCF\u67093\u53EA\u76F8\u90BB\u52A8\u7269\u88AB\u79FB\u9664\uFF0C\u83B7\u5F971\u4EF6\u968F\u673A\u9053\u5177"
+  icon: {fileID: 21300000, guid: b87be41ff6af02841a91659bcf9d6425, type: 3}
+  familyIcon: {fileID: 21300000, guid: be11099430914c942a52a28df7c3c808, type: 3}
+  iconScale: 1

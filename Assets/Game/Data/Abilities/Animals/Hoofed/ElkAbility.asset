@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc8b67d2bd64e1498ad642244aa2e36, type: 3}
+  m_Name: ElkAbility
+  m_EditorClassIdentifier: 
+  id: ElkAbility
+  abilityType: Normal
+  priority: 0
+  impactType: Adjacent
+  stackable: 1
+  desc: "\u76F8\u90BB\u52A8\u7269\u79FB\u9664\u65F6\uFF0C\u5C06\u5176\u5F53\u524D\u57FA\u7840\u6536\u76CA\u7684\u4E00\u534A\u5E73\u5206\u7ED9\u5176\u5B83\u76F8\u90BB\u52A8\u7269\uFF08\u4E0D\u5305\u62EC\u56DB\u4E0D\u50CF\u672C\u8EAB\uFF09"
+  triggerType: AdjacentAnimalRemoved
+  triggerChancePercent: 100
+  triggerLimit: 0
+  effectType: ShareHalfRemovedAnimalBaseMoney
+  effectScriptId: ElkAbilityEffect
+  effectParams:
+    money: 0
+    count: 0
+    maxCount: 0
+    minMultiplier: 0
+    maxMultiplier: 0
+    maxRarity: 0
+    itemCount: 0
+    initialCooldownDays: 0
+    cooldownDays: 0
+    cooldownReductionAmount: 0
+    cooldownReductionTileType: None
+    durationDays: 0
+    transformChancePercent: 100
+    type: Flat
+    target: Other
+    targetFamily: None
+    animalData: {fileID: 0}
+  subAbilities: []

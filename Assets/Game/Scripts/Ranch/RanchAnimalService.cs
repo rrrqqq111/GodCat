@@ -43,29 +43,34 @@ namespace NekogamiRanch.Ranch
 
         public bool TryAddAnimalToRandomEmptyCell(AnimalData data)
         {
+            return TryAddAnimalToRandomEmptyCell(data, out _);
+        }
+
+        public bool TryAddAnimalToRandomEmptyCell(AnimalData data, out Animal animal)
+        {
+            animal = null;
             if (data == null || ranchMap == null)
             {
                 return false;
             }
-
-            var animal = new Animal(data, Vector2Int.zero);
-            animals.Add(animal);
 
             var emptyCells = ranchMap.GetCells()
                 .Where(cell => cell != null && cell.IsEmpty)
                 .ToList();
             if (emptyCells.Count == 0)
             {
-                return true;
-            }
-
-            var cell = emptyCells[UnityEngine.Random.Range(0, emptyCells.Count)];
-            if (!cell.TryPlaceAnimal(animal))
-            {
-                animals.Remove(animal);
                 return false;
             }
 
+            animal = new Animal(data, Vector2Int.zero);
+            var cell = emptyCells[UnityEngine.Random.Range(0, emptyCells.Count)];
+            if (!cell.TryPlaceAnimal(animal))
+            {
+                animal = null;
+                return false;
+            }
+
+            animals.Add(animal);
             return true;
         }
 
@@ -263,7 +268,7 @@ namespace NekogamiRanch.Ranch
             }
         }
 
-        private bool IsAnimalOnMap(Animal animal)
+        public bool IsAnimalOnMap(Animal animal)
         {
             return animal != null &&
                 ranchMap != null &&
