@@ -9,6 +9,7 @@ namespace NekogamiRanch.Animals
     {
         private readonly List<TemporaryIncomeMultiplier> temporaryIncomeMultipliers = new List<TemporaryIncomeMultiplier>();
         private readonly Dictionary<string, int> runtimeCounters = new Dictionary<string, int>();
+        private EvolutionRuntimeState evolutionState = new EvolutionRuntimeState();
         private int baseMoneyBonus;
         private int extraMoneyMultiplier = 1;
 
@@ -26,6 +27,10 @@ namespace NekogamiRanch.Animals
 
         public string DisplayName => Data != null ? Data.DisplayName : "Animal";
         public int BaseMoney => (Data != null ? Data.BaseMoney : 0) + baseMoneyBonus;
+        public bool HasEvolution => Data != null && Data.HasEvolution;
+        public int EvolutionThreshold => Data != null ? Data.EvolutionThreshold : 0;
+        public int EvolutionLevel => HasEvolution ? evolutionState.Level : 0;
+        public int EvolutionProgress => HasEvolution ? evolutionState.Progress : 0;
 
         public void SetCoords(Vector2Int coords)
         {
@@ -104,6 +109,33 @@ namespace NekogamiRanch.Animals
             baseMoneyBonus += bonus;
         }
 
+        public int AddEvolutionProgress(int amount = 1)
+        {
+            if (!HasEvolution || amount <= 0)
+            {
+                return 0;
+            }
+
+            evolutionState.Progress += amount;
+            var levelsGained = 0;
+            while (evolutionState.Progress >= EvolutionThreshold)
+            {
+                evolutionState.Progress -= EvolutionThreshold;
+                evolutionState.Level++;
+                levelsGained++;
+            }
+
+            return levelsGained;
+        }
+
+        public void InheritEvolutionStateFrom(Animal source)
+        {
+            if (source != null)
+            {
+                evolutionState = source.evolutionState;
+            }
+        }
+
         public int GetRuntimeCounter(string key)
         {
             return !string.IsNullOrWhiteSpace(key) && runtimeCounters.TryGetValue(key, out var value) ? value : 0;
@@ -138,6 +170,12 @@ namespace NekogamiRanch.Animals
         {
             public int MultiplierBonus;
             public int RemainingDays;
+        }
+
+        private class EvolutionRuntimeState
+        {
+            public int Level = 1;
+            public int Progress;
         }
     }
 }

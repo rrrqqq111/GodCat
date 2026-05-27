@@ -17438,6 +17438,7 @@ MonoBehaviour:
   offerPoolFamilies:
   - Hoofed
   - Carnivora
+  - General
   offerPool:
   - {fileID: 11400000, guid: 2023d34f933e0f04eaeaedf879b9ea07, type: 2}
   - {fileID: 11400000, guid: 44a22eda009bf0b4c9e086d442d2bca5, type: 2}
@@ -17472,6 +17473,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b0363cbdd8334403b0124873d2ea4ce1, type: 2}
   - {fileID: 11400000, guid: 7a0f6f8f0d1f45a6bde5a70b39ea20b8, type: 2}
   - {fileID: 11400000, guid: 490d9662f54c421ea744c010b75a7bb0, type: 2}
+  - {fileID: 11400000, guid: 90a82ae957ec4ee1aa5eea70bb1547d5, type: 2}
+  - {fileID: 11400000, guid: e598abbb2b0440d7a698aa050a6f57e6, type: 2}
+  - {fileID: 11400000, guid: 8337e36e4df449b3929683a991587318, type: 2}
+  - {fileID: 11400000, guid: fbb87ed837cf409c8f3a0e1028a83155, type: 2}
+  - {fileID: 11400000, guid: 413fd64ea62142e3be92fa805e5db4fe, type: 2}
+  - {fileID: 11400000, guid: 04a8579539d344769a27283498902d2d, type: 2}
+  - {fileID: 11400000, guid: f35f1c1ae4e94170ab5716a76215bdf5, type: 2}
+  - {fileID: 11400000, guid: 82531ccd0e714746ae9bbd7bcc720ddd, type: 2}
   abilitySpawnPool:
   - {fileID: 11400000, guid: 2023d34f933e0f04eaeaedf879b9ea07, type: 2}
   - {fileID: 11400000, guid: 44a22eda009bf0b4c9e086d442d2bca5, type: 2}
@@ -17506,6 +17515,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b0363cbdd8334403b0124873d2ea4ce1, type: 2}
   - {fileID: 11400000, guid: 7a0f6f8f0d1f45a6bde5a70b39ea20b8, type: 2}
   - {fileID: 11400000, guid: 490d9662f54c421ea744c010b75a7bb0, type: 2}
+  - {fileID: 11400000, guid: 90a82ae957ec4ee1aa5eea70bb1547d5, type: 2}
+  - {fileID: 11400000, guid: e598abbb2b0440d7a698aa050a6f57e6, type: 2}
+  - {fileID: 11400000, guid: 8337e36e4df449b3929683a991587318, type: 2}
+  - {fileID: 11400000, guid: fbb87ed837cf409c8f3a0e1028a83155, type: 2}
+  - {fileID: 11400000, guid: 413fd64ea62142e3be92fa805e5db4fe, type: 2}
+  - {fileID: 11400000, guid: 04a8579539d344769a27283498902d2d, type: 2}
+  - {fileID: 11400000, guid: f35f1c1ae4e94170ab5716a76215bdf5, type: 2}
+  - {fileID: 11400000, guid: 82531ccd0e714746ae9bbd7bcc720ddd, type: 2}
   offerRoller: {fileID: 2032885278}
   animalViewPrefab: {fileID: 1147956489028073971, guid: 70dfe621d5fa7ba4096e561457e636fe, type: 3}
   fallbackAnimalSprite: {fileID: 0}

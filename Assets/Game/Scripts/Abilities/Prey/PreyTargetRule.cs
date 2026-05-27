@@ -14,7 +14,8 @@ namespace NekogamiRanch.Abilities.Prey
             IEnumerable<string> excludeAnimalIds = null,
             IEnumerable<string> excludeFamilies = null,
             int targetCount = 1,
-            bool randomPick = false)
+            bool randomPick = false,
+            int maxRarity = -1)
         {
             ImpactType = string.IsNullOrWhiteSpace(impactType) ? "Adjacent" : impactType;
             TargetAnimalIds = RuleText.CopyNonEmpty(targetAnimalIds);
@@ -23,6 +24,7 @@ namespace NekogamiRanch.Abilities.Prey
             ExcludeFamilies = RuleText.CopyNonEmpty(excludeFamilies);
             TargetCount = Math.Max(1, targetCount);
             RandomPick = randomPick;
+            MaxRarity = maxRarity;
         }
 
         public string ImpactType { get; }
@@ -32,6 +34,7 @@ namespace NekogamiRanch.Abilities.Prey
         public IReadOnlyList<string> ExcludeFamilies { get; }
         public int TargetCount { get; }
         public bool RandomPick { get; }
+        public int MaxRarity { get; }
 
         public bool Matches(Animal animal)
         {
@@ -42,6 +45,11 @@ namespace NekogamiRanch.Abilities.Prey
 
             if (RuleText.Contains(ExcludeAnimalIds, animal.Data.Id) ||
                 RuleText.Contains(ExcludeFamilies, animal.Data.Family))
+            {
+                return false;
+            }
+
+            if (MaxRarity >= 0 && animal.Data.Rarity > MaxRarity)
             {
                 return false;
             }

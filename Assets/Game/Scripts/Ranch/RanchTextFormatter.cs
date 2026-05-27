@@ -21,8 +21,16 @@ namespace NekogamiRanch.Ranch
             var animal = selectedCell.Animal;
             return $"{animal.DisplayName}\n" +
                 $"基础收益：{animal.BaseMoney:+#;-#;0}\n" +
+                GetEvolutionText(animal) +
                 $"技能CD：{GetAnimalCooldownText(animal)}\n" +
                 $"技能：{GetAnimalAbilityText(animal)}";
+        }
+
+        private static string GetEvolutionText(Animal animal)
+        {
+            return animal != null && animal.HasEvolution
+                ? $"进化：Lv.{animal.EvolutionLevel} {animal.EvolutionProgress}/{animal.EvolutionThreshold}\n"
+                : string.Empty;
         }
 
         private static string GetAnimalCooldownText(Animal animal)

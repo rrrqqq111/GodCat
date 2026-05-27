@@ -56,9 +56,13 @@ namespace NekogamiRanch.Abilities
                 totalTargetCount += result.TargetCount;
             }
 
-            return succeeded
-                ? AbilityExecutionResult.Succeeded(config.Id, triggerType, totalTargetCount)
-                : AbilityExecutionResult.Failed(config.Id, triggerType, totalTargetCount);
+            if (!succeeded)
+            {
+                return AbilityExecutionResult.Failed(config.Id, triggerType, totalTargetCount);
+            }
+
+            context.RanchManager.NotifyAnimalAbilitySucceeded(context.Owner, config);
+            return AbilityExecutionResult.Succeeded(config.Id, triggerType, totalTargetCount);
         }
 
         private AbilityExecutionResult TryExecuteConfiguredAbility(AbilityData abilityConfig, AnimalAbilityContext context, string triggerType)

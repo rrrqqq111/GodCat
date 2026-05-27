@@ -64,6 +64,25 @@ namespace NekogamiRanch.Ranch
             return false;
         }
 
+        public bool TryAddAnimalAtEmptyCell(AnimalData data, Vector2Int coords, out Animal animal)
+        {
+            animal = null;
+            if (data == null)
+            {
+                return false;
+            }
+
+            var candidate = new Animal(data, coords);
+            if (!boardService.TryPlaceAt(candidate, coords))
+            {
+                return false;
+            }
+
+            rosterService.Add(candidate);
+            animal = candidate;
+            return true;
+        }
+
         public bool TryMoveAnimal(Animal animal, Vector2Int targetCoords)
         {
             return boardService.TryMove(animal, targetCoords);
@@ -96,7 +115,7 @@ namespace NekogamiRanch.Ranch
             return cell != null && cell.Animal != null && AnimalRemoved(cell.Animal);
         }
 
-        public bool ReplaceAnimal(Animal oldAnimal, AnimalData newAnimalData)
+        public bool ReplaceAnimal(Animal oldAnimal, AnimalData newAnimalData, bool inheritEvolutionState = true)
         {
             if (oldAnimal == null || newAnimalData == null || !boardService.IsDeployed(oldAnimal))
             {
@@ -110,6 +129,11 @@ namespace NekogamiRanch.Ranch
             }
 
             var newAnimal = new Animal(newAnimalData, coords);
+            if (inheritEvolutionState)
+            {
+                newAnimal.InheritEvolutionStateFrom(oldAnimal);
+            }
+
             if (!boardService.TryPlaceAt(newAnimal, coords))
             {
                 return false;

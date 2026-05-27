@@ -23,7 +23,7 @@ namespace NekogamiRanch.Ranch
         [SerializeField, Min(0)] private int removeAnimalCansCost = 1;
         [SerializeField] private RanchMap ranchMap;
         [SerializeField] private bool autoPopulateOfferPoolByFamily = true;
-        [SerializeField] private List<string> offerPoolFamilies = new List<string> { "Hoofed", "Carnivora" };
+        [SerializeField] private List<string> offerPoolFamilies = new List<string> { "Hoofed", "Carnivora", "General" };
         [SerializeField, HideInInspector] private List<AnimalData> offerPool = new List<AnimalData>();
         [SerializeField, HideInInspector] private List<AnimalData> abilitySpawnPool = new List<AnimalData>();
         [SerializeField] private AnimalOfferRoller offerRoller;
@@ -42,6 +42,7 @@ namespace NekogamiRanch.Ranch
         private RanchAnimalSpawnService animalSpawnService;
         private RanchProtectionService protectionService;
         private RanchPreyService preyService;
+        private RanchEvolutionService evolutionService;
         private RanchTurnService turnService;
         private RanchOfferService offerService;
         private RanchSettlementService settlementService;
@@ -115,6 +116,18 @@ namespace NekogamiRanch.Ranch
         {
             add => eventHub.AnimalCooldownReduced += value;
             remove => eventHub.AnimalCooldownReduced -= value;
+        }
+
+        public event Action<AnimalEvolutionContext> OnAnimalEvolutionProgressed
+        {
+            add => eventHub.AnimalEvolutionProgressed += value;
+            remove => eventHub.AnimalEvolutionProgressed -= value;
+        }
+
+        public event Action<AnimalEvolutionContext> OnAnimalEvolutionLeveledUp
+        {
+            add => eventHub.AnimalEvolutionLeveledUp += value;
+            remove => eventHub.AnimalEvolutionLeveledUp -= value;
         }
 
         public int Day => state != null ? state.Day : day;
@@ -461,6 +474,22 @@ namespace NekogamiRanch.Ranch
             return replaced;
         }
 
+        public bool EvolveAnimalSilently(Animal oldAnimal, AnimalData newAnimalData)
+        {
+            if (animalService == null || oldAnimal == null || newAnimalData == null)
+            {
+                return false;
+            }
+
+            var replaced = animalService.ReplaceAnimal(oldAnimal, newAnimalData, inheritEvolutionState: false);
+            if (replaced)
+            {
+                NotifyStateChanged();
+            }
+
+            return replaced;
+        }
+
         public bool GrowAnimal(Animal youngAnimal, AnimalData grownAnimalData)
         {
             if (animalService == null || youngAnimal == null || grownAnimalData == null)
@@ -525,6 +554,31 @@ namespace NekogamiRanch.Ranch
             addedAnimal = null;
             if (animalSpawnService == null ||
                 !animalSpawnService.TrySpawnRandomFromFamily(family, baseMoneyBonus, out addedAnimal))
+            {
+                return false;
+            }
+
+            NotifyStateChanged();
+            return true;
+        }
+
+        public bool TryAddRandomAnimalOutsideFamilyAt(string excludedFamily, Vector2Int coords, out Animal addedAnimal)
+        {
+            addedAnimal = null;
+            if (animalSpawnService == null ||
+                !animalSpawnService.TrySpawnRandomOutsideFamilyAt(excludedFamily, coords, out addedAnimal))
+            {
+                return false;
+            }
+
+            NotifyStateChanged();
+            return true;
+        }
+
+        public bool TryReplaceAnimalWithRandomRaritySilently(Animal target, int minRarity, int maxRarity)
+        {
+            if (animalSpawnService == null ||
+                !animalSpawnService.TryReplaceWithRandomRarity(target, minRarity, maxRarity))
             {
                 return false;
             }
@@ -647,6 +701,11 @@ namespace NekogamiRanch.Ranch
             eventHub.NotifyAnimalCooldownReduced(context);
         }
 
+        public void NotifyAnimalAbilitySucceeded(Animal animal, AbilityData sourceAbility)
+        {
+            evolutionService?.RegisterSuccessfulAbilityTrigger(animal, sourceAbility);
+        }
+
         public string GetSelectedCellText()
         {
             return RanchTextFormatter.GetSelectedCellText(selectedCell);
@@ -667,6 +726,7 @@ namespace NekogamiRanch.Ranch
                 eventHub);
             protectionService = new RanchProtectionService(ranchMap, economyService.AddMoney);
             preyService = new RanchPreyService(ranchMap, animalLifecycleService, protectionService, eventHub);
+            evolutionService = new RanchEvolutionService(eventHub, EvolveAnimalSilently);
             animalSpawnService = new RanchAnimalSpawnService(animalService, abilitySpawnPool);
             var configuredRewardPool = itemRewardPool != null && itemRewardPool.Count > 0 ? itemRewardPool : startingItems;
             rewardService = new RanchRewardService(itemService, configuredRewardPool);

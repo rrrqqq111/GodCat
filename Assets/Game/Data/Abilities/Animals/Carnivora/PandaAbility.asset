@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc8b67d2bd64e1498ad642244aa2e36, type: 3}
+  m_Name: PandaAbility
+  m_EditorClassIdentifier: 
+  id: PandaAbility
+  abilityType: Normal
+  priority: 0
+  impactType: Adjacent
+  stackable: 0
+  desc: "\u4F7F\u4E00\u53EA\u76F8\u90BB\u52A8\u7269\u57FA\u7840\u5C5E\u6027\u52A04"
+  triggerType: SettlementPrepare
+  triggerChancePercent: 100
+  triggerLimit: 0
+  effectType: AddBaseMoneyToRandomAdjacentAnimal
+  effectScriptId: PandaAbilityEffect
+  effectParams:
+    money: 4
+    count: 1
+    maxCount: 0
+    minMultiplier: 0
+    maxMultiplier: 0
+    maxRarity: 0
+    itemCount: 0
+    initialCooldownDays: 0
+    cooldownDays: 0
+    cooldownReductionAmount: 0
+    cooldownReductionTileType: None
+    durationDays: 0
+    transformChancePercent: 100
+    type: Flat
+    target: Other
+    targetFamily: None
+    animalData: {fileID: 0}
+  subAbilities: []

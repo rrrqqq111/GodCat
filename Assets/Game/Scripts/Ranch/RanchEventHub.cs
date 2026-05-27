@@ -18,6 +18,8 @@ namespace NekogamiRanch.Ranch
         public event Action<Animal, AnimalData> AnimalGrown;
         public event Action<Animal, AnimalData> AnimalTransformed;
         public event Action<AnimalCooldownReductionContext> AnimalCooldownReduced;
+        public event Action<AnimalEvolutionContext> AnimalEvolutionProgressed;
+        public event Action<AnimalEvolutionContext> AnimalEvolutionLeveledUp;
 
         public void NotifyStateChanged()
         {
@@ -74,6 +76,16 @@ namespace NekogamiRanch.Ranch
         public void NotifyAnimalCooldownReduced(AnimalCooldownReductionContext context)
         {
             AnimalCooldownReduced?.Invoke(context);
+        }
+
+        public void NotifyAnimalEvolutionProgressed(AnimalEvolutionContext context)
+        {
+            AnimalEvolutionProgressed?.Invoke(context);
+        }
+
+        public void NotifyAnimalEvolutionLeveledUp(AnimalEvolutionContext context)
+        {
+            AnimalEvolutionLeveledUp?.Invoke(context);
         }
     }
 }

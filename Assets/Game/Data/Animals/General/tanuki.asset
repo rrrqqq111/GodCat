@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: tanuki
+  m_EditorClassIdentifier: 
+  id: Tanuki
+  animalName: "\u72F8\u732B"
+  family: Carnivora
+  rarity: 2
+  baseMoney: 3
+  evolutionThreshold: 0
+  evolutionTarget: {fileID: 0}
+  evolutionTargetLevel: 0
+  ability: {fileID: 11400000, guid: 9c94872e17534e08a53540bb999250ca, type: 2}
+  description: "\u5C061\u53EA\u76F8\u90BB\u7684\u666E\u901A\u52A8\u7269\u66FF\u6362\u4E3A\u968F\u673A\u7A00\u6709\u3001\u7F55\u89C1\u3001\u73CD\u7A00\u6216\u7EDD\u8FF9\u52A8\u7269"
+  icon: {fileID: 21300000, guid: 533a6ef383d87d444990c4a7149e4a1a, type: 3}
+  familyIcon: {fileID: 21300000, guid: 951d23785c48e064ebb1238436aa0024, type: 3}
+  iconScale: 0.8
