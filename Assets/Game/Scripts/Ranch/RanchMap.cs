@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using NekogamiRanch.Animals;
+using NekogamiRanch.MapObjects;
 using UnityEngine;
 
 namespace NekogamiRanch.Ranch
@@ -48,6 +49,11 @@ namespace NekogamiRanch.Ranch
         public bool TryPlaceAnimal(Animal animal, Vector2Int coords)
         {
             return TryGetCell(coords, out var cell) && cell.TryPlaceAnimal(animal);
+        }
+
+        public bool TryPlaceMapObject(MapCellObjectRuntime mapObject, Vector2Int coords)
+        {
+            return TryGetCell(coords, out var cell) && cell.TryPlaceMapObject(mapObject);
         }
 
         public bool TryMoveAnimal(Animal animal, Vector2Int targetCoords)
@@ -112,6 +118,22 @@ namespace NekogamiRanch.Ranch
             }
 
             cell.RemoveAnimal();
+            return true;
+        }
+
+        public bool TryRemoveMapObject(Vector2Int coords)
+        {
+            return TryGetCell(coords, out var cell) && cell.RemoveMapObject() != null;
+        }
+
+        public bool TryRemoveMapObject(MapCellObjectRuntime mapObject)
+        {
+            if (mapObject == null || !TryGetCell(mapObject.Coords, out var cell) || cell.MapObject != mapObject)
+            {
+                return false;
+            }
+
+            cell.RemoveMapObject();
             return true;
         }
 

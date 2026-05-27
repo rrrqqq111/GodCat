@@ -61,6 +61,7 @@ namespace NekogamiRanch.Ranch
                     continue;
                 }
 
+                manager.TryConsumeMapObjectAt(animal, animal.Coords);
                 var resolvedMoney = animal.ResolveBaseMoney(ranchMap);
                 income += resolvedMoney;
                 var report = GetSettlementAnimalReport(animal);
@@ -216,6 +217,30 @@ namespace NekogamiRanch.Ranch
                     GetSettlementAnimalReport(animal);
                     ExecuteAbilityWithReport(animal, "GlobalAnimalPreyed", predator, preyedAnimal);
                 }
+            }
+            finally
+            {
+                externalAbilityTriggerDepth--;
+            }
+        }
+
+        public AbilityExecutionResult ResolveAnimalSelfPreyedAbility(Animal preyedAnimal, Animal predator, RanchMap ranchMap)
+        {
+            if (preyedAnimal == null || predator == null || ranchMap == null)
+            {
+                return AbilityExecutionResult.Failed(triggerType: "AnimalPreyedSelf");
+            }
+
+            if (externalAbilityTriggerDepth >= MaxExternalAbilityTriggerDepth)
+            {
+                return AbilityExecutionResult.Failed(preyedAnimal.Ability != null ? preyedAnimal.Ability.Name : string.Empty, "AnimalPreyedSelf");
+            }
+
+            externalAbilityTriggerDepth++;
+            try
+            {
+                GetSettlementAnimalReport(preyedAnimal);
+                return ExecuteAbilityWithReport(preyedAnimal, "AnimalPreyedSelf", predator, preyedAnimal);
             }
             finally
             {

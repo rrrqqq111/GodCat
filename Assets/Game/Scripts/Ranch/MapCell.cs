@@ -1,4 +1,5 @@
 using NekogamiRanch.Animals;
+using NekogamiRanch.MapObjects;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,17 +10,20 @@ namespace NekogamiRanch.Ranch
     {
         [SerializeField] private SpriteRenderer tileRenderer;
         [SerializeField] private AnimalView animalView;
+        [SerializeField] private SpriteRenderer mapObjectRenderer;
 
         private RanchManager manager;
         private Color normalColor;
         private Vector3 defaultTileLocalScale = Vector3.one;
         private Vector2 defaultColliderSize = Vector2.one;
         private Sprite defaultAnimalSprite;
+        private Sprite defaultMapObjectSprite;
         private AnimalView animalViewPrefab;
         private bool missingAnimalViewWarningLogged;
 
         public Vector2Int Coords { get; private set; }
         public Animal Animal { get; private set; }
+        public MapCellObjectRuntime MapObject { get; private set; }
         public bool IsEmpty => Animal == null;
 
         public void Initialize(RanchManager ranchManager, Vector2Int coords, Sprite tileSprite, Sprite animalSprite, bool preserveTileSprite = false, AnimalView viewPrefab = null)
@@ -41,6 +45,7 @@ namespace NekogamiRanch.Ranch
             normalColor = tileRenderer.color;
             defaultTileLocalScale = tileRenderer.transform.localScale;
             defaultAnimalSprite = animalSprite;
+            defaultMapObjectSprite = null;
 
             var collider2d = GetComponent<BoxCollider2D>();
             collider2d.size = tileRenderer.sprite != null ? (Vector2)tileRenderer.sprite.bounds.size : Vector2.one * 0.95f;
@@ -68,6 +73,27 @@ namespace NekogamiRanch.Ranch
             Animal = null;
             RefreshView();
             return animal;
+        }
+
+        public bool TryPlaceMapObject(MapCellObjectRuntime mapObject)
+        {
+            if (mapObject == null || MapObject != null)
+            {
+                return false;
+            }
+
+            MapObject = mapObject;
+            MapObject.SetCoords(Coords);
+            RefreshView();
+            return true;
+        }
+
+        public MapCellObjectRuntime RemoveMapObject()
+        {
+            var mapObject = MapObject;
+            MapObject = null;
+            RefreshView();
+            return mapObject;
         }
 
         public void SetSelected(bool selected)
@@ -112,17 +138,22 @@ namespace NekogamiRanch.Ranch
 
         private void RefreshView()
         {
-            if (Animal == null && animalView == null)
+            if (Animal == null && MapObject == null && animalView == null && mapObjectRenderer == null)
             {
                 return;
             }
 
-            if (!EnsureAnimalView())
+            if (Animal != null && !EnsureAnimalView())
             {
                 return;
             }
 
-            animalView.Refresh(Animal, defaultAnimalSprite, tileRenderer.sprite, tileRenderer.sortingOrder + 2);
+            if (animalView != null)
+            {
+                animalView.Refresh(Animal, defaultAnimalSprite, tileRenderer.sprite, tileRenderer.sortingOrder + 2);
+            }
+
+            RefreshMapObjectView();
         }
 
         private bool EnsureAnimalView()
@@ -146,6 +177,39 @@ namespace NekogamiRanch.Ranch
             animalView = Instantiate(animalViewPrefab, transform, false);
             animalView.Initialize();
             return true;
+        }
+
+        private void RefreshMapObjectView()
+        {
+            if (MapObject == null)
+            {
+                if (mapObjectRenderer != null)
+                {
+                    mapObjectRenderer.enabled = false;
+                }
+
+                return;
+            }
+
+            if (mapObjectRenderer == null)
+            {
+                var existing = transform.Find("MapObject");
+                if (existing != null)
+                {
+                    mapObjectRenderer = existing.GetComponent<SpriteRenderer>();
+                }
+
+                if (mapObjectRenderer == null)
+                {
+                    var mapObjectObj = new GameObject("MapObject");
+                    mapObjectObj.transform.SetParent(transform, false);
+                    mapObjectRenderer = mapObjectObj.AddComponent<SpriteRenderer>();
+                }
+            }
+
+            mapObjectRenderer.enabled = true;
+            mapObjectRenderer.sprite = MapObject.Icon != null ? MapObject.Icon : defaultMapObjectSprite;
+            mapObjectRenderer.sortingOrder = tileRenderer.sortingOrder + 1;
         }
 
         private void OnMouseDown()

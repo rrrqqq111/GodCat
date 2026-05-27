@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using NekogamiRanch.Abilities;
 using NekogamiRanch.Animals;
+using NekogamiRanch.MapObjects;
 
 namespace NekogamiRanch.Ranch
 {
@@ -13,17 +14,36 @@ namespace NekogamiRanch.Ranch
                 return "未选择地块";
             }
 
-            if (selectedCell.Animal == null)
+            if (selectedCell.Animal == null && selectedCell.MapObject == null)
             {
                 return $"地块 ({selectedCell.Coords.x},{selectedCell.Coords.y})：空";
             }
 
-            var animal = selectedCell.Animal;
-            return $"{animal.DisplayName}\n" +
-                $"基础收益：{animal.BaseMoney:+#;-#;0}\n" +
-                GetEvolutionText(animal) +
-                $"技能CD：{GetAnimalCooldownText(animal)}\n" +
-                $"技能：{GetAnimalAbilityText(animal)}";
+            var lines = new List<string>();
+            if (selectedCell.Animal != null)
+            {
+                var animal = selectedCell.Animal;
+                lines.Add(animal.DisplayName);
+                lines.Add($"基础收益：{animal.BaseMoney:+#;-#;0}");
+
+                var evolutionText = GetEvolutionText(animal);
+                if (!string.IsNullOrWhiteSpace(evolutionText))
+                {
+                    lines.Add(evolutionText.TrimEnd('\n'));
+                }
+
+                lines.Add($"技能CD：{GetAnimalCooldownText(animal)}");
+                lines.Add($"技能：{GetAnimalAbilityText(animal)}");
+            }
+
+            if (selectedCell.MapObject != null)
+            {
+                var mapObject = selectedCell.MapObject;
+                lines.Add($"地块物体：{mapObject.DisplayName}");
+                lines.Add($"来源基础收益：{mapObject.SourceBaseMoney:+#;-#;0}");
+            }
+
+            return string.Join("\n", lines);
         }
 
         private static string GetEvolutionText(Animal animal)

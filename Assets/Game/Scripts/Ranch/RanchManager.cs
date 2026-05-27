@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using NekogamiRanch.Abilities;
 using NekogamiRanch.Abilities.Prey;
 using NekogamiRanch.Animals;
+using NekogamiRanch.MapObjects;
 using NekogamiRanch.Items;
 using NekogamiRanch.Toys;
 using UnityEngine;
@@ -49,7 +49,12 @@ namespace NekogamiRanch.Ranch
         private RanchItemService itemService;
         private RanchRewardService rewardService;
         private RanchToyService toyService;
-        private MapCell selectedCell;
+        private MapObjectService mapObjectService;
+        private RanchSelectionService selectionService;
+        private RanchContentPoolService contentPoolService;
+        private RanchAnimalCommandService animalCommandService;
+        private RanchInventoryCommandService inventoryCommandService;
+        private RanchMapObjectCommandService mapObjectCommandService;
         private bool initialized;
 
         public event Action StateChanged
@@ -130,12 +135,30 @@ namespace NekogamiRanch.Ranch
             remove => eventHub.AnimalEvolutionLeveledUp -= value;
         }
 
+        public event Action<MapCellObjectRuntime> OnMapObjectAdded
+        {
+            add => eventHub.MapObjectAdded += value;
+            remove => eventHub.MapObjectAdded -= value;
+        }
+
+        public event Action<MapCellObjectRuntime> OnMapObjectRemoved
+        {
+            add => eventHub.MapObjectRemoved += value;
+            remove => eventHub.MapObjectRemoved -= value;
+        }
+
+        public event Action<MapCellObjectUseContext, MapCellObjectUseResult> OnMapObjectConsumed
+        {
+            add => eventHub.MapObjectConsumed += value;
+            remove => eventHub.MapObjectConsumed -= value;
+        }
+
         public int Day => state != null ? state.Day : day;
         public int Money => state != null ? state.Money : money;
         public int Cans => state != null ? state.Cans : cans;
         public int RemoveAnimalCansCost => removeAnimalCansCost;
         public RanchMap Map => ranchMap;
-        public MapCell SelectedCell => selectedCell;
+        public MapCell SelectedCell => selectionService?.SelectedCell;
         public bool IsWaitingForOfferSelection => state != null && state.IsWaitingForOfferSelection;
         public bool IsWaitingToEnterNextDay => state != null && state.IsWaitingToEnterNextDay;
         public bool IsTestMode => state != null && state.IsTestMode;
@@ -145,6 +168,7 @@ namespace NekogamiRanch.Ranch
         public IReadOnlyList<string> CurrentItemIds => itemService != null ? itemService.ItemIds : Array.Empty<string>();
         public IReadOnlyList<ToyData> CurrentToys => toyService != null ? toyService.EquippedToys : Array.Empty<ToyData>();
         public IReadOnlyList<string> CurrentToyIds => toyService != null ? toyService.EquippedToyIds : Array.Empty<string>();
+        public IReadOnlyList<MapCellObjectRuntime> CurrentMapObjects => mapObjectService != null ? mapObjectService.RuntimeObjects : Array.Empty<MapCellObjectRuntime>();
         public string LastSettlementReport => settlementService != null ? settlementService.LastReport : "暂无结算";
 
         private void Start()
@@ -155,16 +179,12 @@ namespace NekogamiRanch.Ranch
 #if UNITY_EDITOR
         private void Reset()
         {
-            RefreshOfferPoolFromConfiguredFamilies();
-            RefreshAbilitySpawnPool();
-            RefreshItemRewardPool();
+            RefreshContentPools();
         }
 
         private void OnValidate()
         {
-            RefreshOfferPoolFromConfiguredFamilies();
-            RefreshAbilitySpawnPool();
-            RefreshItemRewardPool();
+            RefreshContentPools();
         }
 #endif
 
@@ -175,9 +195,7 @@ namespace NekogamiRanch.Ranch
                 return;
             }
 
-            RefreshOfferPoolFromConfiguredFamilies();
-            RefreshAbilitySpawnPool();
-            RefreshItemRewardPool();
+            RefreshContentPools();
             ranchMap = RanchSceneBinder.ResolveMap(ranchMap);
 
             if (ranchMap == null)
@@ -186,7 +204,7 @@ namespace NekogamiRanch.Ranch
                 return;
             }
 
-            var startingAnimals = RollRandomStartingAnimals(randomStartingAnimalCount);
+            var startingAnimals = ContentPools.RollRandomStartingAnimals(offerPool, randomStartingAnimalCount);
             Initialize(ranchMap, startingAnimals, null, GetFallbackAnimalSprite(), RanchSceneBinder.FindSceneTileRenderers());
         }
 
@@ -197,9 +215,7 @@ namespace NekogamiRanch.Ranch
                 return;
             }
 
-            RefreshOfferPoolFromConfiguredFamilies();
-            RefreshAbilitySpawnPool();
-            RefreshItemRewardPool();
+            RefreshContentPools();
             ranchMap = map;
             if (ranchMap == null)
             {
@@ -224,18 +240,7 @@ namespace NekogamiRanch.Ranch
 
         public void SelectCell(MapCell cell)
         {
-            if (selectedCell != null)
-            {
-                selectedCell.SetSelected(false);
-            }
-
-            selectedCell = cell;
-            if (selectedCell != null)
-            {
-                selectedCell.SetSelected(true);
-            }
-
-            NotifyStateChanged();
+            selectionService?.SelectCell(cell);
         }
 
         public void NextDay()
@@ -276,56 +281,44 @@ namespace NekogamiRanch.Ranch
 
         public bool AddItem(ItemData itemData, int count = 1)
         {
-            var added = itemService != null && itemService.AddItem(itemData, count);
-            if (added)
-            {
-                NotifyStateChanged();
-            }
-
-            return added;
+            return inventoryCommandService != null && inventoryCommandService.AddItem(itemData, count);
         }
 
         public bool TryAddRandomItem()
         {
-            if (rewardService == null || !rewardService.TryGrantRandomItem(out _))
-            {
-                return false;
-            }
-
-            NotifyStateChanged();
-            return true;
+            return inventoryCommandService != null && inventoryCommandService.TryAddRandomItem();
         }
 
         public bool TryGetItemById(string itemId, out ItemRuntimeState item)
         {
             item = null;
-            return itemService != null && itemService.TryGetItemById(itemId, out item);
+            return inventoryCommandService != null && inventoryCommandService.TryGetItemById(itemId, out item);
         }
 
         public Sprite GetItemIconById(string itemId)
         {
-            return TryGetItemById(itemId, out var item) && item.Data != null ? item.Data.Icon : null;
+            return inventoryCommandService != null ? inventoryCommandService.GetItemIconById(itemId) : null;
         }
 
         public string GetItemDescriptionById(string itemId)
         {
-            return TryGetItemById(itemId, out var item) && item.Data != null ? item.Data.Description : string.Empty;
+            return inventoryCommandService != null ? inventoryCommandService.GetItemDescriptionById(itemId) : string.Empty;
         }
 
         public bool TryGetToyById(string toyId, out ToyData toy)
         {
             toy = null;
-            return toyService != null && toyService.TryGetToyById(toyId, out toy);
+            return inventoryCommandService != null && inventoryCommandService.TryGetToyById(toyId, out toy);
         }
 
         public Sprite GetToyIconById(string toyId)
         {
-            return TryGetToyById(toyId, out var toy) ? toy.Icon : null;
+            return inventoryCommandService != null ? inventoryCommandService.GetToyIconById(toyId) : null;
         }
 
         public string GetToyDescriptionById(string toyId)
         {
-            return TryGetToyById(toyId, out var toy) ? toy.Description : string.Empty;
+            return inventoryCommandService != null ? inventoryCommandService.GetToyDescriptionById(toyId) : string.Empty;
         }
 
         public void TriggerToys(ToyTriggerType triggerType)
@@ -335,13 +328,7 @@ namespace NekogamiRanch.Ranch
 
         public bool RegisterToy(ToyData toyData)
         {
-            var registered = toyService != null && toyService.Register(toyData);
-            if (registered)
-            {
-                NotifyStateChanged();
-            }
-
-            return registered;
+            return inventoryCommandService != null && inventoryCommandService.RegisterToy(toyData);
         }
 
         public void AddExtraMoney(Animal source, int amount)
@@ -378,7 +365,7 @@ namespace NekogamiRanch.Ranch
 
             if (result.Success)
             {
-                if (!RefreshSelectionAfterAnimalRemoval())
+                if (selectionService == null || !selectionService.ClearIfSelectionLostAnimal())
                 {
                     NotifyStateChanged();
                 }
@@ -393,27 +380,7 @@ namespace NekogamiRanch.Ranch
 
         public bool RemoveAnimal(Animal animal)
         {
-            if (animalService == null || animal == null)
-            {
-                return false;
-            }
-
-            var removed = animalLifecycleService != null && animalLifecycleService.TryRemove(animal);
-            if (!removed)
-            {
-                return false;
-            }
-
-            if (selectedCell != null && selectedCell.Animal == null)
-            {
-                SelectCell(null);
-            }
-            else
-            {
-                NotifyStateChanged();
-            }
-
-            return true;
+            return animalCommandService != null && animalCommandService.RemoveAnimal(animal);
         }
 
         public bool TryRemoveAnimalWithCans(Animal animal)
@@ -433,206 +400,95 @@ namespace NekogamiRanch.Ranch
 
         public bool SellAnimal(Animal animal)
         {
-            if (animalService == null || animal == null)
-            {
-                return false;
-            }
-
-            if (animalLifecycleService == null ||
-                !animalLifecycleService.TryRemove(animal, AnimalRemovalReason.Sold))
-            {
-                return false;
-            }
-
-            if (selectedCell != null && selectedCell.Animal == null)
-            {
-                SelectCell(null);
-            }
-            else
-            {
-                NotifyStateChanged();
-            }
-
-            return true;
+            return animalCommandService != null && animalCommandService.SellAnimal(animal);
         }
 
         public bool TransformAnimal(Animal oldAnimal, AnimalData newAnimalData)
         {
-            if (animalService == null || oldAnimal == null || newAnimalData == null)
-            {
-                return false;
-            }
-
-            var wasSelectedAnimal = selectedCell != null && selectedCell.Animal == oldAnimal;
-            eventHub.NotifyAnimalTransformed(oldAnimal, newAnimalData);
-            var replaced = animalService.ReplaceAnimal(oldAnimal, newAnimalData);
-            if (replaced && wasSelectedAnimal)
-            {
-                SelectCell(null);
-            }
-
-            return replaced;
+            return animalCommandService != null && animalCommandService.TransformAnimal(oldAnimal, newAnimalData);
         }
 
         public bool EvolveAnimalSilently(Animal oldAnimal, AnimalData newAnimalData)
         {
-            if (animalService == null || oldAnimal == null || newAnimalData == null)
-            {
-                return false;
-            }
-
-            var replaced = animalService.ReplaceAnimal(oldAnimal, newAnimalData, inheritEvolutionState: false);
-            if (replaced)
-            {
-                NotifyStateChanged();
-            }
-
-            return replaced;
+            return animalCommandService != null && animalCommandService.EvolveAnimalSilently(oldAnimal, newAnimalData);
         }
 
         public bool GrowAnimal(Animal youngAnimal, AnimalData grownAnimalData)
         {
-            if (animalService == null || youngAnimal == null || grownAnimalData == null)
-            {
-                return false;
-            }
-
-            eventHub.NotifyAnimalGrown(youngAnimal, grownAnimalData);
-            var grown = animalService.ReplaceAnimal(youngAnimal, grownAnimalData);
-            if (!grown)
-            {
-                return false;
-            }
-
-            if (selectedCell != null && selectedCell.Animal == youngAnimal)
-            {
-                SelectCell(null);
-            }
-            else
-            {
-                NotifyStateChanged();
-            }
-
-            return true;
+            return animalCommandService != null && animalCommandService.GrowAnimal(youngAnimal, grownAnimalData);
         }
 
         public bool TrySetAnimalAt(Vector2Int coords, AnimalData animalData)
         {
-            if (animalService == null || ranchMap == null || !ranchMap.TryGetCell(coords, out var cell))
-            {
-                return false;
-            }
-
-            if (!animalService.TrySetAnimalAt(coords, animalData))
-            {
-                return false;
-            }
-
-            SelectCell(cell);
-            NotifyStateChanged();
-            return true;
+            return animalCommandService != null && animalCommandService.TrySetAnimalAt(coords, animalData);
         }
 
         public bool TryAddAnimalToRandomEmptyCell(AnimalData animalData)
         {
-            if (animalService == null || animalData == null)
-            {
-                return false;
-            }
+            return animalCommandService != null && animalCommandService.TryAddAnimalToRandomEmptyCell(animalData);
+        }
 
-            var added = animalService.TryAddAnimalToRandomEmptyCell(animalData);
-            if (added)
-            {
-                NotifyStateChanged();
-            }
+        public bool TryAddAnimalAtEmptyCell(Vector2Int coords, AnimalData animalData)
+        {
+            return TryAddAnimalAtEmptyCell(coords, animalData, out _);
+        }
 
-            return added;
+        public bool TryAddAnimalAtEmptyCell(Vector2Int coords, AnimalData animalData, out Animal addedAnimal)
+        {
+            addedAnimal = null;
+            return animalCommandService != null && animalCommandService.TryAddAnimalAtEmptyCell(coords, animalData, out addedAnimal);
         }
 
         public bool TryAddRandomAnimalFromFamily(string family, int baseMoneyBonus, out Animal addedAnimal)
         {
             addedAnimal = null;
-            if (animalSpawnService == null ||
-                !animalSpawnService.TrySpawnRandomFromFamily(family, baseMoneyBonus, out addedAnimal))
-            {
-                return false;
-            }
+            return animalCommandService != null && animalCommandService.TryAddRandomAnimalFromFamily(family, baseMoneyBonus, out addedAnimal);
+        }
 
-            NotifyStateChanged();
-            return true;
+        public bool TryAddMapObject(Vector2Int coords, string effectScriptId, Animal sourceAnimal = null)
+        {
+            return mapObjectCommandService != null && mapObjectCommandService.TryAddMapObject(coords, effectScriptId, sourceAnimal);
+        }
+
+        public bool TryAddMapCellObject(Vector2Int coords, string effectScriptId, Animal sourceAnimal = null)
+        {
+            return TryAddMapObject(coords, effectScriptId, sourceAnimal);
+        }
+
+        public bool TryConsumeMapObjectAt(Animal consumer, Vector2Int coords)
+        {
+            return mapObjectCommandService != null && mapObjectCommandService.TryConsumeMapObjectAt(consumer, coords);
+        }
+
+        public bool TryConsumeNearbyMapObjects(Animal consumer)
+        {
+            return mapObjectCommandService != null && mapObjectCommandService.TryConsumeNearbyMapObjects(consumer);
         }
 
         public bool TryAddRandomAnimalOutsideFamilyAt(string excludedFamily, Vector2Int coords, out Animal addedAnimal)
         {
             addedAnimal = null;
-            if (animalSpawnService == null ||
-                !animalSpawnService.TrySpawnRandomOutsideFamilyAt(excludedFamily, coords, out addedAnimal))
-            {
-                return false;
-            }
-
-            NotifyStateChanged();
-            return true;
+            return animalCommandService != null && animalCommandService.TryAddRandomAnimalOutsideFamilyAt(excludedFamily, coords, out addedAnimal);
         }
 
         public bool TryReplaceAnimalWithRandomRaritySilently(Animal target, int minRarity, int maxRarity)
         {
-            if (animalSpawnService == null ||
-                !animalSpawnService.TryReplaceWithRandomRarity(target, minRarity, maxRarity))
-            {
-                return false;
-            }
-
-            NotifyStateChanged();
-            return true;
+            return animalCommandService != null && animalCommandService.TryReplaceAnimalWithRandomRaritySilently(target, minRarity, maxRarity);
         }
 
         public bool TryClearAnimalAt(Vector2Int coords)
         {
-            if (animalService == null || ranchMap == null || !ranchMap.TryGetCell(coords, out var cell))
-            {
-                return false;
-            }
-
-            var removedAnimal = cell.Animal;
-            if (removedAnimal == null)
-            {
-                return false;
-            }
-
-            if (animalLifecycleService == null || !animalLifecycleService.TryRemove(removedAnimal))
-            {
-                return false;
-            }
-
-            SelectCell(cell);
-            NotifyStateChanged();
-            return true;
+            return animalCommandService != null && animalCommandService.TryClearAnimalAt(coords);
         }
 
         public bool DeleteAnimalAtForTest(Vector2Int coords)
         {
-            if (animalService == null || ranchMap == null || !ranchMap.TryGetCell(coords, out var cell))
-            {
-                return false;
-            }
-
-            var removedAnimal = cell.Animal;
-            if (removedAnimal == null || !animalService.AnimalRemovedFromCell(cell))
-            {
-                return false;
-            }
-
-            SelectCell(cell);
-            NotifyStateChanged();
-            return true;
+            return animalCommandService != null && animalCommandService.DeleteAnimalAtForTest(coords);
         }
 
         public void ClearAllAnimals()
         {
-            animalService?.ClearAllAnimals();
-            SelectCell(null);
-            NotifyStateChanged();
+            animalCommandService?.ClearAllAnimals();
         }
 
         public void EnterTestMode()
@@ -708,12 +564,13 @@ namespace NekogamiRanch.Ranch
 
         public string GetSelectedCellText()
         {
-            return RanchTextFormatter.GetSelectedCellText(selectedCell);
+            return selectionService != null ? selectionService.GetSelectedCellText() : RanchTextFormatter.GetSelectedCellText(null);
         }
 
         private void CreateServices()
         {
             state = new RanchGameState(day, money, cans);
+            selectionService = new RanchSelectionService(NotifyStateChanged);
             economyService = new RanchEconomyService(state);
             animalService = new RanchAnimalService(ranchMap, ResolveMovedAbility);
             offerService = new RanchOfferService(offerRoller, offerPool);
@@ -731,65 +588,41 @@ namespace NekogamiRanch.Ranch
             var configuredRewardPool = itemRewardPool != null && itemRewardPool.Count > 0 ? itemRewardPool : startingItems;
             rewardService = new RanchRewardService(itemService, configuredRewardPool);
             toyService = new RanchToyService(this, economyService, equippedToys);
+            mapObjectService = new MapObjectService(this, ranchMap, eventHub);
+            animalCommandService = new RanchAnimalCommandService(
+                ranchMap,
+                animalService,
+                animalLifecycleService,
+                animalSpawnService,
+                selectionService,
+                eventHub,
+                NotifyStateChanged);
+            inventoryCommandService = new RanchInventoryCommandService(
+                itemService,
+                rewardService,
+                toyService,
+                NotifyStateChanged);
+            mapObjectCommandService = new RanchMapObjectCommandService(mapObjectService, NotifyStateChanged);
         }
 
-        private void RefreshOfferPoolFromConfiguredFamilies()
+        private void RefreshContentPools()
         {
-#if UNITY_EDITOR
-            if (!autoPopulateOfferPoolByFamily)
-            {
-                return;
-            }
-
-            offerPool = RanchContentCatalog.LoadOfferAnimals(AnimalDataRoot, offerPoolFamilies);
-#endif
-        }
-
-        private void RefreshItemRewardPool()
-        {
-#if UNITY_EDITOR
-            itemRewardPool = RanchContentCatalog.LoadItems(ItemDataRoot);
-#endif
-        }
-
-        private void RefreshAbilitySpawnPool()
-        {
-#if UNITY_EDITOR
-            abilitySpawnPool = RanchContentCatalog.LoadAnimals(AnimalDataRoot);
-#endif
+            ContentPools.RefreshPools(
+                autoPopulateOfferPoolByFamily,
+                offerPoolFamilies,
+                ref offerPool,
+                ref abilitySpawnPool,
+                ref itemRewardPool);
         }
 
         private void SeedAnimals(IReadOnlyList<AnimalData> startingAnimals)
         {
-            if (startingAnimals != null && startingAnimals.Count > 0 && offerPool.Count == 0)
+            if (ContentPools.TryUseStartingAnimalsAsOfferPool(startingAnimals, ref offerPool))
             {
-                offerPool = startingAnimals.Where(data => data != null).Distinct().ToList();
                 offerService = new RanchOfferService(offerRoller, offerPool);
             }
 
             animalService?.SeedAnimals(startingAnimals);
-        }
-
-        private IReadOnlyList<AnimalData> RollRandomStartingAnimals(int count)
-        {
-            if (count <= 0 || offerPool == null || offerPool.Count == 0)
-            {
-                return Array.Empty<AnimalData>();
-            }
-
-            var validPool = offerPool.Where(data => data != null).ToList();
-            if (validPool.Count == 0)
-            {
-                return Array.Empty<AnimalData>();
-            }
-
-            var results = new List<AnimalData>();
-            for (var i = 0; i < count; i++)
-            {
-                results.Add(validPool[UnityEngine.Random.Range(0, validPool.Count)]);
-            }
-
-            return results;
         }
 
         private Sprite GetFallbackAnimalSprite()
@@ -811,6 +644,7 @@ namespace NekogamiRanch.Ranch
         {
             settlementService?.ResolveMovedAbility(animal);
             settlementService?.ResolveAdjacentAnimalMovedAbilities(animal, previousCoords, ranchMap);
+            mapObjectService?.TryConsumeNearbyMapObjects(animal);
         }
 
         private void CreateTurnService()
@@ -831,15 +665,17 @@ namespace NekogamiRanch.Ranch
             return animalService != null && animalService.IsAnimalOnMap(animal);
         }
 
-        private bool RefreshSelectionAfterAnimalRemoval()
+        private RanchContentPoolService ContentPools
         {
-            if (selectedCell != null && selectedCell.Animal == null)
+            get
             {
-                SelectCell(null);
-                return true;
-            }
+                if (contentPoolService == null)
+                {
+                    contentPoolService = new RanchContentPoolService(AnimalDataRoot, ItemDataRoot);
+                }
 
-            return false;
+                return contentPoolService;
+            }
         }
 
     }

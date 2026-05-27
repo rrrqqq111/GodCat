@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using NekogamiRanch.Ranch;
+using NekogamiRanch.MapObjects;
 using UnityEngine;
 
 namespace NekogamiRanch.Abilities
 {
-    public class ConfiguredAnimalAbility : IAnimalAbility, IAnimalCooldownStatus
+    public class ConfiguredAnimalAbility : IAnimalAbility, IAnimalCooldownStatus, IMapCellObjectConsumerAbility
     {
         private readonly AbilityData config;
         private readonly Dictionary<AbilityData, AbilityRuntimeState> runtimeStates = new Dictionary<AbilityData, AbilityRuntimeState>();
@@ -18,6 +19,7 @@ namespace NekogamiRanch.Abilities
         public string Name => config != null ? config.Id : string.Empty;
         public int Priority => config != null ? config.Priority : 0;
         public bool HasCooldown => HasCooldownConfigured(config);
+        public bool CanConsumeMapCellObjects => config != null && CanConsumeMapObjectsByEffectType(config.EffectType);
         public int RemainingCooldown
         {
             get
@@ -172,6 +174,17 @@ namespace NekogamiRanch.Abilities
         {
             var cooldownDays = GetCooldownDays(abilityConfig);
             return cooldownDays > 0 || GetInitialCooldownDays(abilityConfig, cooldownDays) > 0;
+        }
+
+        private static bool CanConsumeMapObjectsByEffectType(string effectType)
+        {
+            if (string.IsNullOrWhiteSpace(effectType))
+            {
+                return false;
+            }
+
+            return effectType.IndexOf("Prey", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                effectType.IndexOf("Ambush", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private int GetTileCooldownReductionAmount(AbilityData abilityConfig, AnimalAbilityContext context)

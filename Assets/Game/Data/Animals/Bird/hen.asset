@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: hen
+  m_EditorClassIdentifier: 
+  id: Hen
+  animalName: "母鸡"
+  family: Bird
+  rarity: 0
+  baseMoney: 1
+  evolutionThreshold: 0
+  evolutionTarget: {fileID: 0}
+  evolutionTargetLevel: 0
+  ability: {fileID: 11400000, guid: 2d40301cde49476385a361350f1b0a66, type: 2}
+  description: "与公鸡相邻时，有20%概率繁殖一只小鸡"
+  icon: {fileID: 0}
+  familyIcon: {fileID: 0}
+  iconScale: 1

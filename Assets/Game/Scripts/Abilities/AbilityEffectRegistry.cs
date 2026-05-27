@@ -18,6 +18,9 @@ namespace NekogamiRanch.Abilities
             { "AlpacaAbilityEffect", new AlpacaAbilityEffect() },
             { "CalfAbilityEffect", new CalfAbilityEffect() },
             { "CowAbilityEffect", new CowAbilityEffect() },
+            { "BreedAbilityEffect", new BreedAbilityEffect() },
+            { "RoosterAbilityEffect", new RoosterAbilityEffect() },
+            { "GooseAbilityEffect", new GooseAbilityEffect() },
             { "MuskOxAbilityEffect", new MuskOxAbilityEffect() },
             { "HippoAbilityEffect", new HippoAbilityEffect() },
             { "ReindeerAbilityEffect", new ReindeerAbilityEffect() },
@@ -46,7 +49,13 @@ namespace NekogamiRanch.Abilities
             { "CamelAbilityEffect", new CamelAbilityEffect() },
             { "RaccoonAbilityEffect", new RaccoonAbilityEffect() },
             { "GrayWolfAbilityEffect", new GrayWolfAbilityEffect() },
-            { "TigerAbilityEffect", new TigerAbilityEffect() }
+            { "TigerAbilityEffect", new TigerAbilityEffect() },
+            { "SwanCountAbilityEffect", new SwanCountAbilityEffect() },
+            { "SwanPuddleAbilityEffect", new SwanPuddleAbilityEffect() },
+            { "ChickenAbilityEffect", new ChickenAbilityEffect() },
+            { "HenAbilityEffect", new HenAbilityEffect() },
+            { "TurkeyAbilityEffect", new TurkeyAbilityEffect() },
+            { "FlamingoAbilityEffect", new FlamingoAbilityEffect() }
         };
 
         public static bool TryGet(string effectScriptId, out IAbilityEffect effect)

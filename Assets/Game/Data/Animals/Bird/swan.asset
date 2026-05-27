@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: swan
+  m_EditorClassIdentifier: 
+  id: Swan
+  animalName: "天鹅"
+  family: Bird
+  rarity: 0
+  baseMoney: 1
+  evolutionThreshold: 0
+  evolutionTarget: {fileID: 0}
+  evolutionTargetLevel: 0
+  ability: {fileID: 11400000, guid: 73a105fcad65408fbaece8280a9ce0b7, type: 2}
+  description: "场上有3只以上天鹅时获得1金币，与水洼相邻时获得2金币"
+  icon: {fileID: 0}
+  familyIcon: {fileID: 0}
+  iconScale: 1

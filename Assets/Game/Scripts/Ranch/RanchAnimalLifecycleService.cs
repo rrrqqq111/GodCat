@@ -41,6 +41,7 @@ namespace NekogamiRanch.Ranch
             else if (reason == AnimalRemovalReason.Preyed)
             {
                 eventHub?.NotifyAnimalPreyed(source, animal);
+                settlementService?.ResolveAnimalSelfPreyedAbility(animal, source, ranchMap);
                 settlementService?.ResolveAnimalPreyedAbilities(source, animal, ranchMap);
                 settlementService?.ResolveGlobalAnimalPreyedAbilities(source, animal, ranchMap);
             }

@@ -2,6 +2,7 @@ using System;
 using NekogamiRanch.Abilities;
 using NekogamiRanch.Abilities.Prey;
 using NekogamiRanch.Animals;
+using NekogamiRanch.MapObjects;
 
 namespace NekogamiRanch.Ranch
 {
@@ -20,6 +21,9 @@ namespace NekogamiRanch.Ranch
         public event Action<AnimalCooldownReductionContext> AnimalCooldownReduced;
         public event Action<AnimalEvolutionContext> AnimalEvolutionProgressed;
         public event Action<AnimalEvolutionContext> AnimalEvolutionLeveledUp;
+        public event Action<MapCellObjectRuntime> MapObjectAdded;
+        public event Action<MapCellObjectRuntime> MapObjectRemoved;
+        public event Action<MapCellObjectUseContext, MapCellObjectUseResult> MapObjectConsumed;
 
         public void NotifyStateChanged()
         {
@@ -86,6 +90,21 @@ namespace NekogamiRanch.Ranch
         public void NotifyAnimalEvolutionLeveledUp(AnimalEvolutionContext context)
         {
             AnimalEvolutionLeveledUp?.Invoke(context);
+        }
+
+        public void NotifyMapObjectAdded(MapCellObjectRuntime mapObject)
+        {
+            MapObjectAdded?.Invoke(mapObject);
+        }
+
+        public void NotifyMapObjectRemoved(MapCellObjectRuntime mapObject)
+        {
+            MapObjectRemoved?.Invoke(mapObject);
+        }
+
+        public void NotifyMapObjectConsumed(MapCellObjectUseContext context, MapCellObjectUseResult result)
+        {
+            MapObjectConsumed?.Invoke(context, result);
         }
     }
 }

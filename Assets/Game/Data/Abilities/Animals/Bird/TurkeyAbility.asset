@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc8b67d2bd64e1498ad642244aa2e36, type: 3}
+  m_Name: TurkeyAbility
+  m_EditorClassIdentifier: 
+  id: TurkeyAbility
+  abilityType: Normal
+  priority: 0
+  impactType: Self
+  stackable: 0
+  desc: "被吃掉时获得5金币"
+  triggerType: AnimalPreyedSelf
+  triggerChancePercent: 100
+  triggerLimit: 0
+  effectType: GainMoneyOnPreyed
+  effectScriptId: TurkeyAbilityEffect
+  effectParams:
+    money: 5
+    count: 0
+    maxCount: 0
+    minMultiplier: 0
+    maxMultiplier: 0
+    maxRarity: 0
+    itemCount: 0
+    initialCooldownDays: 0
+    cooldownDays: 0
+    cooldownReductionAmount: 0
+    cooldownReductionTileType: None
+    durationDays: 1
+    transformChancePercent: 100
+    type: Flat
+    target: Self
+    targetFamily: None
+    animalData: {fileID: 0}
+    growUpAnimalDataA: {fileID: 0}
+    growUpWeightA: 0
+    growUpAnimalDataB: {fileID: 0}
+    growUpWeightB: 0
+    growUpAnimalDataC: {fileID: 0}
+    growUpWeightC: 0
+  subAbilities: []

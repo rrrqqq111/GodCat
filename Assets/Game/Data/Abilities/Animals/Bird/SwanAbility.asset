@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc8b67d2bd64e1498ad642244aa2e36, type: 3}
+  m_Name: SwanAbility
+  m_EditorClassIdentifier: 
+  id: SwanAbility
+  abilityType: Normal
+  priority: 0
+  impactType: Global
+  stackable: 0
+  desc: "场上有3只以上天鹅时获得1金币，与水洼相邻时获得2金币"
+  triggerType: Passive
+  triggerChancePercent: 100
+  triggerLimit: 0
+  effectType: Container
+  effectScriptId: 
+  effectParams:
+    money: 0
+    count: 0
+    maxCount: 0
+    minMultiplier: 0
+    maxMultiplier: 0
+    maxRarity: 0
+    itemCount: 0
+    initialCooldownDays: 0
+    cooldownDays: 0
+    cooldownReductionAmount: 0
+    cooldownReductionTileType: None
+    durationDays: 0
+    transformChancePercent: 100
+    type: Flat
+    target: Self
+    targetFamily: Bird
+    animalData: {fileID: 0}
+    growUpAnimalDataA: {fileID: 0}
+    growUpWeightA: 0
+    growUpAnimalDataB: {fileID: 0}
+    growUpWeightB: 0
+    growUpAnimalDataC: {fileID: 0}
+    growUpWeightC: 0
+  subAbilities:
+  - {fileID: 11400000, guid: 541f112bb4e442df86c300c4d72326fc, type: 2}
+  - {fileID: 11400000, guid: 6edb65fb695e4b6c8fa3c4a4d03c4713, type: 2}
