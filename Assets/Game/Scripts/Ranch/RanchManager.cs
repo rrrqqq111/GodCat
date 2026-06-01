@@ -51,6 +51,7 @@ namespace NekogamiRanch.Ranch
         private RanchToyService toyService;
         private MapObjectService mapObjectService;
         private RanchBaseMoneyBonusTriggerService baseMoneyBonusTriggerService;
+        private RanchDeploymentTriggerService deploymentTriggerService;
         private RanchSelectionService selectionService;
         private RanchContentPoolService contentPoolService;
         private RanchAnimalCommandService animalCommandService;
@@ -384,6 +385,11 @@ namespace NekogamiRanch.Ranch
             return animalCommandService != null && animalCommandService.RemoveAnimal(animal);
         }
 
+        public bool RemoveAnimalSilently(Animal animal)
+        {
+            return animalService != null && animalService.AnimalRemoved(animal);
+        }
+
         public bool TryRemoveAnimalWithCans(Animal animal)
         {
             if (animalService == null || animal == null || !IsAnimalOnMap(animal))
@@ -612,6 +618,9 @@ namespace NekogamiRanch.Ranch
             baseMoneyBonusTriggerService = new RanchBaseMoneyBonusTriggerService(
                 ranchMap,
                 TryTriggerAnimalAbilityWithResult);
+            deploymentTriggerService = new RanchDeploymentTriggerService(
+                animalService,
+                TryTriggerAnimalAbilityWithResult);
             animalCommandService = new RanchAnimalCommandService(
                 ranchMap,
                 animalService,
@@ -678,6 +687,7 @@ namespace NekogamiRanch.Ranch
                 animalService,
                 offerService,
                 settlementService,
+                deploymentTriggerService,
                 itemService,
                 toyService,
                 NotifyStateChanged);

@@ -22,6 +22,6 @@ MonoBehaviour:
   evolutionTargetLevel: 0
   ability: {fileID: 11400000, guid: 5180cf03c10c46b781ddd995972cf34e, type: 2}
   description: "\u76F8\u90BB\u52A8\u7269\u589E\u52A0\u57FA\u7840\u5C5E\u6027\u65F6\uFF0C\u83B7\u5F97\u4E09\u500D\u5BF9\u5E94\u6570\u91CF\u7684\u91D1\u5E01\u3002"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 9741008da54175541b62f5d2cefb81d7, type: 3}
   familyIcon: {fileID: 21300000, guid: 2c4dbaf10562b7b46814560f896b05c8, type: 3}
   iconScale: 1

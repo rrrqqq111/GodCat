@@ -11,6 +11,7 @@ namespace NekogamiRanch.Ranch
         private readonly RanchAnimalService animalService;
         private readonly RanchOfferService offerService;
         private readonly RanchSettlementService settlementService;
+        private readonly RanchDeploymentTriggerService deploymentTriggerService;
         private readonly RanchItemService itemService;
         private readonly RanchToyService toyService;
         private readonly Action stateChanged;
@@ -21,6 +22,7 @@ namespace NekogamiRanch.Ranch
             RanchAnimalService animalService,
             RanchOfferService offerService,
             RanchSettlementService settlementService,
+            RanchDeploymentTriggerService deploymentTriggerService,
             RanchItemService itemService,
             RanchToyService toyService,
             Action stateChanged)
@@ -30,6 +32,7 @@ namespace NekogamiRanch.Ranch
             this.animalService = animalService;
             this.offerService = offerService;
             this.settlementService = settlementService;
+            this.deploymentTriggerService = deploymentTriggerService;
             this.itemService = itemService;
             this.toyService = toyService;
             this.stateChanged = stateChanged;
@@ -75,6 +78,7 @@ namespace NekogamiRanch.Ranch
                 animalService?.RandomizeAnimalPositions();
             }
 
+            deploymentTriggerService?.TriggerDayStartDeployedAnimals();
             state.AddDay();
             state.SetPhase(state.IsTestMode ? RanchPhase.TestMode : RanchPhase.Playing);
             toyService?.Trigger(ToyTriggerType.DayStart, state.Day);

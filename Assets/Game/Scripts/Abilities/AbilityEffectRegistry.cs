@@ -60,7 +60,10 @@ namespace NekogamiRanch.Abilities
             { "CrowAbilityEffect", new CrowAbilityEffect() },
             { "PigeonAbilityEffect", new PigeonAbilityEffect() },
             { "ParrotAbilityEffect", new ParrotAbilityEffect() },
-            { "MagpieAbilityEffect", new MagpieAbilityEffect() }
+            { "MagpieAbilityEffect", new MagpieAbilityEffect() },
+            { "OstrichAbilityEffect", new OstrichAbilityEffect() },
+            { "PeacockAbilityEffect", new PeacockAbilityEffect() },
+            { "TerrorBirdAbilityEffect", new TerrorBirdAbilityEffect() }
         };
 
         public static bool TryGet(string effectScriptId, out IAbilityEffect effect)
