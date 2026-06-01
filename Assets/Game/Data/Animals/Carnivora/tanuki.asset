@@ -23,5 +23,5 @@ MonoBehaviour:
   ability: {fileID: 11400000, guid: 9c94872e17534e08a53540bb999250ca, type: 2}
   description: "\u5C061\u53EA\u76F8\u90BB\u7684\u666E\u901A\u52A8\u7269\u66FF\u6362\u4E3A\u968F\u673A\u7A00\u6709\u3001\u7F55\u89C1\u3001\u73CD\u7A00\u6216\u7EDD\u8FF9\u52A8\u7269"
   icon: {fileID: 21300000, guid: 533a6ef383d87d444990c4a7149e4a1a, type: 3}
-  familyIcon: {fileID: 21300000, guid: 951d23785c48e064ebb1238436aa0024, type: 3}
+  familyIcon: {fileID: 21300000, guid: 3cb28a53ba33788439ee3d4a2d81ee30, type: 3}
   iconScale: 0.8

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: duck
+  m_EditorClassIdentifier: 
+  id: Duck
+  animalName: "\u9E2D\u5B50"
+  family: Bird
+  rarity: 0
+  baseMoney: 1
+  evolutionThreshold: 0
+  evolutionTarget: {fileID: 0}
+  evolutionTargetLevel: 0
+  ability: {fileID: 11400000, guid: 45c971afe739431b8f4b7f280b51b8bc, type: 2}
+  description: "\u4F7F\u76F8\u90BB\u7684\u5F53\u524D\u57FA\u7840\u5C5E\u6027\u503C\u5C0F\u4E8E1\u7684\u52A8\u7269\u83B7\u5F97\u4E24\u91D1\u5E01\u3002"
+  icon: {fileID: 21300000, guid: 8ebdd6de813be5b41b2750061fb2d5cc, type: 3}
+  familyIcon: {fileID: 21300000, guid: 2c4dbaf10562b7b46814560f896b05c8, type: 3}
+  iconScale: 1

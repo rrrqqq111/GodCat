@@ -19,7 +19,12 @@ namespace NekogamiRanch.Abilities
                 : new ProtectionRule("Global", protector: protector, reason: abilityData != null ? abilityData.Id : "GiraffeProtection");
         }
 
-        public void OnProtected(Animal protector, Animal protectedAnimal, AbilityData abilityData, Action<int> addMoney)
+        public void OnProtected(
+            Animal protector,
+            Animal protectedAnimal,
+            AbilityData abilityData,
+            Action<int> addMoney,
+            Action<Animal, int> addBaseMoneyBonus)
         {
             if (protector == null || protectedAnimal == null)
             {
@@ -29,7 +34,14 @@ namespace NekogamiRanch.Abilities
             var bonus = abilityData?.EffectParams != null && abilityData.EffectParams.money > 0
                 ? abilityData.EffectParams.money
                 : 1;
-            protector.AddPermanentBaseMoneyBonus(bonus);
+            if (addBaseMoneyBonus != null)
+            {
+                addBaseMoneyBonus(protector, bonus);
+            }
+            else
+            {
+                protector.AddPermanentBaseMoneyBonus(bonus);
+            }
         }
     }
 }

@@ -163,6 +163,30 @@ namespace NekogamiRanch.Ranch
             }
         }
 
+        public AbilityExecutionResult TryTriggerAnimalAbility(Animal animal, string triggerType)
+        {
+            if (animal == null || animal.Ability == null || string.IsNullOrWhiteSpace(triggerType))
+            {
+                return AbilityExecutionResult.Failed(triggerType: triggerType);
+            }
+
+            if (externalAbilityTriggerDepth >= MaxExternalAbilityTriggerDepth)
+            {
+                return AbilityExecutionResult.Failed(animal.Ability.Name, triggerType);
+            }
+
+            externalAbilityTriggerDepth++;
+            try
+            {
+                GetSettlementAnimalReport(animal);
+                return ExecuteAbilityWithReport(animal, triggerType);
+            }
+            finally
+            {
+                externalAbilityTriggerDepth--;
+            }
+        }
+
         public void ResolveAnimalPreyedAbilities(Animal predator, Animal preyedAnimal, RanchMap ranchMap)
         {
             if (predator == null || preyedAnimal == null || ranchMap == null)

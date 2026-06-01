@@ -50,6 +50,7 @@ namespace NekogamiRanch.Ranch
         private RanchRewardService rewardService;
         private RanchToyService toyService;
         private MapObjectService mapObjectService;
+        private RanchBaseMoneyBonusTriggerService baseMoneyBonusTriggerService;
         private RanchSelectionService selectionService;
         private RanchContentPoolService contentPoolService;
         private RanchAnimalCommandService animalCommandService;
@@ -547,6 +548,25 @@ namespace NekogamiRanch.Ranch
                 : AbilityExecutionResult.Failed();
         }
 
+        public AbilityExecutionResult TryTriggerAnimalAbilityWithResult(Animal animal, string triggerType)
+        {
+            return settlementService != null
+                ? settlementService.TryTriggerAnimalAbility(animal, triggerType)
+                : AbilityExecutionResult.Failed(triggerType: triggerType);
+        }
+
+        public void AddAnimalBaseMoneyBonus(Animal target, int bonus)
+        {
+            if (baseMoneyBonusTriggerService != null)
+            {
+                baseMoneyBonusTriggerService.AddBaseMoneyBonus(target, bonus);
+            }
+            else
+            {
+                target?.AddPermanentBaseMoneyBonus(bonus);
+            }
+        }
+
         public void NotifyAnimalCooldownReduced(AnimalCooldownReductionContext context)
         {
             if (context.Target == null || context.Amount <= 0)
@@ -581,7 +601,7 @@ namespace NekogamiRanch.Ranch
                 settlementService,
                 ranchMap,
                 eventHub);
-            protectionService = new RanchProtectionService(ranchMap, economyService.AddMoney);
+            protectionService = new RanchProtectionService(ranchMap, economyService.AddMoney, AddAnimalBaseMoneyBonus);
             preyService = new RanchPreyService(ranchMap, animalLifecycleService, protectionService, eventHub);
             evolutionService = new RanchEvolutionService(eventHub, EvolveAnimalSilently);
             animalSpawnService = new RanchAnimalSpawnService(animalService, abilitySpawnPool);
@@ -589,6 +609,9 @@ namespace NekogamiRanch.Ranch
             rewardService = new RanchRewardService(itemService, configuredRewardPool);
             toyService = new RanchToyService(this, economyService, equippedToys);
             mapObjectService = new MapObjectService(this, ranchMap, eventHub);
+            baseMoneyBonusTriggerService = new RanchBaseMoneyBonusTriggerService(
+                ranchMap,
+                TryTriggerAnimalAbilityWithResult);
             animalCommandService = new RanchAnimalCommandService(
                 ranchMap,
                 animalService,

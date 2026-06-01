@@ -47,7 +47,7 @@ namespace NekogamiRanch.MapObjects
                     return MapCellObjectUseResult.Failed("NoReward");
                 }
 
-                context.Consumer.AddPermanentBaseMoneyBonus(baseMoneyBonus);
+                context.RanchManager.AddAnimalBaseMoneyBonus(context.Consumer, baseMoneyBonus);
                 return MapCellObjectUseResult.Succeeded("LeftoverMeatConsumed", baseMoneyBonusDelta: baseMoneyBonus);
             }
 

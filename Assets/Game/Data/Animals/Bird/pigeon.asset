@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: pigeon
+  m_EditorClassIdentifier: 
+  id: Pigeon
+  animalName: "\u9E3D\u5B50"
+  family: Bird
+  rarity: 1
+  baseMoney: 1
+  evolutionThreshold: 0
+  evolutionTarget: {fileID: 0}
+  evolutionTargetLevel: 0
+  ability: {fileID: 11400000, guid: 23a94394a0c9404eb97532913d452389, type: 2}
+  description: "\u5468\u56F4\u6CA1\u6709\u4E00\u53EA\u9E3D\u5B50\u65F6\uFF0C\u83B7\u5F972\u91D1\u5E01\u3002"
+  icon: {fileID: 21300000, guid: 1cca9cdc04270ae44b3916669ac688a5, type: 3}
+  familyIcon: {fileID: 21300000, guid: 2c4dbaf10562b7b46814560f896b05c8, type: 3}
+  iconScale: 1

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: parrot
+  m_EditorClassIdentifier: 
+  id: Parrot
+  animalName: "\u9E66\u9E49"
+  family: Bird
+  rarity: 1
+  baseMoney: 2
+  evolutionThreshold: 0
+  evolutionTarget: {fileID: 0}
+  evolutionTargetLevel: 0
+  ability: {fileID: 11400000, guid: 5180cf03c10c46b781ddd995972cf34e, type: 2}
+  description: "\u76F8\u90BB\u52A8\u7269\u589E\u52A0\u57FA\u7840\u5C5E\u6027\u65F6\uFF0C\u83B7\u5F97\u4E09\u500D\u5BF9\u5E94\u6570\u91CF\u7684\u91D1\u5E01\u3002"
+  icon: {fileID: 0}
+  familyIcon: {fileID: 21300000, guid: 2c4dbaf10562b7b46814560f896b05c8, type: 3}
+  iconScale: 1

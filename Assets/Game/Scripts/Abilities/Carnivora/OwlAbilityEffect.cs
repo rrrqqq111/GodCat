@@ -36,7 +36,7 @@ namespace NekogamiRanch.Abilities
             var bonusPerPrey = abilityData.EffectParams != null && abilityData.EffectParams.money > 0
                 ? abilityData.EffectParams.money
                 : 2;
-            context.Owner.AddPermanentBaseMoneyBonus(bonusPerPrey * result.RemovedTargets.Count);
+            context.RanchManager.AddAnimalBaseMoneyBonus(context.Owner, bonusPerPrey * result.RemovedTargets.Count);
             return true;
         }
     }

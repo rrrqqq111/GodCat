@@ -1,0 +1,79 @@
+水牛（WaterBuffalo）能力脚本生成提示词
+========================================
+
+【使用方式】
+把下面整段提示词复制给 vibecoding 工具。要求工具先列出文件清单，确认只会新增/修改允许的文件，再让它生成。
+
+【提示词开始】
+
+你现在在 Unity 项目《猫神牧场教学项目》中工作。
+请根据下面的动物设定、能力资源字段和脚本行为，生成这个动物对应的能力脚本与必要注册。
+
+硬性限制：
+1. 不要修改 RanchManager、RanchMap、MapCell、RanchTurnService、RanchSettlementService、RanchOfferService。
+2. 不要修改抽卡逻辑、结算逻辑、地图绑定逻辑、UI 逻辑。
+3. 不要删除已有资源或脚本。
+4. 如果需要注册能力，只能在 AbilityEffectRegistry 的字典末尾追加注册项。
+5. 新脚本必须实现 IAbilityEffect；如果说明是被动保护能力，还要实现 IPassiveProtectionEffect。
+6. 生成前先列出准备新增或修改的文件清单。
+
+允许修改：
+- Assets/Game/Scripts/Abilities/Hoofed/ 下新增或修正本动物能力脚本。
+- Assets/Game/Scripts/Abilities/AbilityEffectRegistry.cs 中追加本能力注册项。
+- 如资源尚未存在，可以新增对应 AnimalData 与 AbilityData，但不要改核心逻辑。
+
+动物资源设定：
+- 动物中文名: 水牛
+- 动物 ID: WaterBuffalo
+- 家族 family: Hoofed
+- 稀有度 rarity: 0
+- 基础收益 baseMoney: 2
+- 动物描述: 在水洼上时，自身基础收益+1，可叠加
+- 动物资源路径: E:/Unity/猫神牧场Demo/Assets/Game/Data/Animals/Hoofed/water_buffalo.asset
+
+能力资源字段：
+- 能力资源: WaterBuffaloAbility
+  - 路径: E:/Unity/猫神牧场Demo/Assets/Game/Data/Abilities/Animals/Hoofed/WaterBuffaloAbility.asset
+  - id: WaterBuffaloAbility
+  - desc: 在水洼上触发时，自身基础收益永久+1，可叠加
+  - triggerType: SettlementPrepare
+  - impactType: Self
+  - effectType: AddSettlementBaseMoneyOnPuddle
+  - effectScriptId: WaterBuffaloAbilityEffect
+  - 关键 effectParams:
+    - money: 1
+    - transformChancePercent: 100
+    - type: Flat
+    - target: Self
+
+需要生成或复刻的能力脚本行为：
+- WaterBuffaloAbilityEffect:
+  - 建议脚本路径: Assets/Game/Scripts/Abilities/Hoofed/WaterBuffaloAbilityEffect.cs
+  - 注册 key: "WaterBuffaloAbilityEffect"
+  - 行为要求: 只有自己站在 Puddle 地块上才触发，成功后给自己永久增加 1 点基础收益。
+
+代码风格要求：
+- namespace 使用 NekogamiRanch.Abilities。
+- 必要 using 通常包括 System、System.Collections.Generic、System.Linq、UnityEngine、NekogamiRanch.Animals、NekogamiRanch.Ranch、NekogamiRanch.Abilities.Prey。
+- Execute 方法必须先检查 context、context.Owner、context.RanchManager、abilityData 是否为空。
+- 未满足条件时返回 false，成功应用效果时返回 true。
+- 数值优先读取 abilityData.EffectParams，不要写死在核心管理器里。
+- 不要新增新的框架、服务或管理器。
+
+注册要求：
+- 在 AbilityEffectRegistry 的 Effects 字典中追加: { "WaterBuffaloAbilityEffect", new WaterBuffaloAbilityEffect() },
+- AbilityData.effectScriptId 必须和注册 key 完全一致。
+
+测试要求：
+1. Unity 编译无红色报错。
+2. AnimalData.ability 正确绑定 AbilityData。
+3. AbilityData.effectScriptId 能在 AbilityEffectRegistry 找到。
+4. 进入 Play 模式，放置或抽到该动物。
+5. 触发对应 triggerType，观察能力是否按描述执行。
+
+输出要求：
+1. 先列出准备新增/修改文件。
+2. 再生成代码。
+3. 最后说明如何在 Unity 中测试。
+
+【提示词结束】

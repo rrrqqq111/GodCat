@@ -40,7 +40,7 @@ namespace NekogamiRanch.Abilities
                 .ToList();
             foreach (var target in selectedTargets)
             {
-                target.AddPermanentBaseMoneyBonus(bonus);
+                context.RanchManager.AddAnimalBaseMoneyBonus(target, bonus);
             }
 
             return selectedTargets.Count > 0;

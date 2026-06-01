@@ -39,7 +39,7 @@ namespace NekogamiRanch.Abilities
 
                 if (bonus != 0)
                 {
-                    recipient.AddPermanentBaseMoneyBonus(bonus);
+                    context.RanchManager.AddAnimalBaseMoneyBonus(recipient, bonus);
                 }
             }
 

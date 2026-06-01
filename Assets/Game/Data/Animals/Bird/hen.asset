@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: hen
   m_EditorClassIdentifier: 
   id: Hen
-  animalName: "母鸡"
+  animalName: "\u6BCD\u9E21"
   family: Bird
   rarity: 0
   baseMoney: 1
@@ -21,7 +21,7 @@ MonoBehaviour:
   evolutionTarget: {fileID: 0}
   evolutionTargetLevel: 0
   ability: {fileID: 11400000, guid: 2d40301cde49476385a361350f1b0a66, type: 2}
-  description: "与公鸡相邻时，有20%概率繁殖一只小鸡"
-  icon: {fileID: 0}
-  familyIcon: {fileID: 0}
+  description: "\u4E0E\u516C\u9E21\u76F8\u90BB\u65F6\uFF0C\u670920%\u6982\u7387\u7E41\u6B96\u4E00\u53EA\u5C0F\u9E21"
+  icon: {fileID: 21300000, guid: 0db6fbc77c9a0af43908766b83358451, type: 3}
+  familyIcon: {fileID: 21300000, guid: 2c4dbaf10562b7b46814560f896b05c8, type: 3}
   iconScale: 1

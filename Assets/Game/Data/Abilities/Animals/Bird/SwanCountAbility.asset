@@ -17,7 +17,7 @@ MonoBehaviour:
   priority: 0
   impactType: Global
   stackable: 0
-  desc: "场上有3只以上天鹅时获得1金币"
+  desc: 
   triggerType: SettlementPrepare
   triggerChancePercent: 100
   triggerLimit: 0

@@ -12,11 +12,13 @@ namespace NekogamiRanch.Ranch
     {
         private readonly RanchMap ranchMap;
         private readonly Action<int> addMoney;
+        private readonly Action<Animal, int> addBaseMoneyBonus;
 
-        public RanchProtectionService(RanchMap ranchMap, Action<int> addMoney)
+        public RanchProtectionService(RanchMap ranchMap, Action<int> addMoney, Action<Animal, int> addBaseMoneyBonus)
         {
             this.ranchMap = ranchMap;
             this.addMoney = addMoney;
+            this.addBaseMoneyBonus = addBaseMoneyBonus;
         }
 
         public ProtectionResult Resolve(PreyContext context, Animal target)
@@ -93,7 +95,7 @@ namespace NekogamiRanch.Ranch
                 return;
             }
 
-            passiveProtection.OnProtected(result.Protector, result.Target, abilityData, addMoney);
+            passiveProtection.OnProtected(result.Protector, result.Target, abilityData, addMoney, addBaseMoneyBonus);
         }
 
         private IReadOnlyList<Animal> ResolveCandidateProtectors(ProtectionRule rule, Animal target)

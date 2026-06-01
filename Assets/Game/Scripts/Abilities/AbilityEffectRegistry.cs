@@ -55,7 +55,12 @@ namespace NekogamiRanch.Abilities
             { "ChickenAbilityEffect", new ChickenAbilityEffect() },
             { "HenAbilityEffect", new HenAbilityEffect() },
             { "TurkeyAbilityEffect", new TurkeyAbilityEffect() },
-            { "FlamingoAbilityEffect", new FlamingoAbilityEffect() }
+            { "FlamingoAbilityEffect", new FlamingoAbilityEffect() },
+            { "DuckAbilityEffect", new DuckAbilityEffect() },
+            { "CrowAbilityEffect", new CrowAbilityEffect() },
+            { "PigeonAbilityEffect", new PigeonAbilityEffect() },
+            { "ParrotAbilityEffect", new ParrotAbilityEffect() },
+            { "MagpieAbilityEffect", new MagpieAbilityEffect() }
         };
 
         public static bool TryGet(string effectScriptId, out IAbilityEffect effect)

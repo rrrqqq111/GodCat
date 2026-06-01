@@ -15,9 +15,9 @@ MonoBehaviour:
   id: SwanPuddleAbility
   abilityType: Normal
   priority: 0
-  stackable: 0
   impactType: Self
-  desc: "与水洼相邻时获得2金币"
+  stackable: 0
+  desc: 
   triggerType: SettlementPrepare
   triggerChancePercent: 100
   triggerLimit: 0

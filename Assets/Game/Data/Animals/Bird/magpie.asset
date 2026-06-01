@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: magpie
+  m_EditorClassIdentifier: 
+  id: Magpie
+  animalName: "\u559C\u9E4A"
+  family: Bird
+  rarity: 2
+  baseMoney: 3
+  evolutionThreshold: 0
+  evolutionTarget: {fileID: 0}
+  evolutionTargetLevel: 0
+  ability: {fileID: 11400000, guid: 47aa721b0b91432a800ae89fd40bd3e0, type: 2}
+  description: "\u573A\u4E0A\u6BCF\u6709\u4E00\u79CD\u6570\u91CF\u5927\u4E8E\u7B49\u4E8E3\u7684\u52A8\u7269\uFF0C\u559C\u9E4A\u589E\u52A01\u70B9\u81EA\u8EAB\u57FA\u7840\u5C5E\u6027\u3002"
+  icon: {fileID: 0}
+  familyIcon: {fileID: 21300000, guid: 2c4dbaf10562b7b46814560f896b05c8, type: 3}
+  iconScale: 1

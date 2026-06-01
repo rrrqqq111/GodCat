@@ -48,7 +48,7 @@ namespace NekogamiRanch.Abilities
                     continue;
                 }
 
-                animal.AddPermanentBaseMoneyBonus(bonus);
+                context.RanchManager.AddAnimalBaseMoneyBonus(animal, bonus);
                 applied = true;
             }
 

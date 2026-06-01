@@ -24,7 +24,7 @@ namespace NekogamiRanch.Abilities
                 return false;
             }
 
-            context.Owner.AddPermanentBaseMoneyBonus(bonus);
+            context.RanchManager.AddAnimalBaseMoneyBonus(context.Owner, bonus);
             return true;
         }
     }

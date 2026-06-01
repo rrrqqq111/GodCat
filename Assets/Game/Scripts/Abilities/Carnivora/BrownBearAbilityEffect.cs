@@ -47,7 +47,7 @@ namespace NekogamiRanch.Abilities
             var bonus = abilityData.EffectParams != null && abilityData.EffectParams.money > 0
                 ? abilityData.EffectParams.money
                 : 2;
-            context.Owner.AddPermanentBaseMoneyBonus(bonus);
+            context.RanchManager.AddAnimalBaseMoneyBonus(context.Owner, bonus);
             return true;
         }
     }

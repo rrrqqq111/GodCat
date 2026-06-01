@@ -23,7 +23,12 @@ namespace NekogamiRanch.Abilities
                     reason: abilityData != null ? abilityData.Id : "GooseProtection");
         }
 
-        public void OnProtected(Animal protector, Animal protectedAnimal, AbilityData abilityData, Action<int> addMoney)
+        public void OnProtected(
+            Animal protector,
+            Animal protectedAnimal,
+            AbilityData abilityData,
+            Action<int> addMoney,
+            Action<Animal, int> addBaseMoneyBonus)
         {
         }
     }

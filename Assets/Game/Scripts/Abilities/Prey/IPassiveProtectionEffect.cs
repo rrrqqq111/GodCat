@@ -6,6 +6,11 @@ namespace NekogamiRanch.Abilities.Prey
     public interface IPassiveProtectionEffect
     {
         ProtectionRule CreateProtectionRule(Animal protector, AbilityData abilityData);
-        void OnProtected(Animal protector, Animal protectedAnimal, AbilityData abilityData, Action<int> addMoney);
+        void OnProtected(
+            Animal protector,
+            Animal protectedAnimal,
+            AbilityData abilityData,
+            Action<int> addMoney,
+            Action<Animal, int> addBaseMoneyBonus);
     }
 }

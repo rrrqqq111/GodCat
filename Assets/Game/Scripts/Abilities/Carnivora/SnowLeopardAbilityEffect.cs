@@ -35,7 +35,7 @@ namespace NekogamiRanch.Abilities
             var multiplier = abilityData.EffectParams != null && abilityData.EffectParams.minMultiplier > 0
                 ? abilityData.EffectParams.minMultiplier
                 : 2;
-            context.Owner.AddPermanentBaseMoneyBonus(result.RemovedTargets[0].BaseMoney * multiplier);
+            context.RanchManager.AddAnimalBaseMoneyBonus(context.Owner, result.RemovedTargets[0].BaseMoney * multiplier);
             return true;
         }
     }

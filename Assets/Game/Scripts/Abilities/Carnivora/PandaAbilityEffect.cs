@@ -33,7 +33,7 @@ namespace NekogamiRanch.Abilities
                 ? abilityData.EffectParams.money
                 : 4;
             var selectedAnimal = candidates[UnityEngine.Random.Range(0, candidates.Count)];
-            selectedAnimal.AddPermanentBaseMoneyBonus(bonus);
+            context.RanchManager.AddAnimalBaseMoneyBonus(selectedAnimal, bonus);
             return true;
         }
     }

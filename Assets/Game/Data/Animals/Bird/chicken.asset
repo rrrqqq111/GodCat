@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: chicken
   m_EditorClassIdentifier: 
   id: Chicken
-  animalName: "小鸡"
+  animalName: "\u5C0F\u9E21"
   family: Bird
   rarity: 0
   baseMoney: 0
@@ -21,7 +21,7 @@ MonoBehaviour:
   evolutionTarget: {fileID: 0}
   evolutionTargetLevel: 0
   ability: {fileID: 11400000, guid: d283f825b6134f30b4fd623e78078769, type: 2}
-  description: "3天后成长为公鸡、母鸡或火鸡（概率相同）"
-  icon: {fileID: 0}
-  familyIcon: {fileID: 0}
+  description: "3\u5929\u540E\u6210\u957F\u4E3A\u516C\u9E21\u3001\u6BCD\u9E21\u6216\u706B\u9E21\uFF08\u6982\u7387\u76F8\u540C\uFF09"
+  icon: {fileID: 21300000, guid: f779da4b8e82c0743b92c221845b47b3, type: 3}
+  familyIcon: {fileID: 21300000, guid: 2c4dbaf10562b7b46814560f896b05c8, type: 3}
   iconScale: 1
