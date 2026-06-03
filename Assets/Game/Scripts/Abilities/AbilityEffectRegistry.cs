@@ -32,6 +32,7 @@ namespace NekogamiRanch.Abilities
             { "SheepdogAbilityEffect", new SheepdogAbilityEffect() },
             { "SkunkAbilityEffect", new SkunkAbilityEffect() },
             { "CoyoteAbilityEffect", new CoyoteAbilityEffect() },
+            { "FoxAbilityEffect", new FoxAbilityEffect() },
             { "CheetahAbilityEffect", new CheetahAbilityEffect() },
             { "BadgerAbilityEffect", new BadgerAbilityEffect() },
             { "LionessAbilityEffect", new LionessAbilityEffect() },

@@ -15,8 +15,11 @@ MonoBehaviour:
   id: Camel
   animalName: "\u9A86\u9A7C"
   family: Hoofed
-  rarity: 0
+  rarity: 1
   baseMoney: 1
+  evolutionThreshold: 0
+  evolutionTarget: {fileID: 0}
+  evolutionTargetLevel: 0
   ability: {fileID: 11400000, guid: c1ac87463195429a8b04e1310072af0d, type: 2}
   description: "\u5F53\u81EA\u8EAB\u5904\u4E8E\u6C99\u6F20\u5730\u5757\u65F6\uFF0C\u968F\u673A\u89E6\u53D1\u4E00\u53EA\u76F8\u90BB\u52A8\u7269\u7684\u80FD\u529B"
   icon: {fileID: 21300000, guid: 436cc0b02b8ecd047bd524902eb1f0b8, type: 3}
