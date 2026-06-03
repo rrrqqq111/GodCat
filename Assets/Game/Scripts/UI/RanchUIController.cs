@@ -122,6 +122,15 @@ namespace NekogamiRanch.UI
                     manager.LastSettlementReport,
                     manager.IsWaitingForOfferSelection,
                     manager.IsWaitingToEnterNextDay);
+
+                if (manager.IsTurnFlowAnimating || manager.IsWaitingForOfferSelection)
+                {
+                    hud.MoveNextDayButtonOffscreen();
+                }
+                else
+                {
+                    hud.RestoreNextDayButton();
+                }
             }
 
             if (offerPanel != null)

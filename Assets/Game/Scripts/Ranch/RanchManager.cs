@@ -5,6 +5,7 @@ using NekogamiRanch.Abilities.Prey;
 using NekogamiRanch.Animals;
 using NekogamiRanch.MapObjects;
 using NekogamiRanch.Items;
+using NekogamiRanch.Presentation;
 using NekogamiRanch.Toys;
 using UnityEngine;
 
@@ -33,6 +34,8 @@ namespace NekogamiRanch.Ranch
         [SerializeField] private List<ItemData> startingItems = new List<ItemData>();
         [SerializeField, HideInInspector] private List<ItemData> itemRewardPool = new List<ItemData>();
         [SerializeField] private List<ToyData> equippedToys = new List<ToyData>();
+        [SerializeField] private RanchTurnFlowController turnFlowController;
+        [SerializeField] private RanchAnimationDirector animationDirector;
 
         private readonly RanchEventHub eventHub = new RanchEventHub();
         private RanchGameState state;
@@ -164,6 +167,7 @@ namespace NekogamiRanch.Ranch
         public bool IsWaitingForOfferSelection => state != null && state.IsWaitingForOfferSelection;
         public bool IsWaitingToEnterNextDay => state != null && state.IsWaitingToEnterNextDay;
         public bool IsTestMode => state != null && state.IsTestMode;
+        public bool IsTurnFlowAnimating => turnFlowController != null && turnFlowController.IsAnimating;
         public bool RandomizeAnimalPositionsInTestMode => state == null || state.RandomizeAnimalPositionsInTestMode;
         public IReadOnlyList<AnimalData> CurrentOffers => offerService != null ? offerService.CurrentOffers : Array.Empty<AnimalData>();
         public IReadOnlyList<ItemRuntimeState> CurrentItems => itemService != null ? itemService.Items : Array.Empty<ItemRuntimeState>();
@@ -235,6 +239,7 @@ namespace NekogamiRanch.Ranch
             TriggerToys(ToyTriggerType.RunStart);
             SeedAnimals(startingAnimals);
             CreateTurnService();
+            CreatePresentationFlow();
             SelectCell(null);
             initialized = true;
             NotifyStateChanged();
@@ -247,6 +252,11 @@ namespace NekogamiRanch.Ranch
 
         public void NextDay()
         {
+            if (turnFlowController != null && turnFlowController.PlayNextDayFlow())
+            {
+                return;
+            }
+
             turnService?.NextDay();
         }
 
@@ -526,9 +536,13 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
+            if (index < 0 || index >= offerService.CurrentOffers.Count)
+            {
+                return false;
+            }
+
             var added = offerService.SelectOffer(index, animalService);
-            state?.SetPhase(RanchPhase.DayTransition);
-            NotifyStateChanged();
+            turnService?.EnterNextDay();
             return added;
         }
 
@@ -691,6 +705,36 @@ namespace NekogamiRanch.Ranch
                 itemService,
                 toyService,
                 NotifyStateChanged);
+        }
+
+        private void CreatePresentationFlow()
+        {
+            if (turnFlowController == null)
+            {
+                turnFlowController = GetComponent<RanchTurnFlowController>();
+            }
+
+            if (turnFlowController == null)
+            {
+                turnFlowController = gameObject.AddComponent<RanchTurnFlowController>();
+            }
+
+            if (animationDirector == null)
+            {
+                animationDirector = GetComponent<RanchAnimationDirector>();
+            }
+
+            if (animationDirector == null)
+            {
+                animationDirector = FindObjectOfType<RanchAnimationDirector>();
+            }
+
+            if (animationDirector == null)
+            {
+                animationDirector = gameObject.AddComponent<RanchAnimationDirector>();
+            }
+
+            turnFlowController.Initialize(this, animationDirector, () => turnService?.NextDay());
         }
 
         private bool IsAnimalOnMap(Animal animal)

@@ -16,6 +16,12 @@ namespace NekogamiRanch.UI
         [SerializeField] private TMP_Text settlementReportText;
         [SerializeField] private Button nextDayButton;
         [SerializeField] private TMP_Text nextDayButtonLabel;
+        [SerializeField] private float hiddenButtonOffset = 240f;
+
+        private RectTransform nextDayButtonRect;
+        private Vector2 nextDayButtonShownPosition;
+        private bool hasShownButtonPosition;
+        private bool isNextDayButtonHidden;
 
         public void Initialize(Action onNextDayClicked)
         {
@@ -30,6 +36,8 @@ namespace NekogamiRanch.UI
             {
                 nextDayButton.onClick.AddListener(() => onNextDayClicked());
             }
+
+            CacheNextDayButtonPosition();
         }
 
         public void Refresh(int day, int money, int cans, string selectionTextValue, string settlementReport, bool isWaitingForOfferSelection, bool isWaitingToEnterNextDay)
@@ -74,16 +82,61 @@ namespace NekogamiRanch.UI
                 return;
             }
 
-            if (isWaitingToEnterNextDay)
-            {
-                nextDayButtonLabel.text = "下一天";
-            }
-            else
-            {
-                nextDayButtonLabel.text = "结算";
-            }
+            nextDayButtonLabel.text = "下一天";
 
             nextDayButton.interactable = !isWaitingForOfferSelection;
+        }
+
+        public void SetNextDayInteractable(bool interactable)
+        {
+            if (nextDayButton != null)
+            {
+                nextDayButton.interactable = interactable;
+            }
+        }
+
+        public void MoveNextDayButtonOffscreen()
+        {
+            CacheNextDayButtonPosition();
+            if (nextDayButtonRect == null || !hasShownButtonPosition)
+            {
+                SetNextDayInteractable(false);
+                return;
+            }
+
+            nextDayButtonRect.anchoredPosition = nextDayButtonShownPosition + Vector2.down * hiddenButtonOffset;
+            isNextDayButtonHidden = true;
+            SetNextDayInteractable(false);
+        }
+
+        public void RestoreNextDayButton()
+        {
+            CacheNextDayButtonPosition();
+            if (nextDayButtonRect != null && hasShownButtonPosition)
+            {
+                nextDayButtonRect.anchoredPosition = nextDayButtonShownPosition;
+            }
+
+            isNextDayButtonHidden = false;
+        }
+
+        private void CacheNextDayButtonPosition()
+        {
+            if (nextDayButton == null)
+            {
+                return;
+            }
+
+            if (nextDayButtonRect == null)
+            {
+                nextDayButtonRect = nextDayButton.transform as RectTransform;
+            }
+
+            if (!hasShownButtonPosition && nextDayButtonRect != null && !isNextDayButtonHidden)
+            {
+                nextDayButtonShownPosition = nextDayButtonRect.anchoredPosition;
+                hasShownButtonPosition = true;
+            }
         }
     }
 }

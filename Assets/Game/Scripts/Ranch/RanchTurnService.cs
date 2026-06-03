@@ -59,19 +59,22 @@ namespace NekogamiRanch.Ranch
             settlementService?.ResolveDailySettlement(ranchMap);
             if (state.IsTestMode)
             {
-                state.SetPhase(RanchPhase.DayTransition);
-                stateChanged?.Invoke();
+                EnterNextDay();
                 return;
             }
 
             offerService?.Roll(state.Day, 3);
-            state.SetPhase(offerService != null && offerService.CurrentOffers.Count > 0
-                ? RanchPhase.OfferSelection
-                : RanchPhase.DayTransition);
-            stateChanged?.Invoke();
+            if (offerService != null && offerService.CurrentOffers.Count > 0)
+            {
+                state.SetPhase(RanchPhase.OfferSelection);
+                stateChanged?.Invoke();
+                return;
+            }
+
+            EnterNextDay();
         }
 
-        private void EnterNextDay()
+        public void EnterNextDay()
         {
             if (!state.IsTestMode || state.RandomizeAnimalPositionsInTestMode)
             {
