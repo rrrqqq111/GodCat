@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NekogamiRanch.Animals;
 using NekogamiRanch.Ranch;
+using NekogamiRanch.Terrains;
 
 namespace NekogamiRanch.Abilities
 {
@@ -22,7 +23,7 @@ namespace NekogamiRanch.Abilities
 
             var hasAdjacentPuddle = context.RanchManager.Map
                 .GetNeighbors(context.Owner.Coords)
-                .Any(cell => cell != null && context.RanchManager.Map.IsTileType(cell.Coords, RanchTileType.Puddle));
+                .Any(cell => cell != null && context.RanchManager.Map.IsTerrain(cell.Coords, RanchTerrainIds.Puddle));
             if (!hasAdjacentPuddle)
             {
                 return false;

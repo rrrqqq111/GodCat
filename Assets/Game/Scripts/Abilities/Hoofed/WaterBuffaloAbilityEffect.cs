@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using NekogamiRanch.Animals;
 using NekogamiRanch.Ranch;
+using NekogamiRanch.Terrains;
 
 namespace NekogamiRanch.Abilities
 {
@@ -13,7 +14,7 @@ namespace NekogamiRanch.Abilities
                 return false;
             }
 
-            if (!context.RanchManager.Map.IsTileType(context.Owner, RanchTileType.Puddle))
+            if (!context.RanchManager.Map.IsTerrain(context.Owner, RanchTerrainIds.Puddle))
             {
                 return false;
             }

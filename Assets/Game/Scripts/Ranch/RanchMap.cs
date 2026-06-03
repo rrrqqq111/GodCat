@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NekogamiRanch.Animals;
 using NekogamiRanch.MapObjects;
@@ -202,49 +203,39 @@ namespace NekogamiRanch.Ranch
             return null;
         }
 
-        public RanchTileType GetTileType(Vector2Int coords)
+        public string GetTerrainId(Vector2Int coords)
         {
-            return tileSystem != null ? tileSystem.GetTileType(coords) : RanchTileType.Normal;
+            return tileSystem != null ? tileSystem.GetTerrainId(coords) : "normal";
         }
 
-        public RanchTileType GetTileType(Animal animal)
+        public string GetTerrainId(Animal animal)
         {
-            return tileSystem != null ? tileSystem.GetTileType(animal) : RanchTileType.Normal;
+            return tileSystem != null ? tileSystem.GetTerrainId(animal) : "normal";
         }
 
-        public bool IsTileType(Vector2Int coords, RanchTileType tileType)
+        public bool IsTerrain(Vector2Int coords, string terrainId)
         {
-            return GetTileType(coords) == tileType;
+            return tileSystem != null && tileSystem.IsTerrain(coords, terrainId);
         }
 
-        public bool IsTileType(Animal animal, RanchTileType tileType)
+        public bool IsTerrain(Animal animal, string terrainId)
         {
-            return animal != null && GetTileType(animal) == tileType;
+            return tileSystem != null && tileSystem.IsTerrain(animal, terrainId);
         }
 
-        public bool TrySetTileType(Vector2Int coords, RanchTileType tileType)
+        public bool TrySetTerrainId(Vector2Int coords, string terrainId)
         {
-            return tileSystem != null && tileSystem.TrySetTileType(coords, tileType);
+            return tileSystem != null && tileSystem.TrySetTerrainId(coords, terrainId);
         }
 
-        public bool TrySetTileType(MapCell cell, RanchTileType tileType)
+        public bool TrySetTerrainId(MapCell cell, string terrainId)
         {
-            return tileSystem != null && tileSystem.TrySetTileType(cell, tileType);
+            return tileSystem != null && tileSystem.TrySetTerrainId(cell, terrainId);
         }
 
-        public bool TrySetTileType(Animal animal, RanchTileType tileType)
+        public bool TrySetTerrainId(Animal animal, string terrainId)
         {
-            return tileSystem != null && tileSystem.TrySetTileType(animal, tileType);
-        }
-
-        public bool TrySetAnimalTileType(Animal animal, RanchTileType tileType)
-        {
-            return TrySetTileType(animal, tileType);
-        }
-
-        public bool TrySetCellTileType(MapCell cell, RanchTileType tileType)
-        {
-            return TrySetTileType(cell, tileType);
+            return tileSystem != null && tileSystem.TrySetTerrainId(animal, terrainId);
         }
 
         private IEnumerable<Vector2Int> GetNeighborCoords(Vector2Int coords)

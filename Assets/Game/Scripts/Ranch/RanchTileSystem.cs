@@ -1,21 +1,23 @@
 using System;
 using System.Collections.Generic;
 using NekogamiRanch.Animals;
+using NekogamiRanch.Terrains;
 using UnityEngine;
 
 namespace NekogamiRanch.Ranch
 {
     public class RanchTileSystem : MonoBehaviour
     {
-        [SerializeField] private RanchTileType defaultTileType = RanchTileType.Normal;
-        [SerializeField] private List<TileSpriteBinding> tileSprites = new List<TileSpriteBinding>();
-        [SerializeField] private List<CellTileTypeOverride> cellOverrides = new List<CellTileTypeOverride>();
+        [SerializeField] private string defaultTerrainId = RanchTerrainIds.Normal;
+        [SerializeField] private List<RanchTerrainData> terrainData = new List<RanchTerrainData>();
+        [SerializeField] private List<CellTerrainOverride> terrainOverrides = new List<CellTerrainOverride>();
 
-        private readonly Dictionary<RanchTileType, TileSpriteBinding> visualByType = new Dictionary<RanchTileType, TileSpriteBinding>();
-        private readonly Dictionary<Vector2Int, RanchTileType> typeByCoords = new Dictionary<Vector2Int, RanchTileType>();
+        private readonly Dictionary<string, RanchTerrainData> dataById = new Dictionary<string, RanchTerrainData>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<Vector2Int, string> terrainIdByCoords = new Dictionary<Vector2Int, string>();
         private RanchMap map;
 
-        public RanchTileType DefaultTileType => defaultTileType;
+        public string DefaultTerrainId => NormalizeTerrainId(defaultTerrainId);
+        public IReadOnlyList<RanchTerrainData> TerrainData => terrainData;
 
         public void Initialize(RanchMap ranchMap)
         {
@@ -24,72 +26,78 @@ namespace NekogamiRanch.Ranch
             ApplyAll();
         }
 
-        public RanchTileType GetTileType(Vector2Int coords)
+        public string GetTerrainId(Vector2Int coords)
         {
-            return typeByCoords.TryGetValue(coords, out var tileType) ? tileType : defaultTileType;
+            if (terrainIdByCoords.TryGetValue(coords, out var terrainId))
+            {
+                return NormalizeTerrainId(terrainId);
+            }
+
+            return DefaultTerrainId;
         }
 
-        public RanchTileType GetTileType(Animal animal)
+        public string GetTerrainId(Animal animal)
         {
-            return animal != null ? GetTileType(animal.Coords) : defaultTileType;
+            return animal != null ? GetTerrainId(animal.Coords) : DefaultTerrainId;
         }
 
-        public bool IsTileType(Vector2Int coords, RanchTileType tileType)
+        public bool IsTerrain(Vector2Int coords, string terrainId)
         {
-            return GetTileType(coords) == tileType;
+            return string.Equals(GetTerrainId(coords), NormalizeTerrainId(terrainId), StringComparison.OrdinalIgnoreCase);
         }
 
-        public bool IsTileType(Animal animal, RanchTileType tileType)
+        public bool IsTerrain(Animal animal, string terrainId)
         {
-            return animal != null && IsTileType(animal.Coords, tileType);
+            return animal != null && IsTerrain(animal.Coords, terrainId);
         }
 
-        public bool TrySetTileType(Vector2Int coords, RanchTileType tileType)
+        public bool TrySetTerrainId(Vector2Int coords, string terrainId)
         {
             if (map == null || !map.TryGetCell(coords, out var cell))
             {
                 return false;
             }
 
-            SetTileType(coords, tileType);
+            SetTerrainId(coords, terrainId);
             ApplyToCell(cell);
             return true;
         }
 
-        public bool TrySetTileType(MapCell cell, RanchTileType tileType)
+        public bool TrySetTerrainId(MapCell cell, string terrainId)
         {
-            return cell != null && TrySetTileType(cell.Coords, tileType);
+            return cell != null && TrySetTerrainId(cell.Coords, terrainId);
         }
 
-        public bool TrySetTileType(Animal animal, RanchTileType tileType)
+        public bool TrySetTerrainId(Animal animal, string terrainId)
         {
-            return animal != null && TrySetTileType(animal.Coords, tileType);
+            return animal != null && TrySetTerrainId(animal.Coords, terrainId);
         }
 
-        public bool TrySetAnimalTileType(Animal animal, RanchTileType tileType)
+        public void SetTerrainId(Vector2Int coords, string terrainId)
         {
-            return TrySetTileType(animal, tileType);
+            var normalizedId = NormalizeTerrainId(terrainId);
+            terrainIdByCoords[coords] = normalizedId;
+            SetSerializedTerrainOverride(coords, normalizedId);
         }
 
-        public bool TrySetCellTileType(MapCell cell, RanchTileType tileType)
+        public Sprite GetSprite(string terrainId)
         {
-            return TrySetTileType(cell, tileType);
+            if (dataById.TryGetValue(NormalizeTerrainId(terrainId), out var terrain) && terrain.TileSprite != null)
+            {
+                return terrain.TileSprite;
+            }
+
+            return null;
         }
 
-        public void SetTileType(Vector2Int coords, RanchTileType tileType)
+        public Vector2 GetSizeMultiplier(string terrainId)
         {
-            typeByCoords[coords] = tileType;
-            SetSerializedOverride(coords, tileType);
-        }
+            if (dataById.TryGetValue(NormalizeTerrainId(terrainId), out var terrain))
+            {
+                return terrain.SizeMultiplier;
+            }
 
-        public Sprite GetSprite(RanchTileType tileType)
-        {
-            return visualByType.TryGetValue(tileType, out var visual) ? visual.sprite : null;
-        }
-
-        public Vector2 GetSizeMultiplier(RanchTileType tileType)
-        {
-            return visualByType.TryGetValue(tileType, out var visual) ? visual.SizeMultiplier : Vector2.one;
+            return Vector2.one;
         }
 
         public void ApplyToCell(MapCell cell)
@@ -99,10 +107,11 @@ namespace NekogamiRanch.Ranch
                 return;
             }
 
-            var tileType = GetTileType(cell.Coords);
-            if (visualByType.TryGetValue(tileType, out var visual) && visual.sprite != null)
+            var terrainId = GetTerrainId(cell.Coords);
+            if (dataById.TryGetValue(terrainId, out var terrain) && terrain.TileSprite != null)
             {
-                cell.SetTileSprite(visual.sprite, visual.SizeMultiplier, visual.updateColliderSize);
+                cell.SetTileSprite(terrain.TileSprite, terrain.SizeMultiplier, terrain.UpdateColliderSize);
+                return;
             }
         }
 
@@ -121,68 +130,54 @@ namespace NekogamiRanch.Ranch
 
         private void RebuildLookups()
         {
-            visualByType.Clear();
-            foreach (var binding in tileSprites)
+            dataById.Clear();
+            foreach (var data in terrainData)
             {
-                if (binding.sprite != null)
+                if (data != null)
                 {
-                    visualByType[binding.tileType] = binding;
+                    dataById[data.Id] = data;
                 }
             }
 
-            typeByCoords.Clear();
-            foreach (var entry in cellOverrides)
+            terrainIdByCoords.Clear();
+            foreach (var entry in terrainOverrides)
             {
-                typeByCoords[entry.coords] = entry.tileType;
+                terrainIdByCoords[entry.coords] = NormalizeTerrainId(entry.terrainId);
             }
         }
 
-        private void SetSerializedOverride(Vector2Int coords, RanchTileType tileType)
+        private void SetSerializedTerrainOverride(Vector2Int coords, string terrainId)
         {
-            for (var i = 0; i < cellOverrides.Count; i++)
+            for (var i = 0; i < terrainOverrides.Count; i++)
             {
-                if (cellOverrides[i].coords != coords)
+                if (terrainOverrides[i].coords != coords)
                 {
                     continue;
                 }
 
-                var entry = cellOverrides[i];
-                entry.tileType = tileType;
-                cellOverrides[i] = entry;
+                var entry = terrainOverrides[i];
+                entry.terrainId = terrainId;
+                terrainOverrides[i] = entry;
                 return;
             }
 
-            cellOverrides.Add(new CellTileTypeOverride
+            terrainOverrides.Add(new CellTerrainOverride
             {
                 coords = coords,
-                tileType = tileType
+                terrainId = terrainId
             });
         }
 
-        [Serializable]
-        private struct TileSpriteBinding
+        private static string NormalizeTerrainId(string terrainId)
         {
-            public RanchTileType tileType;
-            public Sprite sprite;
-            public Vector2 sizeMultiplier;
-            public bool updateColliderSize;
-
-            public Vector2 SizeMultiplier
-            {
-                get
-                {
-                    return new Vector2(
-                        sizeMultiplier.x > 0f ? sizeMultiplier.x : 1f,
-                        sizeMultiplier.y > 0f ? sizeMultiplier.y : 1f);
-                }
-            }
+            return string.IsNullOrWhiteSpace(terrainId) ? RanchTerrainIds.Normal : terrainId.Trim();
         }
 
         [Serializable]
-        private struct CellTileTypeOverride
+        private struct CellTerrainOverride
         {
             public Vector2Int coords;
-            public RanchTileType tileType;
+            public string terrainId;
         }
     }
 }

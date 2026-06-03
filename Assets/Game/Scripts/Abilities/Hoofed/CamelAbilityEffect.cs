@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NekogamiRanch.Animals;
 using NekogamiRanch.Ranch;
+using NekogamiRanch.Terrains;
 using UnityEngine;
 
 namespace NekogamiRanch.Abilities
@@ -16,7 +17,7 @@ namespace NekogamiRanch.Abilities
             }
 
             var map = context.RanchManager.Map;
-            if (!map.IsTileType(context.Owner, RanchTileType.Sand))
+            if (!map.IsTerrain(context.Owner, RanchTerrainIds.Sand))
             {
                 return false;
             }

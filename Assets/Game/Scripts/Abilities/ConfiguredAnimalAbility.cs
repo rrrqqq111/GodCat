@@ -199,14 +199,9 @@ namespace NekogamiRanch.Abilities
                 return 0;
             }
 
-            if (!Enum.TryParse<RanchTileType>(effectParams.cooldownReductionTileType, true, out var tileType))
-            {
-                return 0;
-            }
-
             foreach (var neighbor in context.RanchManager.Map.GetNeighbors(context.Owner.Coords))
             {
-                if (context.RanchManager.Map.IsTileType(neighbor.Coords, tileType))
+                if (context.RanchManager.Map.IsTerrain(neighbor.Coords, effectParams.cooldownReductionTileType))
                 {
                     return effectParams.cooldownReductionAmount;
                 }
