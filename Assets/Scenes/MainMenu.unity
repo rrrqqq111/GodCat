@@ -8990,32 +8990,32 @@ MonoBehaviour:
     enterDirection: 2
     targetAnchoredPos: {x: 855, y: 0}
     outsideOffset: 300
-    arriveClip: {fileID: 8300000, guid: 5279c7c375206264aa252c1d988bfa7d, type: 3}
+    arriveClip: {fileID: 8300000, guid: 5703134eec8ca0447ab49dfdf3ef1068, type: 3}
   - rect: {fileID: 388818649}
     enterDirection: 2
     targetAnchoredPos: {x: 381, y: 0}
     outsideOffset: 500
-    arriveClip: {fileID: 8300000, guid: 5279c7c375206264aa252c1d988bfa7d, type: 3}
+    arriveClip: {fileID: 8300000, guid: 5703134eec8ca0447ab49dfdf3ef1068, type: 3}
   - rect: {fileID: 1291041140}
     enterDirection: 0
     targetAnchoredPos: {x: 0, y: -351}
     outsideOffset: 300
-    arriveClip: {fileID: 8300000, guid: 5279c7c375206264aa252c1d988bfa7d, type: 3}
+    arriveClip: {fileID: 8300000, guid: 5703134eec8ca0447ab49dfdf3ef1068, type: 3}
   - rect: {fileID: 401745131}
     enterDirection: 1
     targetAnchoredPos: {x: 0, y: 0}
     outsideOffset: 300
-    arriveClip: {fileID: 8300000, guid: 5279c7c375206264aa252c1d988bfa7d, type: 3}
+    arriveClip: {fileID: 8300000, guid: 5703134eec8ca0447ab49dfdf3ef1068, type: 3}
   - rect: {fileID: 280491092}
     enterDirection: 1
     targetAnchoredPos: {x: 0, y: 368}
     outsideOffset: 300
-    arriveClip: {fileID: 8300000, guid: 5279c7c375206264aa252c1d988bfa7d, type: 3}
+    arriveClip: {fileID: 8300000, guid: 5703134eec8ca0447ab49dfdf3ef1068, type: 3}
   - rect: {fileID: 762888887}
     enterDirection: 1
     targetAnchoredPos: {x: 0, y: 740}
     outsideOffset: 300
-    arriveClip: {fileID: 8300000, guid: 5279c7c375206264aa252c1d988bfa7d, type: 3}
+    arriveClip: {fileID: 8300000, guid: 5703134eec8ca0447ab49dfdf3ef1068, type: 3}
   interval: 0.15
   moveDuration: 0.4
   moveCurve:
@@ -12869,6 +12869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameSceneName: GameStartSence
+  targetSceneName: 
   qqGroupUrl: https://qm.qq.com/q/fROUwjmYJG
   discordUrl: https://www.baidu.com
   twitterUrl: https://www.bilibili.com
@@ -19421,7 +19422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 718441570}
-  hoverClip: {fileID: 8300000, guid: 032e9e4faea0b1d41aef28aebbe86d92, type: 3}
+  hoverClip: {fileID: 8300000, guid: 2fe57d278556adc4e9373e25edce4c87, type: 3}
   clickClip: {fileID: 8300000, guid: 5703134eec8ca0447ab49dfdf3ef1068, type: 3}
 --- !u!114 &1747087713
 MonoBehaviour:

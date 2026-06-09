@@ -25,6 +25,7 @@ namespace Game.EditorTools
 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("skillDescription"), new GUIContent("技能描述"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("catGodImage"), new GUIContent("猫神图片"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("icon"), new GUIContent("猫神头像"));
 
             serializedObject.ApplyModifiedProperties();
         }

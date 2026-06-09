@@ -38,6 +38,24 @@ namespace NekogamiRanch.Ranch
             return TryAddAnimalToRandomEmptyCell(data, out _);
         }
 
+        public bool TryAddAnimalToRoster(AnimalData data)
+        {
+            return TryAddAnimalToRoster(data, out _);
+        }
+
+        public bool TryAddAnimalToRoster(AnimalData data, out Animal animal)
+        {
+            animal = null;
+            if (data == null)
+            {
+                return false;
+            }
+
+            animal = new Animal(data, Vector2Int.zero);
+            rosterService.Add(animal);
+            return true;
+        }
+
         public bool TryAddAnimalToRandomEmptyCell(AnimalData data, out Animal animal)
         {
             animal = null;

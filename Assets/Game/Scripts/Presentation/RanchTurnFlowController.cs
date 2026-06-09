@@ -50,9 +50,20 @@ namespace NekogamiRanch.Presentation
 
             if (director != null)
             {
+                director.HideAnimals(manager.Map);
                 yield return director.PlayDayTransition();
-                yield return director.PlayGateSequence();
-                yield return director.PlayAnimalEnterSequence(manager.Map);
+                yield return director.PlayGateClose();
+                if (manager != null && manager.IsWaitingToEnterNextDay)
+                {
+                    manager.RandomizeAnimalPositionsForNextDay();
+                    director.HideAnimals(manager.Map);
+                }
+
+                yield return director.PlayGateOpenWithDaylight();
+                if (manager == null || !manager.IsWaitingForOfferSelection)
+                {
+                    yield return director.PlayAnimalEnterSequence(manager.Map);
+                }
             }
             else
             {
@@ -60,6 +71,7 @@ namespace NekogamiRanch.Presentation
             }
 
             resolveNextDay?.Invoke();
+
             IsAnimating = false;
             runningFlow = null;
 

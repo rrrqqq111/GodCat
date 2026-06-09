@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 871fd44a8ac44022937a178486d2bf17, type: 3}
   m_Name: CatGodData 1
   m_EditorClassIdentifier: 
-  catGodName: 22223
-  skillName: 44355
+  catGodName: Joker
+  skillName: "\u9B54\u672F\u624B"
   skillType: 0
   activeSkillCooldownDays: 2
-  skillDescription: "\u4ED6\u548C\u592A\u592A\u54C8\u54C8"
-  catGodImage: {fileID: 21300000, guid: 66cddbb2cadee83469fe2a6e84d8b9f8, type: 3}
+  skillDescription: "\u9009\u62E9\u4E00\u53EA\u52A8\u7269\u5C06\u5176\u53D8\u5316\u4E3A\u66F4\u9AD8\u7A00\u6709\u5EA6\u7684\u52A8\u7269\uFF08\u65E0\u6CD5\u53D8\u4E3A\u7EDD\u8FF9\uFF09"
+  catGodImage: {fileID: 21300000, guid: 203ba0115547d3148a0182205b5eb5f5, type: 3}
+  icon: {fileID: 21300000, guid: c95003d72fcaa4b47badbedd25afe946, type: 3}

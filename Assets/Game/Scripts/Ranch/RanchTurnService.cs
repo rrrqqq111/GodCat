@@ -63,7 +63,7 @@ namespace NekogamiRanch.Ranch
                 return;
             }
 
-            offerService?.Roll(state.Day, 3);
+            offerService?.Roll(state.Day, RanchManager.AnimalOfferCount);
             if (offerService != null && offerService.CurrentOffers.Count > 0)
             {
                 state.SetPhase(RanchPhase.OfferSelection);
@@ -76,9 +76,14 @@ namespace NekogamiRanch.Ranch
 
         public void EnterNextDay()
         {
-            if (!state.IsTestMode || state.RandomizeAnimalPositionsInTestMode)
+            EnterNextDay(true);
+        }
+
+        public void EnterNextDay(bool randomizePositions)
+        {
+            if (randomizePositions)
             {
-                animalService?.RandomizeAnimalPositions();
+                RandomizeAnimalPositionsForNextDay();
             }
 
             deploymentTriggerService?.TriggerDayStartDeployedAnimals();
@@ -87,6 +92,14 @@ namespace NekogamiRanch.Ranch
             toyService?.Trigger(ToyTriggerType.DayStart, state.Day);
             itemService?.Trigger(ItemTriggerType.DayStart, state.Day);
             stateChanged?.Invoke();
+        }
+
+        public void RandomizeAnimalPositionsForNextDay()
+        {
+            if (!state.IsTestMode || state.RandomizeAnimalPositionsInTestMode)
+            {
+                animalService?.RandomizeAnimalPositions();
+            }
         }
     }
 }

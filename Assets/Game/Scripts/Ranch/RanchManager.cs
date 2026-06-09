@@ -15,6 +15,8 @@ namespace NekogamiRanch.Ranch
     {
         private const string AnimalDataRoot = "Assets/Game/Data/Animals";
         private const string ItemDataRoot = "Assets/Game/Data/Items";
+        public const int AnimalOfferRefreshCansCost = 1;
+        public const int AnimalOfferCount = 3;
 
         [SerializeField] private int mapWidth = 4;
         [SerializeField] private int mapHeight = 5;
@@ -162,6 +164,7 @@ namespace NekogamiRanch.Ranch
         public int Money => state != null ? state.Money : money;
         public int Cans => state != null ? state.Cans : cans;
         public int RemoveAnimalCansCost => removeAnimalCansCost;
+        public int AnimalOfferRefreshCost => AnimalOfferRefreshCansCost;
         public RanchMap Map => ranchMap;
         public MapCell SelectedCell => selectionService?.SelectedCell;
         public bool IsWaitingForOfferSelection => state != null && state.IsWaitingForOfferSelection;
@@ -254,6 +257,22 @@ namespace NekogamiRanch.Ranch
         {
             if (turnFlowController != null && turnFlowController.PlayNextDayFlow())
             {
+                return;
+            }
+
+            turnService?.NextDay();
+        }
+
+        public void RandomizeAnimalPositionsForNextDay()
+        {
+            turnService?.RandomizeAnimalPositionsForNextDay();
+        }
+
+        public void ResolveNextDayWithoutPositionRandomization()
+        {
+            if (IsWaitingToEnterNextDay)
+            {
+                turnService?.EnterNextDay(false);
                 return;
             }
 
@@ -445,6 +464,25 @@ namespace NekogamiRanch.Ranch
             return animalCommandService != null && animalCommandService.TryAddAnimalToRandomEmptyCell(animalData);
         }
 
+        public bool TryAddAnimalToRosterForNextDay(AnimalData animalData)
+        {
+            if (animalService == null || animalData == null)
+            {
+                return false;
+            }
+
+            var added = animalService.TryAddAnimalToRoster(animalData);
+            if (!added)
+            {
+                return false;
+            }
+
+            offerService?.Clear();
+            state?.SetPhase(RanchPhase.DayTransition);
+            NotifyStateChanged();
+            return true;
+        }
+
         public bool TryAddAnimalAtEmptyCell(Vector2Int coords, AnimalData animalData)
         {
             return TryAddAnimalAtEmptyCell(coords, animalData, out _);
@@ -541,9 +579,53 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
-            var added = offerService.SelectOffer(index, animalService);
+            return offerService.SelectOffer(index, animalService) && SetOfferSelectionReadyForNextDay();
+        }
+
+        private bool SetOfferSelectionReadyForNextDay()
+        {
+            state?.SetPhase(RanchPhase.DayTransition);
+            NotifyStateChanged();
+            return true;
+        }
+
+        public void RefreshAnimalOffers()
+        {
+            TryRefreshAnimalOffers();
+        }
+
+        public bool TryRefreshAnimalOffers()
+        {
+            if (!IsWaitingForOfferSelection || offerService == null || state == null)
+            {
+                return false;
+            }
+
+            if (!TrySpendCans(AnimalOfferRefreshCansCost))
+            {
+                return false;
+            }
+
+            offerService.Roll(state.Day, AnimalOfferCount);
+            NotifyStateChanged();
+            return offerService.CurrentOffers.Count > 0;
+        }
+
+        public void SkipAnimalOfferSelection()
+        {
+            TrySkipAnimalOfferSelection();
+        }
+
+        public bool TrySkipAnimalOfferSelection()
+        {
+            if (!IsWaitingForOfferSelection || offerService == null)
+            {
+                return false;
+            }
+
+            offerService.Clear();
             turnService?.EnterNextDay();
-            return added;
+            return true;
         }
 
         public int CountAnimalsById(string animalId)
@@ -734,7 +816,7 @@ namespace NekogamiRanch.Ranch
                 animationDirector = gameObject.AddComponent<RanchAnimationDirector>();
             }
 
-            turnFlowController.Initialize(this, animationDirector, () => turnService?.NextDay());
+            turnFlowController.Initialize(this, animationDirector, ResolveNextDayWithoutPositionRandomization);
         }
 
         private bool IsAnimalOnMap(Animal animal)

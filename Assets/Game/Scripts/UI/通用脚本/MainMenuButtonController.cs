@@ -4,6 +4,7 @@ public class MainMenuButtonController : MonoBehaviour
 {
     [Header("锟斤拷始锟斤拷戏")]
     [SerializeField] private string gameSceneName = "GameStartSence";
+    [SerializeField] private string targetSceneName;
 
     [Header("锟斤拷页锟斤拷锟斤拷")]
     [SerializeField] private string qqGroupUrl = "https://";
@@ -29,6 +30,22 @@ public class MainMenuButtonController : MonoBehaviour
     public void OnClickStartGame()
     {
         SceneTransitionManager.Instance.LoadSceneWithTransition(gameSceneName);
+    }
+
+    public void OnClickLoadTargetScene()
+    {
+        LoadScene(targetSceneName);
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        if (string.IsNullOrWhiteSpace(sceneName))
+        {
+            Debug.LogWarning("Scene name is empty.");
+            return;
+        }
+
+        SceneTransitionManager.Instance.LoadSceneWithTransition(sceneName.Trim());
     }
 
     public void OnClickQuitGame()

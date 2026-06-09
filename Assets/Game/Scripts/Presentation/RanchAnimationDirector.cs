@@ -23,6 +23,15 @@ namespace NekogamiRanch.Presentation
         [SerializeField, Min(0.01f)] private float animalEnterSpeed = 6f;
         [SerializeField, Min(0f)] private float animalEnterInterval = 0.04f;
 
+        private bool hasDoubleGatePose;
+        private bool hasSingleGatePose;
+        private Vector3 leftGateOpenPosition;
+        private Vector3 leftGateClosedPosition;
+        private Vector3 rightGateOpenPosition;
+        private Vector3 rightGateClosedPosition;
+        private Vector3 singleGateOpenPosition;
+        private Vector3 singleGateClosedPosition;
+
         public Transform AnimalEnterPoint => animalEnterPoint != null ? animalEnterPoint : ranchGate;
 
         public IEnumerator PlayDayTransition()
@@ -45,14 +54,55 @@ namespace NekogamiRanch.Presentation
 
         public IEnumerator PlayGateSequence()
         {
+            yield return PlayGateClose();
+            yield return PlayGateOpenWithDaylight();
+        }
+
+        public IEnumerator PlayGateClose()
+        {
             ResolveGatePanels();
             if (leftGate != null && rightGate != null)
             {
-                yield return PlayDoubleGateSequence();
+                yield return PlayDoubleGateClose();
                 yield break;
             }
 
-            yield return PlaySingleGateFallback();
+            yield return PlaySingleGateCloseFallback();
+        }
+
+        public IEnumerator PlayGateOpenWithDaylight()
+        {
+            if (hasDoubleGatePose && leftGate != null && rightGate != null)
+            {
+                yield return OpenGateWithDaylight(leftGateClosedPosition, leftGateOpenPosition, rightGateClosedPosition, rightGateOpenPosition);
+                hasDoubleGatePose = false;
+                yield break;
+            }
+
+            if (hasSingleGatePose && ranchGate != null)
+            {
+                yield return OpenSingleGateWithDaylight(singleGateClosedPosition, singleGateOpenPosition);
+                hasSingleGatePose = false;
+                yield break;
+            }
+
+            yield return FadeOutOverlay();
+        }
+
+        public void HideAnimals(RanchMap ranchMap)
+        {
+            if (ranchMap == null)
+            {
+                return;
+            }
+
+            foreach (var cell in ranchMap.GetCellsInScanOrder())
+            {
+                if (cell?.AnimalView != null)
+                {
+                    cell.AnimalView.SetVisible(false);
+                }
+            }
         }
 
         public IEnumerator PlayAnimalEnterSequence(RanchMap ranchMap)
@@ -113,20 +163,20 @@ namespace NekogamiRanch.Presentation
             onComplete?.Invoke();
         }
 
-        private IEnumerator PlayDoubleGateSequence()
+        private IEnumerator PlayDoubleGateClose()
         {
-            var leftOpen = leftGate.localPosition;
-            var rightOpen = rightGate.localPosition;
-            var gap = Mathf.Abs(rightOpen.x - leftOpen.x);
+            leftGateOpenPosition = leftGate.localPosition;
+            rightGateOpenPosition = rightGate.localPosition;
+            var gap = Mathf.Abs(rightGateOpenPosition.x - leftGateOpenPosition.x);
             var closeOffset = gap * 0.3f;
-            var leftClosed = leftOpen + Vector3.right * closeOffset;
-            var rightClosed = rightOpen + Vector3.left * closeOffset;
+            leftGateClosedPosition = leftGateOpenPosition + Vector3.right * closeOffset;
+            rightGateClosedPosition = rightGateOpenPosition + Vector3.left * closeOffset;
+            hasDoubleGatePose = true;
 
-            yield return MoveGatePanels(leftOpen, leftClosed, rightOpen, rightClosed, gateStepDuration);
-            yield return OpenGateWithDaylight(leftClosed, leftOpen, rightClosed, rightOpen);
+            yield return MoveGatePanels(leftGateOpenPosition, leftGateClosedPosition, rightGateOpenPosition, rightGateClosedPosition, gateStepDuration);
         }
 
-        private IEnumerator PlaySingleGateFallback()
+        private IEnumerator PlaySingleGateCloseFallback()
         {
             if (ranchGate == null)
             {
@@ -137,15 +187,14 @@ namespace NekogamiRanch.Presentation
             {
                 Debug.Log("[RanchAnimationDirector] Ranch gate panels are not assigned. Skipping placeholder gate animation.");
                 yield return new WaitForSeconds(gateStepDuration * 2f);
-                yield return FadeOutOverlay();
                 yield break;
             }
 
-            var origin = ranchGate.localPosition;
-            var closedPosition = origin + Vector3.down * 0.35f;
+            singleGateOpenPosition = ranchGate.localPosition;
+            singleGateClosedPosition = singleGateOpenPosition + Vector3.down * 0.35f;
+            hasSingleGatePose = true;
 
-            yield return MoveLocal(ranchGate, origin, closedPosition, gateStepDuration);
-            yield return OpenSingleGateWithDaylight(closedPosition, origin);
+            yield return MoveLocal(ranchGate, singleGateOpenPosition, singleGateClosedPosition, gateStepDuration);
         }
 
         private IEnumerator OpenGateWithDaylight(Vector3 leftClosed, Vector3 leftOpen, Vector3 rightClosed, Vector3 rightOpen)

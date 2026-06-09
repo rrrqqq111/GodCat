@@ -11,6 +11,7 @@ namespace NekogamiRanch.CatGods
         [SerializeField, Min(0), InspectorName("主动技能CD")] private int activeSkillCooldownDays;
         [SerializeField, TextArea, InspectorName("技能描述")] private string skillDescription;
         [SerializeField, InspectorName("猫神图片")] private Sprite catGodImage;
+        [SerializeField, InspectorName("猫神头像")] private Sprite icon;
 
         public string CatGodName => string.IsNullOrWhiteSpace(catGodName) ? name : catGodName;
         public string SkillName => skillName;
@@ -19,5 +20,6 @@ namespace NekogamiRanch.CatGods
         public string SkillDescription => skillDescription;
         public Sprite CatGodImage => catGodImage;
         public bool IsActiveSkill => skillType == CatGodSkillType.Active;
+        public Sprite Icon => catGodImage;
     }
 }
