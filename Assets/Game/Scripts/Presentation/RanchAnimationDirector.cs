@@ -1,4 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
+using System;
+using NekogamiRanch.Ranch;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +18,10 @@ namespace NekogamiRanch.Presentation
         [SerializeField, Min(0.01f)] private float fadeDuration = 0.35f;
         [SerializeField, Min(0f)] private float nightHoldDuration = 0.18f;
         [SerializeField, Min(0.01f)] private float gateStepDuration = 0.18f;
+
+        [Header("Animal Enter")]
+        [SerializeField, Min(0.01f)] private float animalEnterSpeed = 6f;
+        [SerializeField, Min(0f)] private float animalEnterInterval = 0.04f;
 
         public Transform AnimalEnterPoint => animalEnterPoint != null ? animalEnterPoint : ranchGate;
 
@@ -46,6 +53,64 @@ namespace NekogamiRanch.Presentation
             }
 
             yield return PlaySingleGateFallback();
+        }
+
+        public IEnumerator PlayAnimalEnterSequence(RanchMap ranchMap)
+        {
+            if (ranchMap == null)
+            {
+                yield break;
+            }
+
+            var entries = new List<(AnimalView View, Vector3 Target)>();
+            foreach (var cell in ranchMap.GetCellsInScanOrder())
+            {
+                if (cell == null || cell.Animal == null || cell.AnimalView == null)
+                {
+                    continue;
+                }
+
+                entries.Add((cell.AnimalView, cell.AnimalView.TargetWorldPosition));
+            }
+
+            if (entries.Count == 0)
+            {
+                yield break;
+            }
+
+            var enterPosition = GetAnimalEnterWorldPosition(entries[0].Target);
+            foreach (var entry in entries)
+            {
+                entry.View.SetVisible(false);
+            }
+
+            var runningCount = 0;
+            foreach (var entry in entries)
+            {
+                var duration = Vector3.Distance(enterPosition, entry.Target) / animalEnterSpeed;
+                runningCount++;
+                StartCoroutine(PlayAnimalEnterAndComplete(entry.View, enterPosition, entry.Target, duration, () => runningCount--));
+
+                if (animalEnterInterval > 0f)
+                {
+                    yield return new WaitForSeconds(animalEnterInterval);
+                }
+            }
+
+            while (runningCount > 0)
+            {
+                yield return null;
+            }
+        }
+
+        private IEnumerator PlayAnimalEnterAndComplete(AnimalView view, Vector3 enterPosition, Vector3 targetPosition, float duration, Action onComplete)
+        {
+            if (view != null)
+            {
+                yield return view.PlayEnterFrom(enterPosition, targetPosition, duration);
+            }
+
+            onComplete?.Invoke();
         }
 
         private IEnumerator PlayDoubleGateSequence()
@@ -266,6 +331,27 @@ namespace NekogamiRanch.Presentation
             }
 
             return null;
+        }
+
+        private Vector3 GetAnimalEnterWorldPosition(Vector3 fallback)
+        {
+            if (animalEnterPoint != null)
+            {
+                return animalEnterPoint.position;
+            }
+
+            if (ranchGate != null)
+            {
+                return ranchGate.position;
+            }
+
+            ResolveGatePanels();
+            if (leftGate != null && rightGate != null)
+            {
+                return (leftGate.position + rightGate.position) * 0.5f;
+            }
+
+            return fallback;
         }
 
         private void ResolveGatePanels()

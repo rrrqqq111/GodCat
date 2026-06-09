@@ -23,6 +23,7 @@ namespace NekogamiRanch.Ranch
 
         public Vector2Int Coords { get; private set; }
         public Animal Animal { get; private set; }
+        public AnimalView AnimalView => animalView;
         public MapCellObjectRuntime MapObject { get; private set; }
         public bool IsEmpty => Animal == null;
 

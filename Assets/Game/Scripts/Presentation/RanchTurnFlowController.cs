@@ -52,6 +52,7 @@ namespace NekogamiRanch.Presentation
             {
                 yield return director.PlayDayTransition();
                 yield return director.PlayGateSequence();
+                yield return director.PlayAnimalEnterSequence(manager.Map);
             }
             else
             {
