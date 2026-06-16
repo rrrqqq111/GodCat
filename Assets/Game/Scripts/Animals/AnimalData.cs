@@ -15,6 +15,7 @@ namespace NekogamiRanch.Animals
         [SerializeField, InspectorName("进化目标动物")] private AnimalData evolutionTarget;
         [SerializeField, Min(0), InspectorName("进化目标等级")] private int evolutionTargetLevel;
         [SerializeField, InspectorName("动物能力")] private AbilityData ability;
+        [SerializeField, InspectorName("默认能力音效")] private AudioClip abilitySound;
         [SerializeField, TextArea, InspectorName("描述")] private string description;
         [SerializeField, InspectorName("动物图标")] private Sprite icon;
         [SerializeField, InspectorName("家族图标")] private Sprite familyIcon;
@@ -30,6 +31,7 @@ namespace NekogamiRanch.Animals
         public AnimalData EvolutionTarget => evolutionTarget;
         public int EvolutionTargetLevel => Mathf.Max(0, evolutionTargetLevel);
         public AbilityData Ability => ability;
+        public AudioClip AbilitySound => abilitySound;
         public string Description => description;
         public Sprite Icon => icon;
         public Sprite FamilyIcon => familyIcon;

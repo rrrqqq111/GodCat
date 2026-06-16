@@ -7159,7 +7159,64 @@ MonoBehaviour:
   deleteAnimalButton: {fileID: 39559872}
   resetTestButton: {fileID: 1223994971}
   randomizeOnDayStartToggle: {fileID: 180988829}
-  animalCatalog: []
+  animalCatalog:
+  - {fileID: 11400000, guid: 66ddb2d60b3d4fffb6b76febbd4e98a2, type: 2}
+  - {fileID: 11400000, guid: 0a9a6f411d0c4148a22780176f038116, type: 2}
+  - {fileID: 11400000, guid: 207be03b86da84446b210fb0d9ec352e, type: 2}
+  - {fileID: 11400000, guid: 04a8579539d344769a27283498902d2d, type: 2}
+  - {fileID: 11400000, guid: 2023d34f933e0f04eaeaedf879b9ea07, type: 2}
+  - {fileID: 11400000, guid: 423df876159346e18bf4917a91cb595f, type: 2}
+  - {fileID: 11400000, guid: ebf54c3684d54156b9002bd647d70227, type: 2}
+  - {fileID: 11400000, guid: b2973c61c9224e518f67dc652d3aef0f, type: 2}
+  - {fileID: 11400000, guid: 7f8c3c0e0c5a4c1f8df7e7b1fbe8d9a1, type: 2}
+  - {fileID: 11400000, guid: 169b2ac70be60a245b6ff31673e43d8a, type: 2}
+  - {fileID: 11400000, guid: ce6be6a83c31443488426113f69be655, type: 2}
+  - {fileID: 11400000, guid: 8337e36e4df449b3929683a991587318, type: 2}
+  - {fileID: 11400000, guid: 2c0c7e54213c4cbbacf0ccc13c220802, type: 2}
+  - {fileID: 11400000, guid: fcdf96998902b0a449dd60e3e29e5b85, type: 2}
+  - {fileID: 11400000, guid: bf8202f56345443a9974139bb046280a, type: 2}
+  - {fileID: 11400000, guid: 83563b0d6f154c4d8e7d3bea01db0b63, type: 2}
+  - {fileID: 11400000, guid: 17e8cb0373224261a48af308ae9fdc82, type: 2}
+  - {fileID: 11400000, guid: 1c056b7a9d984c9ca49042253cf8abcd, type: 2}
+  - {fileID: 11400000, guid: c9dca31873c433043baf7eedafb3eb8d, type: 2}
+  - {fileID: 11400000, guid: e3b2ce91471744449583145502f2c957, type: 2}
+  - {fileID: 11400000, guid: 0f86d4ee44552ec43aebd86db379d67a, type: 2}
+  - {fileID: 11400000, guid: 378101e088424a5daa1178a770ea72fa, type: 2}
+  - {fileID: 11400000, guid: 82f4e08651e64ad190b5ce876665c57e, type: 2}
+  - {fileID: 11400000, guid: be5eebdeb0c74853b21f0e415d9a208d, type: 2}
+  - {fileID: 11400000, guid: a826f06c45f94c0d8adea090721744b8, type: 2}
+  - {fileID: 11400000, guid: 6360dc7e5909a64449ade1e379b6617d, type: 2}
+  - {fileID: 11400000, guid: 490d9662f54c421ea744c010b75a7bb0, type: 2}
+  - {fileID: 11400000, guid: 7dd66f554cea9884b98c6155c38e3637, type: 2}
+  - {fileID: 11400000, guid: b0363cbdd8334403b0124873d2ea4ce1, type: 2}
+  - {fileID: 11400000, guid: d78c8af5140845b4ad67e7f2af030e31, type: 2}
+  - {fileID: 11400000, guid: 7a0f6f8f0d1f45a6bde5a70b39ea20b8, type: 2}
+  - {fileID: 11400000, guid: b2e6ed90219c4d7da7d05565cf5554e8, type: 2}
+  - {fileID: 11400000, guid: a9f2a97d72c24feaa28fedd312224018, type: 2}
+  - {fileID: 11400000, guid: 82531ccd0e714746ae9bbd7bcc720ddd, type: 2}
+  - {fileID: 11400000, guid: e598abbb2b0440d7a698aa050a6f57e6, type: 2}
+  - {fileID: 11400000, guid: 44c4548f67f8400b8f31c77e6fb9d688, type: 2}
+  - {fileID: 11400000, guid: c2c7457817784f3e8aaa80369f9cfcc4, type: 2}
+  - {fileID: 11400000, guid: 25d793ff86165054892067cef9116882, type: 2}
+  - {fileID: 11400000, guid: cea0ae0602824e5e89d8cfb1646a6802, type: 2}
+  - {fileID: 11400000, guid: a7d0e848f28d4ec6b7de6e0f39c5f0dd, type: 2}
+  - {fileID: 11400000, guid: 228676f4f6374278bc7841455f250c6a, type: 2}
+  - {fileID: 11400000, guid: 90a82ae957ec4ee1aa5eea70bb1547d5, type: 2}
+  - {fileID: 11400000, guid: 59f11de58ccb450fbcc7c0a558127b55, type: 2}
+  - {fileID: 11400000, guid: 3edc158fad6f4948b3598b81b4e95ebe, type: 2}
+  - {fileID: 11400000, guid: eb2d2984b0d4497a949ae5d52014025a, type: 2}
+  - {fileID: 11400000, guid: fbb87ed837cf409c8f3a0e1028a83155, type: 2}
+  - {fileID: 11400000, guid: 693376dde7ae634408132ceec7698382, type: 2}
+  - {fileID: 11400000, guid: b47cdb7b48c541b78e4e7e03fc60be7e, type: 2}
+  - {fileID: 11400000, guid: edb4edc405c146f3ad973b0976828b84, type: 2}
+  - {fileID: 11400000, guid: f35f1c1ae4e94170ab5716a76215bdf5, type: 2}
+  - {fileID: 11400000, guid: ef47cab535454dacb63ec625fe4e5320, type: 2}
+  - {fileID: 11400000, guid: 413fd64ea62142e3be92fa805e5db4fe, type: 2}
+  - {fileID: 11400000, guid: fc471547b326420ca661cad8d24b2fb7, type: 2}
+  - {fileID: 11400000, guid: b86508b62265426a80f4986c4f5b10c0, type: 2}
+  - {fileID: 11400000, guid: 6689c7f76fd44f74958b667d4f6ce2a8, type: 2}
+  - {fileID: 11400000, guid: ac7366b6752d484281d04faa3d0ddb8f, type: 2}
+  - {fileID: 11400000, guid: 44a22eda009bf0b4c9e086d442d2bca5, type: 2}
 --- !u!4 &877861307
 Transform:
   m_ObjectHideFlags: 0
@@ -10794,7 +10851,7 @@ GameObject:
   - component: {fileID: 1294350824}
   - component: {fileID: 1294350823}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: RanchAnimationDirector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10823,6 +10880,14 @@ MonoBehaviour:
   gateStepDuration: 0.18
   animalEnterSpeed: 8
   animalEnterInterval: 0.02
+  animalAbilityJumpHeight: 0.32
+  animalAbilityJumpDuration: 0.24
+  animalAbilitySettleDelay: 0.04
+  preyFlightDuration: 0.18
+  preyReturnDuration: 0.18
+  preyHitHoldDuration: 0.04
+  audioSource: {fileID: 0}
+  abilitySoundVolume: 1
 --- !u!4 &1294350824
 Transform:
   m_ObjectHideFlags: 0
@@ -17268,7 +17333,7 @@ MonoBehaviour:
   settlementReportText: {fileID: 1104880832}
   nextDayButton: {fileID: 424799087}
   nextDayButtonLabel: {fileID: 0}
-  hiddenButtonOffset: 240
+  hiddenButtonOffset: 400
 --- !u!114 &1970796941
 MonoBehaviour:
   m_ObjectHideFlags: 0

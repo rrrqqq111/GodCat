@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d818c316ffd24f059d80af1858c29f41, type: 3}
+  m_Name: "\u98DF\u8089\u5929\u8D4B"
+  m_EditorClassIdentifier: 
+  talentName: "\u98DF\u8089\u5929\u8D4B"
+  description: "Lv1\uFF1A\u98DF\u8089\u52A8\u7269\u5403\u6389\u4E00\u53EA\u52A8\u7269\u65F6\u81EA\u8EAB\u5C5E\u6027\u503C+1\u3002\nLv2\uFF1A\u98DF\u8089\u52A8\u7269\u98DF\u91CF+1\u3002\nLv3\uFF1A\u62E5\u6709\u6355\u98DF\u80FD\u529B\u7684\u98DF\u8089\u52A8\u7269\u53EF\u4EE5\u6355\u98DF\u4F4E\u7A00\u6709\u5EA6\u7684\u98DF\u8089\u52A8\u7269\u5E76\u7EE7\u627F\u5176\u57FA\u7840\u5C5E\u6027\u3002"
+  icon: {fileID: 21300000, guid: 09000ee7bd7698344ae0ba79d2828cc6, type: 3}

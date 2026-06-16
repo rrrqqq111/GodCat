@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -21,6 +21,7 @@ MonoBehaviour:
   evolutionTarget: {fileID: 0}
   evolutionTargetLevel: 0
   ability: {fileID: 11400000, guid: 47aa721b0b91432a800ae89fd40bd3e0, type: 2}
+  abilitySound: {fileID: 8300000, guid: 2d8b99bbcd717e447a2cfa45f5c8bc6b, type: 3}
   description: "\u573A\u4E0A\u6BCF\u6709\u4E00\u79CD\u6570\u91CF\u5927\u4E8E\u7B49\u4E8E3\u7684\u52A8\u7269\uFF0C\u559C\u9E4A\u589E\u52A01\u70B9\u81EA\u8EAB\u57FA\u7840\u5C5E\u6027\u3002"
   icon: {fileID: 21300000, guid: 4bb903ef7f3aa564e8b0c8ae57417669, type: 3}
   familyIcon: {fileID: 21300000, guid: 2c4dbaf10562b7b46814560f896b05c8, type: 3}

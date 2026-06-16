@@ -10,6 +10,12 @@ namespace NekogamiRanch.Ranch
     public class RanchSettlementService
     {
         private const int MaxExternalAbilityTriggerDepth = 8;
+        private static readonly string[] DailySettlementAbilityTriggerTypes =
+        {
+            "SettlementPrepare",
+            "DayStart",
+            "DayEnd"
+        };
 
         private readonly RanchManager manager;
         private readonly RanchAnimalService animalService;
@@ -29,6 +35,8 @@ namespace NekogamiRanch.Ranch
 
         public string LastReport { get; private set; } = "暂无结算";
 
+        public static IReadOnlyList<string> DailySettlementAbilityTriggers => DailySettlementAbilityTriggerTypes;
+
         public void SetLastReport(string report)
         {
             LastReport = report;
@@ -46,26 +54,70 @@ namespace NekogamiRanch.Ranch
 
         public void ResolveDailySettlement(RanchMap ranchMap)
         {
-            BeginSettlementReport();
+            BeginDailySettlement();
 
-            ResolveAbilitiesByMapScan(ranchMap, "SettlementPrepare");
-            ResolveAbilitiesByMapScan(ranchMap, "DayStart");
-            ResolveAbilitiesByMapScan(ranchMap, "DayEnd");
-
-            var income = 0;
-            foreach (var cell in ranchMap.GetCellsInScanOrder())
+            foreach (var triggerType in DailySettlementAbilityTriggerTypes)
             {
-                var animal = cell.Animal;
-                if (animal == null)
-                {
-                    continue;
-                }
+                ResolveAbilitiesByMapScan(ranchMap, triggerType);
+            }
 
-                manager.TryConsumeMapObjectAt(animal, animal.Coords);
-                var resolvedMoney = animal.ResolveBaseMoney(ranchMap);
-                income += resolvedMoney;
-                var report = GetSettlementAnimalReport(animal);
-                report.BaseMoney += resolvedMoney;
+            ResolveBaseIncomeAndFinishReport(ranchMap);
+        }
+
+        public void BeginDailySettlement()
+        {
+            BeginSettlementReport();
+        }
+
+        public IReadOnlyList<Animal> GetAnimalsInSettlementScanOrder(RanchMap ranchMap)
+        {
+            if (ranchMap == null)
+            {
+                return Array.Empty<Animal>();
+            }
+
+            return ranchMap.GetCellsInScanOrder()
+                .Select(cell => cell.Animal)
+                .Where(animal => animal != null)
+                .Distinct()
+                .ToList();
+        }
+
+        public bool HasAbilityTrigger(Animal animal, string triggerType)
+        {
+            return HasAbilityTrigger(animal?.Data?.Ability, triggerType);
+        }
+
+        public AbilityExecutionResult ResolveSettlementAbility(RanchMap ranchMap, Animal animal, string triggerType)
+        {
+            if (!CanResolveSettlementAnimal(ranchMap, animal))
+            {
+                return AbilityExecutionResult.Failed(animal?.Ability != null ? animal.Ability.Name : string.Empty, triggerType);
+            }
+
+            GetSettlementAnimalReport(animal);
+            return ExecuteAbilityWithReport(animal, triggerType);
+        }
+
+        public void ResolveBaseIncomeAndFinishReport(RanchMap ranchMap)
+        {
+            var income = 0;
+            if (ranchMap != null)
+            {
+                foreach (var cell in ranchMap.GetCellsInScanOrder())
+                {
+                    var animal = cell.Animal;
+                    if (animal == null)
+                    {
+                        continue;
+                    }
+
+                    manager.TryConsumeMapObjectAt(animal, animal.Coords);
+                    var resolvedMoney = animal.ResolveBaseMoney(ranchMap);
+                    income += resolvedMoney;
+                    var report = GetSettlementAnimalReport(animal);
+                    report.BaseMoney += resolvedMoney;
+                }
             }
 
             economyService.AddMoney(income);
@@ -274,14 +326,10 @@ namespace NekogamiRanch.Ranch
 
         private void ResolveAbilitiesByMapScan(RanchMap ranchMap, string triggerType)
         {
-            var animalsAtPhaseStart = ranchMap.GetCellsInScanOrder()
-                .Select(cell => cell.Animal)
-                .Where(animal => animal != null)
-                .Distinct()
-                .ToList();
+            var animalsAtPhaseStart = GetAnimalsInSettlementScanOrder(ranchMap);
             foreach (var animal in animalsAtPhaseStart)
             {
-                if (!ranchMap.TryGetCell(animal.Coords, out var cell) || cell.Animal != animal)
+                if (!CanResolveSettlementAnimal(ranchMap, animal))
                 {
                     continue;
                 }
@@ -289,6 +337,37 @@ namespace NekogamiRanch.Ranch
                 GetSettlementAnimalReport(animal);
                 ExecuteAbilityWithReport(animal, triggerType);
             }
+        }
+
+        private static bool CanResolveSettlementAnimal(RanchMap ranchMap, Animal animal)
+        {
+            return animal != null &&
+                ranchMap != null &&
+                ranchMap.TryGetCell(animal.Coords, out var cell) &&
+                cell.Animal == animal;
+        }
+
+        private static bool HasAbilityTrigger(AbilityData abilityData, string triggerType)
+        {
+            if (abilityData == null || string.IsNullOrWhiteSpace(triggerType))
+            {
+                return false;
+            }
+
+            if (string.Equals(abilityData.TriggerType, triggerType, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            foreach (var subAbility in abilityData.SubAbilities)
+            {
+                if (HasAbilityTrigger(subAbility, triggerType))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private AbilityExecutionResult ExecuteAbilityWithReport(Animal animal, string triggerType)

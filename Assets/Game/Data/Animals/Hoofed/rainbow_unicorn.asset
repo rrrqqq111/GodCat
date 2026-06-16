@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -18,6 +18,7 @@ MonoBehaviour:
   rarity: 4
   baseMoney: 10
   ability: {fileID: 11400000, guid: a5e84e44c9cd4611aa81794928f57557, type: 2}
+  abilitySound: {fileID: 8300000, guid: 3369f63539eeda647ad58edfb7c59325, type: 3}
   description: "\u6BCF\u67093\u53EA\u76F8\u90BB\u52A8\u7269\u88AB\u79FB\u9664\uFF0C\u83B7\u5F971\u4EF6\u968F\u673A\u9053\u5177"
   icon: {fileID: 21300000, guid: b87be41ff6af02841a91659bcf9d6425, type: 3}
   familyIcon: {fileID: 21300000, guid: be11099430914c942a52a28df7c3c808, type: 3}

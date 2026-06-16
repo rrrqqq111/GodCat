@@ -57,9 +57,19 @@ namespace NekogamiRanch.Ranch
             }
 
             settlementService?.ResolveDailySettlement(ranchMap);
+            CompleteAfterDailySettlement(true);
+        }
+
+        public void CompleteAfterDailySettlement(bool randomizePositionsOnEnter)
+        {
+            if (state == null)
+            {
+                return;
+            }
+
             if (state.IsTestMode)
             {
-                EnterNextDay();
+                EnterNextDay(randomizePositionsOnEnter);
                 return;
             }
 
@@ -71,7 +81,7 @@ namespace NekogamiRanch.Ranch
                 return;
             }
 
-            EnterNextDay();
+            EnterNextDay(randomizePositionsOnEnter);
         }
 
         public void EnterNextDay()

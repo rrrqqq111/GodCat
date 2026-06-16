@@ -47,30 +47,33 @@ namespace NekogamiRanch.Presentation
             IsAnimating = true;
             ResolveHud();
             hud?.MoveNextDayButtonOffscreen();
+            var playedAnimatedSettlement = false;
 
             if (director != null)
             {
                 director.HideAnimals(manager.Map);
                 yield return director.PlayDayTransition();
                 yield return director.PlayGateClose();
-                if (manager != null && manager.IsWaitingToEnterNextDay)
-                {
-                    manager.RandomizeAnimalPositionsForNextDay();
-                    director.HideAnimals(manager.Map);
-                }
-
+                manager?.RandomizeAnimalPositionsForNextDay();
+                director.HideAnimals(manager.Map);
                 yield return director.PlayGateOpenWithDaylight();
                 if (manager == null || !manager.IsWaitingForOfferSelection)
                 {
                     yield return director.PlayAnimalEnterSequence(manager.Map);
                 }
+
+                yield return PlayAnimatedSettlementRoutine();
+                playedAnimatedSettlement = true;
             }
             else
             {
                 yield return new WaitForSeconds(0.25f);
             }
 
-            resolveNextDay?.Invoke();
+            if (!playedAnimatedSettlement)
+            {
+                resolveNextDay?.Invoke();
+            }
 
             IsAnimating = false;
             runningFlow = null;
@@ -100,6 +103,41 @@ namespace NekogamiRanch.Presentation
 
             IsAnimating = false;
             hud?.RestoreNextDayButton();
+        }
+
+        private IEnumerator PlayAnimatedSettlementRoutine()
+        {
+            if (manager == null)
+            {
+                yield break;
+            }
+
+            manager.BeginDailySettlement();
+            var triggers = manager.DailySettlementAbilityTriggers;
+            foreach (var triggerType in triggers)
+            {
+                var animalsAtPhaseStart = manager.GetAnimalsInSettlementScanOrder();
+                foreach (var animal in animalsAtPhaseStart)
+                {
+                    if (!manager.HasSettlementAbilityTrigger(animal, triggerType))
+                    {
+                        continue;
+                    }
+
+                    if (director != null)
+                    {
+                        yield return director.PlayAnimalAbility(manager.Map, animal);
+                    }
+
+                    manager.ResolveSettlementAbility(animal, triggerType);
+                    if (director != null)
+                    {
+                        yield return director.PlayPreySequence(manager.Map, manager.ConsumePreyAnimationRequests());
+                    }
+                }
+            }
+
+            manager.CompleteAnimatedDailySettlement();
         }
     }
 }

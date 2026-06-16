@@ -62,6 +62,7 @@ namespace NekogamiRanch.Ranch
         private RanchAnimalCommandService animalCommandService;
         private RanchInventoryCommandService inventoryCommandService;
         private RanchMapObjectCommandService mapObjectCommandService;
+        private readonly List<RanchPreyAnimationRequest> preyAnimationRequests = new List<RanchPreyAnimationRequest>();
         private bool initialized;
 
         public event Action StateChanged
@@ -270,13 +271,51 @@ namespace NekogamiRanch.Ranch
 
         public void ResolveNextDayWithoutPositionRandomization()
         {
-            if (IsWaitingToEnterNextDay)
+            turnService?.NextDay();
+        }
+
+        public void BeginDailySettlement()
+        {
+            settlementService?.BeginDailySettlement();
+        }
+
+        public IReadOnlyList<Animal> GetAnimalsInSettlementScanOrder()
+        {
+            return settlementService != null
+                ? settlementService.GetAnimalsInSettlementScanOrder(ranchMap)
+                : Array.Empty<Animal>();
+        }
+
+        public IReadOnlyList<string> DailySettlementAbilityTriggers => RanchSettlementService.DailySettlementAbilityTriggers;
+
+        public bool HasSettlementAbilityTrigger(Animal animal, string triggerType)
+        {
+            return settlementService != null && settlementService.HasAbilityTrigger(animal, triggerType);
+        }
+
+        public AbilityExecutionResult ResolveSettlementAbility(Animal animal, string triggerType)
+        {
+            return settlementService != null
+                ? settlementService.ResolveSettlementAbility(ranchMap, animal, triggerType)
+                : AbilityExecutionResult.Failed(triggerType: triggerType);
+        }
+
+        public IReadOnlyList<RanchPreyAnimationRequest> ConsumePreyAnimationRequests()
+        {
+            if (preyAnimationRequests.Count == 0)
             {
-                turnService?.EnterNextDay(false);
-                return;
+                return Array.Empty<RanchPreyAnimationRequest>();
             }
 
-            turnService?.NextDay();
+            var requests = preyAnimationRequests.ToArray();
+            preyAnimationRequests.Clear();
+            return requests;
+        }
+
+        public void CompleteAnimatedDailySettlement()
+        {
+            settlementService?.ResolveBaseIncomeAndFinishReport(ranchMap);
+            turnService?.CompleteAfterDailySettlement(false);
         }
 
         public void AddMoney(int amount)
@@ -478,8 +517,7 @@ namespace NekogamiRanch.Ranch
             }
 
             offerService?.Clear();
-            state?.SetPhase(RanchPhase.DayTransition);
-            NotifyStateChanged();
+            turnService?.EnterNextDay(false);
             return true;
         }
 
@@ -579,13 +617,12 @@ namespace NekogamiRanch.Ranch
                 return false;
             }
 
-            return offerService.SelectOffer(index, animalService) && SetOfferSelectionReadyForNextDay();
-        }
+            if (!offerService.SelectOffer(index, animalService))
+            {
+                return false;
+            }
 
-        private bool SetOfferSelectionReadyForNextDay()
-        {
-            state?.SetPhase(RanchPhase.DayTransition);
-            NotifyStateChanged();
+            turnService?.EnterNextDay(false);
             return true;
         }
 
@@ -624,7 +661,7 @@ namespace NekogamiRanch.Ranch
             }
 
             offerService.Clear();
-            turnService?.EnterNextDay();
+            turnService?.EnterNextDay(false);
             return true;
         }
 
@@ -704,7 +741,7 @@ namespace NekogamiRanch.Ranch
                 ranchMap,
                 eventHub);
             protectionService = new RanchProtectionService(ranchMap, economyService.AddMoney, AddAnimalBaseMoneyBonus);
-            preyService = new RanchPreyService(ranchMap, animalLifecycleService, protectionService, eventHub);
+            preyService = new RanchPreyService(ranchMap, animalLifecycleService, protectionService, eventHub, QueuePreyAnimation);
             evolutionService = new RanchEvolutionService(eventHub, EvolveAnimalSilently);
             animalSpawnService = new RanchAnimalSpawnService(animalService, abilitySpawnPool);
             var configuredRewardPool = itemRewardPool != null && itemRewardPool.Count > 0 ? itemRewardPool : startingItems;
@@ -773,6 +810,16 @@ namespace NekogamiRanch.Ranch
             settlementService?.ResolveMovedAbility(animal);
             settlementService?.ResolveAdjacentAnimalMovedAbilities(animal, previousCoords, ranchMap);
             mapObjectService?.TryConsumeNearbyMapObjects(animal);
+        }
+
+        private void QueuePreyAnimation(Animal predator, Animal target)
+        {
+            if (predator == null || target == null)
+            {
+                return;
+            }
+
+            preyAnimationRequests.Add(new RanchPreyAnimationRequest(predator, predator.Coords, target.Coords));
         }
 
         private void CreateTurnService()

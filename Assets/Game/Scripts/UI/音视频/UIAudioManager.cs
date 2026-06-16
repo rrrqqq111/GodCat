@@ -38,9 +38,14 @@ public class UIAudioManager : MonoBehaviour
 
     public void PlayClip(AudioClip clip)
     {
+        PlayClip(clip, 1f);
+    }
+
+    public void PlayClip(AudioClip clip, float volumeScale)
+    {
         if (audioSource != null && clip != null)
         {
-            audioSource.PlayOneShot(clip);
+            audioSource.PlayOneShot(clip, Mathf.Clamp01(volumeScale));
         }
     }
 

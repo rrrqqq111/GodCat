@@ -17,6 +17,7 @@ namespace NekogamiRanch.Abilities
         [SerializeField, InspectorName("触发次数上限")] private int triggerLimit;
         [SerializeField, InspectorName("效果类型")] private string effectType = "None";
         [SerializeField, InspectorName("效果脚本ID")] private string effectScriptId;
+        [SerializeField, InspectorName("能力触发音效")] private AudioClip abilitySound;
         [SerializeField, InspectorName("效果参数")] private AbilityEffectParams effectParams = new AbilityEffectParams();
         [SerializeField, InspectorName("子能力列表")] private List<AbilityData> subAbilities = new List<AbilityData>();
 
@@ -31,6 +32,7 @@ namespace NekogamiRanch.Abilities
         public int TriggerLimit => triggerLimit;
         public string EffectType => effectType;
         public string EffectScriptId => string.IsNullOrWhiteSpace(effectScriptId) ? id : effectScriptId;
+        public AudioClip AbilitySound => abilitySound;
         public AbilityEffectParams EffectParams => effectParams;
         public IReadOnlyList<AbilityData> SubAbilities => subAbilities;
     }

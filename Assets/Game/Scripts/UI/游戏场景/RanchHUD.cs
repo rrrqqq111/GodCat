@@ -16,7 +16,9 @@ namespace NekogamiRanch.UI
         [SerializeField] private TMP_Text settlementReportText;
         [SerializeField] private Button nextDayButton;
         [SerializeField] private TMP_Text nextDayButtonLabel;
-        [SerializeField] private float hiddenButtonOffset = 240f;
+        [Header("Next Day Button")]
+        [InspectorName("下一天按钮下移距离")]
+        [SerializeField, Min(0f)] private float hiddenButtonOffset = 240f;
 
         private RectTransform nextDayButtonRect;
         private Vector2 nextDayButtonShownPosition;

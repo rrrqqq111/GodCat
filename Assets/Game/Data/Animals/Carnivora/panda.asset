@@ -17,7 +17,11 @@ MonoBehaviour:
   family: Carnivora
   rarity: 3
   baseMoney: 4
+  evolutionThreshold: 0
+  evolutionTarget: {fileID: 0}
+  evolutionTargetLevel: 0
   ability: {fileID: 11400000, guid: 7ce65e5c61d54413b967b721cc3baac5, type: 2}
+  abilitySound: {fileID: 8300000, guid: ed4be07101f8de14fa96d570bc3f31e8, type: 3}
   description: "\u4F7F\u4E00\u53EA\u76F8\u90BB\u52A8\u7269\u57FA\u7840\u5C5E\u6027\u52A04"
   icon: {fileID: 21300000, guid: 471676c6b0617f54e8274f64f972d5b1, type: 3}
   familyIcon: {fileID: 21300000, guid: 3cb28a53ba33788439ee3d4a2d81ee30, type: 3}

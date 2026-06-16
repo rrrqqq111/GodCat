@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using NekogamiRanch.Animals;
 using NekogamiRanch.Ranch;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +23,20 @@ namespace NekogamiRanch.Presentation
         [Header("Animal Enter")]
         [SerializeField, Min(0.01f)] private float animalEnterSpeed = 6f;
         [SerializeField, Min(0f)] private float animalEnterInterval = 0.04f;
+
+        [Header("Animal Ability")]
+        [SerializeField, Min(0f)] private float animalAbilityJumpHeight = 0.32f;
+        [SerializeField, Min(0.01f)] private float animalAbilityJumpDuration = 0.24f;
+        [SerializeField, Min(0f)] private float animalAbilitySettleDelay = 0.04f;
+
+        [Header("Prey")]
+        [SerializeField, Min(0.01f)] private float preyFlightDuration = 0.18f;
+        [SerializeField, Min(0f)] private float preyReturnDuration = 0.18f;
+        [SerializeField, Min(0f)] private float preyHitHoldDuration = 0.04f;
+
+        [Header("Audio")]
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField, Range(0f, 1f)] private float abilitySoundVolume = 1f;
 
         private bool hasDoubleGatePose;
         private bool hasSingleGatePose;
@@ -151,6 +166,101 @@ namespace NekogamiRanch.Presentation
             {
                 yield return null;
             }
+        }
+
+        public IEnumerator PlayAnimalAbility(RanchMap ranchMap, Animal animal)
+        {
+            if (animal == null || ranchMap == null || !ranchMap.TryGetCell(animal.Coords, out var cell) || cell.Animal != animal)
+            {
+                yield break;
+            }
+
+            var view = cell.AnimalView;
+            if (view == null)
+            {
+                yield break;
+            }
+
+            PlayAbilitySound(animal);
+            view.SetVisible(true);
+            yield return view.PlayAbilityJump(animalAbilityJumpHeight, animalAbilityJumpDuration);
+
+            if (animalAbilitySettleDelay > 0f)
+            {
+                yield return new WaitForSeconds(animalAbilitySettleDelay);
+            }
+        }
+
+        private void PlayAbilitySound(Animal animal)
+        {
+            var clip = animal?.Data?.Ability?.AbilitySound != null
+                ? animal.Data.Ability.AbilitySound
+                : animal?.Data?.AbilitySound;
+            if (clip == null)
+            {
+                return;
+            }
+
+            if (UIAudioManager.Instance != null)
+            {
+                UIAudioManager.Instance.PlayClip(clip, abilitySoundVolume);
+                return;
+            }
+
+            EnsureAudioSource();
+            audioSource?.PlayOneShot(clip, abilitySoundVolume);
+        }
+
+        public IEnumerator PlayPreySequence(RanchMap ranchMap, IReadOnlyList<RanchPreyAnimationRequest> requests)
+        {
+            if (ranchMap == null || requests == null)
+            {
+                yield break;
+            }
+
+            foreach (var request in requests)
+            {
+                yield return PlayPreyFlight(ranchMap, request);
+            }
+        }
+
+        private IEnumerator PlayPreyFlight(RanchMap ranchMap, RanchPreyAnimationRequest request)
+        {
+            if (request.Predator == null ||
+                !ranchMap.TryGetCell(request.TargetCoords, out var targetCell))
+            {
+                yield break;
+            }
+
+            if (!ranchMap.TryGetCell(request.PredatorCoords, out var predatorCell) ||
+                predatorCell.Animal != request.Predator)
+            {
+                if (!ranchMap.TryGetCell(request.Predator.Coords, out predatorCell) || predatorCell.Animal != request.Predator)
+                {
+                    yield break;
+                }
+            }
+
+            var view = predatorCell.AnimalView;
+            if (view == null)
+            {
+                yield break;
+            }
+
+            var from = view.TargetWorldPosition;
+            var to = targetCell.AnimalView != null
+                ? targetCell.AnimalView.TargetWorldPosition
+                : targetCell.transform.position;
+
+            view.SetVisible(true);
+            yield return MoveWorld(view.transform, from, to, preyFlightDuration);
+
+            if (preyHitHoldDuration > 0f)
+            {
+                yield return new WaitForSeconds(preyHitHoldDuration);
+            }
+
+            yield return MoveWorld(view.transform, to, from, preyReturnDuration);
         }
 
         private IEnumerator PlayAnimalEnterAndComplete(AnimalView view, Vector3 enterPosition, Vector3 targetPosition, float duration, Action onComplete)
@@ -334,6 +444,31 @@ namespace NekogamiRanch.Presentation
             target.localPosition = to;
         }
 
+        private static IEnumerator MoveWorld(Transform target, Vector3 from, Vector3 to, float duration)
+        {
+            if (target == null)
+            {
+                yield break;
+            }
+
+            if (duration <= 0f)
+            {
+                target.position = to;
+                yield break;
+            }
+
+            var elapsed = 0f;
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                var t = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(elapsed / duration));
+                target.position = Vector3.Lerp(from, to, t);
+                yield return null;
+            }
+
+            target.position = to;
+        }
+
         private void EnsureFadeOverlay()
         {
             if (fadeOverlay != null)
@@ -366,6 +501,22 @@ namespace NekogamiRanch.Presentation
             fadeOverlay.alpha = 0f;
             fadeOverlay.blocksRaycasts = false;
             overlayObject.SetActive(false);
+        }
+
+        private void EnsureAudioSource()
+        {
+            if (audioSource != null)
+            {
+                return;
+            }
+
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
+
+            audioSource.playOnAwake = false;
         }
 
         private static Transform FindGateTransform()

@@ -11,17 +11,20 @@ namespace NekogamiRanch.Ranch
         private readonly RanchAnimalLifecycleService lifecycleService;
         private readonly RanchProtectionService protectionService;
         private readonly RanchEventHub eventHub;
+        private readonly Action<Animal, Animal> preyAnimationQueued;
 
         public RanchPreyService(
             RanchMap ranchMap,
             RanchAnimalLifecycleService lifecycleService,
             RanchProtectionService protectionService,
-            RanchEventHub eventHub)
+            RanchEventHub eventHub,
+            Action<Animal, Animal> preyAnimationQueued = null)
         {
             this.ranchMap = ranchMap;
             this.lifecycleService = lifecycleService;
             this.protectionService = protectionService;
             this.eventHub = eventHub;
+            this.preyAnimationQueued = preyAnimationQueued;
         }
 
         public PreyResult TryPrey(PreyContext context)
@@ -63,6 +66,7 @@ namespace NekogamiRanch.Ranch
                 if (lifecycleService != null &&
                     lifecycleService.TryRemove(target, AnimalRemovalReason.Preyed, context.Predator))
                 {
+                    preyAnimationQueued?.Invoke(context.Predator, target);
                     removedTargets.Add(target);
                 }
             }
