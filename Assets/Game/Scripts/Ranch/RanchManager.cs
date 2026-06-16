@@ -15,6 +15,7 @@ namespace NekogamiRanch.Ranch
     {
         private const string AnimalDataRoot = "Assets/Game/Data/Animals";
         private const string ItemDataRoot = "Assets/Game/Data/Items";
+        private const string SelectedAnimalFamiliesPlayerPrefsKey = "SelectedAnimalFamilies";
         public const int AnimalOfferRefreshCansCost = 1;
         public const int AnimalOfferCount = 3;
 
@@ -38,6 +39,7 @@ namespace NekogamiRanch.Ranch
         [SerializeField] private List<ToyData> equippedToys = new List<ToyData>();
         [SerializeField] private RanchTurnFlowController turnFlowController;
         [SerializeField] private RanchAnimationDirector animationDirector;
+        [SerializeField] private RanchWinLoseController winLoseController;
 
         private readonly RanchEventHub eventHub = new RanchEventHub();
         private RanchGameState state;
@@ -171,6 +173,10 @@ namespace NekogamiRanch.Ranch
         public bool IsWaitingForOfferSelection => state != null && state.IsWaitingForOfferSelection;
         public bool IsWaitingToEnterNextDay => state != null && state.IsWaitingToEnterNextDay;
         public bool IsTestMode => state != null && state.IsTestMode;
+        public bool HasGameResult => winLoseController != null && winLoseController.HasResult;
+        public RanchGameResult GameResult => winLoseController != null ? winLoseController.Result : RanchGameResult.Playing;
+        public int CurrentStageNumber => winLoseController != null ? winLoseController.CurrentStageNumber : 1;
+        public int CurrentStageRequiredTotalMoney => winLoseController != null ? winLoseController.CurrentStageRequiredTotalMoney : 25;
         public bool IsTurnFlowAnimating => turnFlowController != null && turnFlowController.IsAnimating;
         public bool RandomizeAnimalPositionsInTestMode => state == null || state.RandomizeAnimalPositionsInTestMode;
         public IReadOnlyList<AnimalData> CurrentOffers => offerService != null ? offerService.CurrentOffers : Array.Empty<AnimalData>();
@@ -205,6 +211,7 @@ namespace NekogamiRanch.Ranch
                 return;
             }
 
+            ApplySelectedAnimalFamilies();
             RefreshContentPools();
             ranchMap = RanchSceneBinder.ResolveMap(ranchMap);
 
@@ -225,6 +232,7 @@ namespace NekogamiRanch.Ranch
                 return;
             }
 
+            ApplySelectedAnimalFamilies();
             RefreshContentPools();
             ranchMap = map;
             if (ranchMap == null)
@@ -238,6 +246,7 @@ namespace NekogamiRanch.Ranch
                 offerRoller = GetComponent<AnimalOfferRoller>();
             }
 
+            ResolveWinLoseController();
             ranchMap.Initialize(this, mapWidth, mapHeight, tileSprite, animalSprite != null ? animalSprite : GetFallbackAnimalSprite(), sceneTiles ?? RanchSceneBinder.FindSceneTileRenderers(), animalViewPrefab);
             CreateServices();
             TriggerToys(ToyTriggerType.RunStart);
@@ -256,6 +265,11 @@ namespace NekogamiRanch.Ranch
 
         public void NextDay()
         {
+            if (HasGameResult)
+            {
+                return;
+            }
+
             if (turnFlowController != null && turnFlowController.PlayNextDayFlow())
             {
                 return;
@@ -271,7 +285,17 @@ namespace NekogamiRanch.Ranch
 
         public void ResolveNextDayWithoutPositionRandomization()
         {
+            if (HasGameResult)
+            {
+                return;
+            }
+
             turnService?.NextDay();
+        }
+
+        public void ContinueAfterStagePayment()
+        {
+            turnService?.CompleteAfterDailySettlement(true);
         }
 
         public void BeginDailySettlement()
@@ -505,7 +529,7 @@ namespace NekogamiRanch.Ranch
 
         public bool TryAddAnimalToRosterForNextDay(AnimalData animalData)
         {
-            if (animalService == null || animalData == null)
+            if (HasGameResult || animalService == null || animalData == null)
             {
                 return false;
             }
@@ -607,7 +631,7 @@ namespace NekogamiRanch.Ranch
 
         public bool SelectOffer(int index)
         {
-            if (!IsWaitingForOfferSelection || offerService == null || animalService == null)
+            if (HasGameResult || !IsWaitingForOfferSelection || offerService == null || animalService == null)
             {
                 return false;
             }
@@ -633,7 +657,7 @@ namespace NekogamiRanch.Ranch
 
         public bool TryRefreshAnimalOffers()
         {
-            if (!IsWaitingForOfferSelection || offerService == null || state == null)
+            if (HasGameResult || !IsWaitingForOfferSelection || offerService == null || state == null)
             {
                 return false;
             }
@@ -655,7 +679,7 @@ namespace NekogamiRanch.Ranch
 
         public bool TrySkipAnimalOfferSelection()
         {
-            if (!IsWaitingForOfferSelection || offerService == null)
+            if (HasGameResult || !IsWaitingForOfferSelection || offerService == null)
             {
                 return false;
             }
@@ -780,6 +804,48 @@ namespace NekogamiRanch.Ranch
                 ref itemRewardPool);
         }
 
+        private void ApplySelectedAnimalFamilies()
+        {
+            if (!PlayerPrefs.HasKey(SelectedAnimalFamiliesPlayerPrefsKey))
+            {
+                return;
+            }
+
+            string savedFamilies = PlayerPrefs.GetString(SelectedAnimalFamiliesPlayerPrefsKey, string.Empty);
+            List<string> selectedFamilies = ParseSelectedAnimalFamilies(savedFamilies);
+            if (selectedFamilies.Count == 0)
+            {
+                return;
+            }
+
+            offerPoolFamilies = selectedFamilies;
+        }
+
+        private List<string> ParseSelectedAnimalFamilies(string savedFamilies)
+        {
+            List<string> selectedFamilies = new List<string>();
+            HashSet<string> selectedFamilySet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            if (string.IsNullOrWhiteSpace(savedFamilies))
+            {
+                return selectedFamilies;
+            }
+
+            string[] familyParts = savedFamilies.Split(',');
+            foreach (string familyPart in familyParts)
+            {
+                string family = familyPart.Trim();
+                if (string.IsNullOrEmpty(family) || !selectedFamilySet.Add(family))
+                {
+                    continue;
+                }
+
+                selectedFamilies.Add(family);
+            }
+
+            return selectedFamilies;
+        }
+
         private void SeedAnimals(IReadOnlyList<AnimalData> startingAnimals)
         {
             if (ContentPools.TryUseStartingAnimalsAsOfferPool(startingAnimals, ref offerPool))
@@ -798,6 +864,21 @@ namespace NekogamiRanch.Ranch
             }
 
             return fallbackAnimalSprite;
+        }
+
+        private void ResolveWinLoseController()
+        {
+            if (winLoseController == null)
+            {
+                winLoseController = GetComponent<RanchWinLoseController>();
+            }
+
+            if (winLoseController == null)
+            {
+                winLoseController = FindObjectOfType<RanchWinLoseController>();
+            }
+
+            winLoseController?.Initialize(this);
         }
 
         private void NotifyStateChanged()
@@ -830,6 +911,7 @@ namespace NekogamiRanch.Ranch
                 animalService,
                 offerService,
                 settlementService,
+                winLoseController,
                 deploymentTriggerService,
                 itemService,
                 toyService,

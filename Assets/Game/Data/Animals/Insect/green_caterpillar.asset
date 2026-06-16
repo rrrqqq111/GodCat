@@ -24,7 +24,7 @@ MonoBehaviour:
   abilitySound: {fileID: 0}
   description: "1\u5929\u540E\u53D8\u4E3A\u968F\u673A\u666E\u901A\u4EE5\u4E0A\u7684\u866B\u866B\u5BB6\u65CF\u3002"
   icon: {fileID: 21300000, guid: 433bcf0d39cbf3142ac20800a8f2f4c6, type: 3}
-  familyIcon: {fileID: 21300000, guid: 879c58d7009b43a4a88e5531d7490f38, type: 3}
+  familyIcon: {fileID: 21300000, guid: 20005f7b7fdf3c545b62e00bd17f1169, type: 3}
   iconScale: 1
   secondaryFamily: 
   secondaryFamilyIcon: {fileID: 0}

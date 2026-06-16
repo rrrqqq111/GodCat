@@ -8,6 +8,9 @@ public class HangingSignToggleVisual : MonoBehaviour
     [SerializeField] private RectTransform sign;
     [SerializeField] private RectTransform rope;
 
+    [Header("Family")]
+    [SerializeField] private string family;
+
     [Header("Selected State")]
     [SerializeField] private float signDownOffset = 14f;
     [SerializeField] private float ropeStretch = 14f;
@@ -19,6 +22,21 @@ public class HangingSignToggleVisual : MonoBehaviour
     private Vector2 signBasePos;
     private Vector2 ropeBaseSize;
     private Coroutine animCo;
+    private bool hasWarnedEmptyFamily;
+
+    public string Family
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(family) && !hasWarnedEmptyFamily)
+            {
+                hasWarnedEmptyFamily = true;
+                Debug.LogWarning($"[HangingSignToggleVisual] {name} 的 family 为空，请在 Inspector 中填写动物家族 ID。", this);
+            }
+
+            return family;
+        }
+    }
 
     private void Awake()
     {
