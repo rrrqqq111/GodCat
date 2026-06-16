@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: krill
+  m_EditorClassIdentifier: 
+  id: Krill
+  animalName: "\u78F7\u867E"
+  family: Aquatic
+  rarity: 0
+  baseMoney: 1
+  evolutionThreshold: 0
+  evolutionTarget: {fileID: 0}
+  evolutionTargetLevel: 0
+  ability: {fileID: 0}
+  abilitySound: {fileID: 0}
+  description: "\u6F5C\u6C34\uFF1A\u6295\u5582\u6D77\u6C34\u4E0A\u65B9\u4E00\u53EA\u52A8\u7269\u3002"
+  icon: {fileID: 21300000, guid: afcd39764e8296f48b92777241ccbf4d, type: 3}
+  familyIcon: {fileID: 21300000, guid: 2e691afefad7739468ce561faffb6bf4, type: 3}
+  iconScale: 1
+  secondaryFamily: 
+  secondaryFamilyIcon: {fileID: 0}
