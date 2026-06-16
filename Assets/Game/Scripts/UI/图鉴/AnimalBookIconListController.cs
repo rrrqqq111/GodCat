@@ -228,7 +228,7 @@ namespace NekogamiRanch.UI
             if (category != null && !category.showAll && !string.IsNullOrWhiteSpace(category.family))
             {
                 var family = category.family.Trim();
-                animals = animals.Where(data => string.Equals(data.Family, family, StringComparison.OrdinalIgnoreCase));
+                animals = animals.Where(data => data.HasFamily(family));
             }
 
             return animals

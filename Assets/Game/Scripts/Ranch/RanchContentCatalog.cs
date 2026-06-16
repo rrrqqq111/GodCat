@@ -26,7 +26,7 @@ namespace NekogamiRanch.Ranch
 
             var familySet = new HashSet<string>(familyFilters, StringComparer.OrdinalIgnoreCase);
             return LoadAnimals(root)
-                .Where(data => familySet.Contains(data.Family))
+                .Where(data => familyFilters.Any(data.HasFamily))
                 .OrderBy(data => GetFamilySortIndex(familyFilters, data.Family))
                 .ThenBy(data => data.Rarity)
                 .ThenBy(data => data.DisplayName)

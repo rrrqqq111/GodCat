@@ -1298,6 +1298,8 @@ MonoBehaviour:
   autoLoadAssetsInEditor: 1
   cachedAssets:
   - {fileID: 11400000, guid: f13ec6d93b65f394c906b5828eb3c6f5, type: 2}
+  - {fileID: 11400000, guid: eca64f32ce9ce87448d8e65a09f0a244, type: 2}
+  - {fileID: 11400000, guid: daa9c134da6a65a418681d023c692a84, type: 2}
   onAssetClicked:
     m_PersistentCalls:
       m_Calls:
@@ -4222,7 +4224,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -4628,8 +4630,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -320.16803, y: 0}
-  m_SizeDelta: {x: 697.3636, y: 198.1592}
+  m_AnchoredPosition: {x: -13.5411, y: 0}
+  m_SizeDelta: {x: 401.7496, y: 198.1592}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &481274584
 MonoBehaviour:
@@ -4681,9 +4683,9 @@ MonoBehaviour:
   m_fontSize: 170
   m_fontSizeBase: 170
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 170
   m_fontStyle: 1
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 1024
@@ -4694,7 +4696,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -11771,6 +11773,7 @@ MonoBehaviour:
   autoSelectFirstAsset: 1
   autoLoadAssetsInEditor: 1
   cachedAssets:
+  - {fileID: 11400000, guid: 3c5e5a17657f07241ba1e700bf5fa4d8, type: 2}
   - {fileID: 11400000, guid: b6db39c173914877ac470ba42925b626, type: 2}
   - {fileID: 11400000, guid: 934b9f6d00924c97bfef3cafe42ad605, type: 2}
   onAssetClicked:
@@ -13220,8 +13223,8 @@ MonoBehaviour:
   autoSelectFirstAsset: 1
   autoLoadAssetsInEditor: 1
   cachedAssets:
-  - {fileID: 11400000, guid: 373bd9f13d7668e4e87475dd94ad2c76, type: 2}
   - {fileID: 11400000, guid: 0b6f3a56228771144a25345de66f4a5a, type: 2}
+  - {fileID: 11400000, guid: 373bd9f13d7668e4e87475dd94ad2c76, type: 2}
   onAssetClicked:
     m_PersistentCalls:
       m_Calls:

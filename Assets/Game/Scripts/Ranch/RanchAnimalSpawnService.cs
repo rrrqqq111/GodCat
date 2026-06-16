@@ -26,7 +26,7 @@ namespace NekogamiRanch.Ranch
             }
 
             var candidates = abilitySpawnPool
-                .Where(data => data != null && string.Equals(data.Family, family, StringComparison.OrdinalIgnoreCase))
+                .Where(data => data != null && data.HasFamily(family))
                 .ToList();
             if (candidates.Count == 0)
             {
@@ -56,7 +56,7 @@ namespace NekogamiRanch.Ranch
             }
 
             var candidates = abilitySpawnPool
-                .Where(data => data != null && !string.Equals(data.Family, excludedFamily, StringComparison.OrdinalIgnoreCase))
+                .Where(data => data != null && !data.HasFamily(excludedFamily))
                 .ToList();
             if (candidates.Count == 0)
             {

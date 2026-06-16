@@ -28,7 +28,7 @@ namespace NekogamiRanch.Abilities
             var familyCount = context.RanchManager.Map
                 .GetCellsInScanOrder()
                 .Select(cell => cell.Animal)
-                .Count(animal => animal?.Data != null && string.Equals(animal.Data.Family, family, StringComparison.OrdinalIgnoreCase));
+                .Count(animal => animal?.Data != null && animal.Data.HasFamily(family));
             var reward = parameters.money != 0 ? parameters.money : 2;
             var penalty = parameters.count > 0 ? parameters.count : 1;
 

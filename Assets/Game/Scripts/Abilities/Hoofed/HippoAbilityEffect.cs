@@ -23,7 +23,7 @@ namespace NekogamiRanch.Abilities
             }
 
             var targetFamily = abilityData.EffectParams.targetFamily;
-            if (!string.Equals(context.RemovedAnimal.Data.Family, targetFamily, StringComparison.OrdinalIgnoreCase))
+            if (!context.RemovedAnimal.Data.HasFamily(targetFamily))
             {
                 return false;
             }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using NekogamiRanch.Abilities;
 
@@ -21,9 +22,14 @@ namespace NekogamiRanch.Animals
         [SerializeField, InspectorName("家族图标")] private Sprite familyIcon;
         [SerializeField, Min(0.01f), InspectorName("图标缩放")] private float iconScale = 1f;
 
+        [SerializeField, InspectorName("第二家族")] private string secondaryFamily;
+        [SerializeField, InspectorName("第二家族图标")] private Sprite secondaryFamilyIcon;
+
         public string Id => id;
         public string Name => string.IsNullOrWhiteSpace(animalName) ? name : animalName;
         public string Family => family;
+        public string SecondaryFamily => secondaryFamily;
+        public Sprite SecondaryFamilyIcon => secondaryFamilyIcon;
         public int Rarity => rarity;
         public int BaseMoney => baseMoney;
         public int EvolutionThreshold => Mathf.Max(0, evolutionThreshold);
@@ -40,6 +46,17 @@ namespace NekogamiRanch.Animals
         public string AnimalId => Id;
         public string DisplayName => Name;
         public string AbilityDescription => ability != null && !string.IsNullOrWhiteSpace(ability.Desc) ? ability.Desc : description;
+
+        public bool HasFamily(string familyId)
+        {
+            if (string.IsNullOrWhiteSpace(familyId))
+            {
+                return false;
+            }
+
+            return string.Equals(family, familyId, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(secondaryFamily, familyId, StringComparison.OrdinalIgnoreCase);
+        }
 
         public void Initialize(string animalId, string displayName, string animalFamily, int animalRarity, int money, AbilityData animalAbility, string animalDescription, Sprite animalIcon = null, Sprite animalFamilyIcon = null, float animalIconScale = 1f, int animalEvolutionThreshold = 0)
         {

@@ -31,8 +31,7 @@ namespace NekogamiRanch.Abilities
             var adjacentBirds = context.RanchManager.Map
                 .GetNeighbors(context.Owner.Coords)
                 .Select(cell => cell?.Animal)
-                .Where(animal => animal?.Data != null &&
-                    string.Equals(animal.Data.Family, targetFamily, StringComparison.OrdinalIgnoreCase))
+                .Where(animal => animal?.Data != null && animal.Data.HasFamily(targetFamily))
                 .ToList();
             if (adjacentBirds.Count <= 0)
             {
