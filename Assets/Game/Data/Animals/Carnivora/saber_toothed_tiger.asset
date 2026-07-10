@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: saber_toothed_tiger
+  m_EditorClassIdentifier:
+  id: SaberToothedTiger
+  animalName: "\u5251\u9F7F\u864E"
+  family: Carnivora
+  rarity: 4
+  baseMoney: 10
+  evolutionThreshold: 0
+  evolutionTarget: {fileID: 0}
+  evolutionTargetLevel: 0
+  ability: {fileID: 0}
+  abilitySound: {fileID: 0}
+  description: "\u6355\u98DF\u6240\u6709\u76F8\u90BB\u7684\u975E\u98DF\u8089\u5BB6\u65CF\u52A8\u7269\u3002\u6210\u529F\u5219\u83B7\u5F97\u5176\u57FA\u7840\u5C5E\u6027\uFF0C\u5E76\u5728\u7A7A\u5730\u4E0A\u6389\u843D\u7EDD\u54C1\u5269\u8089\u3002"
+  icon: {fileID: 21300000, guid: 03a53c2cec16a73499d17ce7b599f0b7, type: 3}
+  familyIcon: {fileID: 21300000, guid: 3cb28a53ba33788439ee3d4a2d81ee30, type: 3}
+  iconScale: 1

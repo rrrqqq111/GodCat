@@ -30,7 +30,7 @@ namespace NekogamiRanch.Abilities
 
             var neighbors = context.RanchManager.Map.GetNeighbors(context.Owner.Coords).ToList();
             var hasAdjacentTargetFamily = neighbors.Any(cell =>
-                string.Equals(cell?.Animal?.Data?.Family, targetFamily, StringComparison.OrdinalIgnoreCase));
+                cell?.Animal?.Data != null && cell.Animal.Data.HasFamily(targetFamily));
             if (!hasAdjacentTargetFamily)
             {
                 return false;

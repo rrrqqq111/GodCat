@@ -38,7 +38,7 @@ namespace NekogamiRanch.Abilities
             if (!context.RanchManager.Map.TryGetCell(targetCoords, out var targetCell) ||
                 targetCell.Animal == null ||
                 targetCell.Animal.Data == null ||
-                !string.Equals(targetCell.Animal.Data.Family, "Carnivora", StringComparison.OrdinalIgnoreCase))
+                !targetCell.Animal.Data.HasFamily("Carnivora"))
             {
                 return false;
             }

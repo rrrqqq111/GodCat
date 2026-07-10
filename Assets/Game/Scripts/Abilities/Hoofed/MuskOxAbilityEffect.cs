@@ -43,7 +43,7 @@ namespace NekogamiRanch.Abilities
 
                 if (!string.IsNullOrWhiteSpace(targetFamily) &&
                     !string.Equals(targetFamily, "None", StringComparison.OrdinalIgnoreCase) &&
-                    (animal.Data == null || !string.Equals(animal.Data.Family, targetFamily, StringComparison.OrdinalIgnoreCase)))
+                    (animal.Data == null || !animal.Data.HasFamily(targetFamily)))
                 {
                     continue;
                 }

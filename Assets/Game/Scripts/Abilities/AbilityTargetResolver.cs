@@ -109,7 +109,7 @@ namespace NekogamiRanch.Abilities
             var targetFamily = effectParams != null ? effectParams.targetFamily : "None";
             if (!string.IsNullOrWhiteSpace(targetFamily) && !string.Equals(targetFamily, "None", StringComparison.OrdinalIgnoreCase))
             {
-                return candidate.Data != null && string.Equals(candidate.Data.Family, targetFamily, StringComparison.OrdinalIgnoreCase);
+                return candidate.Data != null && candidate.Data.HasFamily(targetFamily);
             }
 
             return true;

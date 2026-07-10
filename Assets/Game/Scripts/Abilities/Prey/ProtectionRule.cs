@@ -58,7 +58,7 @@ namespace NekogamiRanch.Abilities.Prey
             }
 
             return RuleText.Contains(ProtectorAnimalIds, protector.Data.Id) ||
-                RuleText.Contains(ProtectorFamilies, protector.Data.Family);
+                RuleText.ContainsFamily(ProtectorFamilies, protector.Data);
         }
 
         public bool CanProtect(Animal protector, Animal predator, Animal target)
@@ -83,7 +83,7 @@ namespace NekogamiRanch.Abilities.Prey
             }
 
             return RuleText.Contains(ProtectedAnimalIds, target.Data.Id) ||
-                RuleText.Contains(ProtectedFamilies, target.Data.Family);
+                RuleText.ContainsFamily(ProtectedFamilies, target.Data);
         }
 
         private bool MatchesPredator(Animal predator)
@@ -101,7 +101,7 @@ namespace NekogamiRanch.Abilities.Prey
             }
 
             return RuleText.Contains(AgainstPredatorIds, predator.Data.Id) ||
-                RuleText.Contains(AgainstPredatorFamilies, predator.Data.Family);
+                RuleText.ContainsFamily(AgainstPredatorFamilies, predator.Data);
         }
     }
 }

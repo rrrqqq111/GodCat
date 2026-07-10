@@ -23,7 +23,6 @@ namespace NekogamiRanch.UI
         private void Awake()
         {
             EnsureView();
-            Hide();
         }
 
         private void LateUpdate()

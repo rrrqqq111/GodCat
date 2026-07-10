@@ -1,4 +1,5 @@
 using NekogamiRanch.Ranch;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,6 +11,8 @@ namespace NekogamiRanch.UI
         [SerializeField] private AnimalOfferPanel offerPanel;
         [SerializeField] private AnimalDetailPanel animalDetailPanel;
         [SerializeField] private AnimalRemoveButtonPanel animalRemoveButtonPanel;
+        [SerializeField] private TMP_Text stageText;
+        [SerializeField] private TMP_Text stageGoalMoneyText;
         [SerializeField] private RanchManager manager;
 
         private bool initialized;
@@ -123,7 +126,7 @@ namespace NekogamiRanch.UI
                     manager.IsWaitingForOfferSelection,
                     manager.IsWaitingToEnterNextDay);
 
-                if (manager.IsTurnFlowAnimating || manager.IsWaitingForOfferSelection)
+                if (manager.IsTurnFlowAnimating || manager.IsWaitingForOfferSelection || manager.HasGameResult)
                 {
                     hud.MoveNextDayButtonOffscreen();
                 }
@@ -132,6 +135,8 @@ namespace NekogamiRanch.UI
                     hud.RestoreNextDayButton();
                 }
             }
+
+            RefreshStageTexts();
 
             if (offerPanel != null)
             {
@@ -146,6 +151,19 @@ namespace NekogamiRanch.UI
             if (animalRemoveButtonPanel != null)
             {
                 animalRemoveButtonPanel.Refresh(manager.SelectedCell);
+            }
+        }
+
+        private void RefreshStageTexts()
+        {
+            if (stageText != null)
+            {
+                stageText.text = manager.CurrentStageNumber.ToString();
+            }
+
+            if (stageGoalMoneyText != null)
+            {
+                stageGoalMoneyText.text = manager.CurrentStageRequiredTotalMoney.ToString();
             }
         }
 

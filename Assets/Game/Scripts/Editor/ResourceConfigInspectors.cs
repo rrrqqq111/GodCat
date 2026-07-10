@@ -195,6 +195,8 @@ namespace Game.EditorTools
             ["description"] = "描述",
             ["icon"] = "图标",
             ["familyIcon"] = "家族图标",
+            ["secondaryFamily"] = "第二家族",
+            ["secondaryFamilyIcon"] = "第二家族图标",
             ["iconScale"] = "图标缩放"
         };
 

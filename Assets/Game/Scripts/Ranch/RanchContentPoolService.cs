@@ -33,6 +33,11 @@ namespace NekogamiRanch.Ranch
 
             abilitySpawnPool = RanchContentCatalog.LoadAnimals(animalDataRoot);
             itemRewardPool = RanchContentCatalog.LoadItems(itemDataRoot);
+#else
+            if (autoPopulateOfferPoolByFamily)
+            {
+                offerPool = FilterAnimalsByFamily(abilitySpawnPool, offerPoolFamilies);
+            }
 #endif
         }
 
@@ -67,6 +72,41 @@ namespace NekogamiRanch.Ranch
 
             offerPool = startingAnimals.Where(data => data != null).Distinct().ToList();
             return offerPool.Count > 0;
+        }
+
+        private List<AnimalData> FilterAnimalsByFamily(IReadOnlyList<AnimalData> animals, IReadOnlyList<string> families)
+        {
+            var familyFilters = (families ?? Array.Empty<string>())
+                .Where(family => !string.IsNullOrWhiteSpace(family))
+                .Select(family => family.Trim())
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            if (familyFilters.Count == 0 || animals == null)
+            {
+                return new List<AnimalData>();
+            }
+
+            return animals
+                .Where(data => data != null && familyFilters.Any(data.HasFamily))
+                .OrderBy(data => GetFamilySortIndex(familyFilters, data.Family))
+                .ThenBy(data => data.Rarity)
+                .ThenBy(data => data.DisplayName)
+                .ThenBy(data => data.Id)
+                .ToList();
+        }
+
+        private int GetFamilySortIndex(IReadOnlyList<string> familyFilters, string family)
+        {
+            for (var i = 0; i < familyFilters.Count; i++)
+            {
+                if (string.Equals(familyFilters[i], family, StringComparison.OrdinalIgnoreCase))
+                {
+                    return i;
+                }
+            }
+
+            return int.MaxValue;
         }
     }
 }

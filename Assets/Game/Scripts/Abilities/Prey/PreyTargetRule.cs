@@ -44,7 +44,7 @@ namespace NekogamiRanch.Abilities.Prey
             }
 
             if (RuleText.Contains(ExcludeAnimalIds, animal.Data.Id) ||
-                RuleText.Contains(ExcludeFamilies, animal.Data.Family))
+                RuleText.ContainsFamily(ExcludeFamilies, animal.Data))
             {
                 return false;
             }
@@ -62,7 +62,7 @@ namespace NekogamiRanch.Abilities.Prey
             }
 
             return RuleText.Contains(TargetAnimalIds, animal.Data.Id) ||
-                RuleText.Contains(TargetFamilies, animal.Data.Family);
+                RuleText.ContainsFamily(TargetFamilies, animal.Data);
         }
     }
 
@@ -87,6 +87,24 @@ namespace NekogamiRanch.Abilities.Prey
             for (var i = 0; i < values.Count; i++)
             {
                 if (string.Equals(values[i], target, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool ContainsFamily(IReadOnlyList<string> values, AnimalData animalData)
+        {
+            if (values == null || values.Count == 0 || animalData == null)
+            {
+                return false;
+            }
+
+            for (var i = 0; i < values.Count; i++)
+            {
+                if (animalData.HasFamily(values[i]))
                 {
                     return true;
                 }

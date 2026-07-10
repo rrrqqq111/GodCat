@@ -11,6 +11,7 @@ namespace NekogamiRanch.Ranch
         private readonly RanchAnimalService animalService;
         private readonly RanchOfferService offerService;
         private readonly RanchSettlementService settlementService;
+        private readonly RanchWinLoseController winLoseController;
         private readonly RanchDeploymentTriggerService deploymentTriggerService;
         private readonly RanchItemService itemService;
         private readonly RanchToyService toyService;
@@ -22,6 +23,7 @@ namespace NekogamiRanch.Ranch
             RanchAnimalService animalService,
             RanchOfferService offerService,
             RanchSettlementService settlementService,
+            RanchWinLoseController winLoseController,
             RanchDeploymentTriggerService deploymentTriggerService,
             RanchItemService itemService,
             RanchToyService toyService,
@@ -32,6 +34,7 @@ namespace NekogamiRanch.Ranch
             this.animalService = animalService;
             this.offerService = offerService;
             this.settlementService = settlementService;
+            this.winLoseController = winLoseController;
             this.deploymentTriggerService = deploymentTriggerService;
             this.itemService = itemService;
             this.toyService = toyService;
@@ -70,6 +73,12 @@ namespace NekogamiRanch.Ranch
             if (state.IsTestMode)
             {
                 EnterNextDay(randomizePositionsOnEnter);
+                return;
+            }
+
+            if (winLoseController != null && winLoseController.TryResolveStageEnd(state.Day, state.Money))
+            {
+                stateChanged?.Invoke();
                 return;
             }
 

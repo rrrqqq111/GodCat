@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: "\u4E09\u89D2\u9F99"
+  m_EditorClassIdentifier: 
+  id: sanjiaolong
+  animalName: "\u4E09\u89D2\u9F99"
+  family: Dinosaur
+  rarity: 0
+  baseMoney: 1
+  evolutionThreshold: 0
+  evolutionTarget: {fileID: 0}
+  evolutionTargetLevel: 0
+  ability: {fileID: 0}
+  abilitySound: {fileID: 0}
+  description: 111111111111111
+  icon: {fileID: 21300000, guid: 5309179c7c234cb4b8a862fb3aa3b3ed, type: 3}
+  familyIcon: {fileID: 21300000, guid: f9f76226b9109e9438f744eeca7cc684, type: 3}
+  iconScale: 1
+  secondaryFamily: 
+  secondaryFamilyIcon: {fileID: 0}

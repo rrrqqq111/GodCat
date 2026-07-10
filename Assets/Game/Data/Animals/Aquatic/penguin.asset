@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc76e68569f486647a86635f3a574c69, type: 3}
+  m_Name: penguin
+  m_EditorClassIdentifier:
+  id: Penguin
+  animalName: "\u4F01\u9E45"
+  family: Aquatic
+  rarity: 3
+  baseMoney: 0
+  evolutionThreshold: 0
+  evolutionTarget: {fileID: 0}
+  evolutionTargetLevel: 0
+  ability: {fileID: 0}
+  abilitySound: {fileID: 0}
+  description: "\u51FA\u53BB\u65C5\u884C3\u5929\uFF0C\u56DE\u6765\u65F6\u5E26\u56DE1\u4EF6\u9053\u5177\u3002"
+  icon: {fileID: 21300000, guid: 5124a4ac576a9354cb4ff18ea9648946, type: 3}
+  familyIcon: {fileID: 21300000, guid: 2e691afefad7739468ce561faffb6bf4, type: 3}
+  iconScale: 1
+  secondaryFamily: Bird
+  secondaryFamilyIcon: {fileID: 21300000, guid: 2c4dbaf10562b7b46814560f896b05c8, type: 3}

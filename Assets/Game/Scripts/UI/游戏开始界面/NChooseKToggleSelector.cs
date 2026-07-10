@@ -19,6 +19,7 @@ public class NChooseKToggleSelector : MonoBehaviour
     [SerializeField] private bool saveSelectionOnConfirm = true;
     [SerializeField] private bool loadSavedSelectionOnEnable = true;
     [SerializeField] private string selectedIndicesPlayerPrefsKey = "SelectedOptionIndices";
+    [SerializeField] private string selectedFamiliesPlayerPrefsKey = "SelectedAnimalFamilies";
 
     [Header("Selected Icon Output")]
     [SerializeField] private List<Image> selectedOutputImages = new List<Image>();
@@ -163,6 +164,7 @@ public class NChooseKToggleSelector : MonoBehaviour
 
         string selectedIndices = GetSelectedIndicesText();
         PlayerPrefs.SetString(selectedIndicesPlayerPrefsKey, selectedIndices);
+        SaveSelectedFamilies();
         PlayerPrefs.Save();
 
         ApplySelectedIconsToOutputs();
@@ -285,6 +287,31 @@ public class NChooseKToggleSelector : MonoBehaviour
         }
 
         return selectedIndices;
+    }
+
+    private void SaveSelectedFamilies()
+    {
+        if (string.IsNullOrEmpty(selectedFamiliesPlayerPrefsKey))
+            return;
+
+        List<string> selectedFamilies = new List<string>();
+
+        foreach (Toggle toggle in optionToggles)
+        {
+            if (toggle == null || !toggle.isOn)
+                continue;
+
+            HangingSignToggleVisual signVisual = toggle.GetComponent<HangingSignToggleVisual>();
+            if (signVisual == null)
+                signVisual = toggle.GetComponentInChildren<HangingSignToggleVisual>(true);
+
+            if (signVisual == null || string.IsNullOrWhiteSpace(signVisual.Family))
+                continue;
+
+            selectedFamilies.Add(signVisual.Family.Trim());
+        }
+
+        PlayerPrefs.SetString(selectedFamiliesPlayerPrefsKey, string.Join(",", selectedFamilies));
     }
 
     private HashSet<int> ParseSelectedIndices(string selectedIndices)

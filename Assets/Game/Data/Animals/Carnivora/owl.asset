@@ -17,9 +17,14 @@ MonoBehaviour:
   family: Carnivora
   rarity: 2
   baseMoney: 3
-  ability: {fileID: 11400000, guid: 5b023f15a77e47ff91ae2685757b6774, type: 2}
-  abilitySound: {fileID: 8300000, guid: 9e447414d56eed24f85cb6e1440de825, type: 3}
-  description: "\u6355\u98DF\u76F8\u90BB\u5730\u5757\u4E0A\u6240\u6709\u7684\u9F20\u5154\u5BB6\u65CF\u52A8\u7269\uFF0C\u6BCF\u6355\u98DF\u6210\u529F\u4E00\u53EA\u81EA\u8EAB\u57FA\u7840\u5C5E\u6027\u52A02"
+  evolutionThreshold: 0
+  evolutionTarget: {fileID: 0}
+  evolutionTargetLevel: 0
+  ability: {fileID: 0}
+  abilitySound: {fileID: 0}
+  description: "\u6355\u98DF\u6240\u6709\u76F8\u90BB\u7684\u5C5E\u5154\u5BB6\u65CF\u52A8\u7269\u3002\u6BCF\u6355\u98DF\u6210\u529F\u4E00\u53EA\uFF0C\u81EA\u8EAB\u589E\u52A02\u57FA\u7840\u5C5E\u6027\u3002"
   icon: {fileID: 21300000, guid: 10e2858045a99464c8ab72927a832ddc, type: 3}
   familyIcon: {fileID: 21300000, guid: 3cb28a53ba33788439ee3d4a2d81ee30, type: 3}
   iconScale: 0.8
+  secondaryFamily: Bird
+  secondaryFamilyIcon: {fileID: 21300000, guid: 2c4dbaf10562b7b46814560f896b05c8, type: 3}
